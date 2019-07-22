@@ -619,10 +619,25 @@ public function get_available_year()
 			return $array;
 	}
 
+
+//// Web Admin functions /////////
 public function get_sales_all_listings()
 {
-	$sql="SELECT listing.listing_id,listing.make_id,listing.listing_image_url,listing.listing_type_id,listing.listing_status_id,
-	make.make_id,";
+	$sql="SELECT
+tbl_listings.listing_id,tbl_listings.make_id,tbl_listings.listing_status_id,tbl_car_makes.make,tbl_listing_images.listing_image_url
+FROM
+tbl_listings,tbl_car_makes,tbl_car_models,tbl_listing_status,tbl_listing_images
+WHERE
+tbl_listings.make_id=tbl_car_makes.make_id AND
+tbl_listings.listing_id=tbl_listing_images.listing_id AND
+tbl_listings.listing_id=tbl_listing_listing_id.listing_id AND
+tbl_listing_images.default_image=1";
+$query=mysqli_query($this->con,$sql);
+while($row=mysqli_fetch_assoc($query))
+	{
+	$array[]=$row;
+	}
+	return $array;
 }
 //////////////////----- Admin Functions -------------////////////
 
