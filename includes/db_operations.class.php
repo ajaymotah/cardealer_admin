@@ -624,11 +624,14 @@ public function get_available_year()
 public function get__all_sales_listings()
 {
 	$sql="SELECT
-tbl_listings.listing_id,tbl_listings.make_id, tbl_car_makes.make
+tbl_listings.listing_id,tbl_listings.user_id, tbl_listings.make_id,tbl_listings.date_posted,tbl_listing_status.listing_status,tbl_car_makes.make,tbl_listing_images.listing_id,tbl_listing_images.listing_image_url
 FROM
-tbl_listings,tbl_car_makes
+tbl_listings,tbl_car_makes,tbl_listing_images,tbl_listing_status
 WHERE
-tbl_listings.make_id=tbl_car_makes.make_id";
+tbl_listings.make_id=tbl_car_makes.make_id AND
+tbl_listings.listing_id=tbl_listing_images.listing_id AND
+tbl_listings.listing_status_id=tbl_listing_status.listing_status_id AND
+tbl_listing_images.default_image=1";
 $query=mysqli_query($this->con,$sql);
 while($row=mysqli_fetch_assoc($query))
 	{

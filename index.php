@@ -165,15 +165,13 @@ include('includes/db_operations.class.php');
                   <thead>
                   <tr>
                     <th>Listing ID</th>
-                    <th>user_id</th>
+                    <th>User_ID</th>
                     <th>Make</th>
-                    <th>Model</th>
                     <th>Image</th>
                     <th>Date Posted</th>
                     <th>Status</th>
                     <th>Payment</th>
                     <th>Edit</th>
-                    <th>Delete</th>
                     <th>Delete</th>
                   </tr>
                   </thead>
@@ -182,10 +180,11 @@ include('includes/db_operations.class.php');
                     foreach ($get_cars as $lst_cars) {?>
                        <tr>
                           <td><?php echo $lst_cars['listing_id']; ?></td>
+                          <td><?php echo $lst_cars['user_id']; ?></td>
                           <td><?php echo $lst_cars['make']; ?></td>
-                          <td><?php echo $lst_cars['make'];?></td>
-                          <td><?php echo $lst_cars['listing_id']; ?></td>
-                          <td><?php echo $lst_cars['listing_id']; ?></td>
+                          <td><img src="<?php echo $img_link.$lst_cars['listing_image_url'];?>" width="100" height="100"/></td>
+                          <td><?php echo $lst_cars['date_posted']; ?></td>
+                          <td><?php echo $lst_cars['listing_status']; ?></td>
                           <td><?php echo $lst_cars['listing_id']; ?></td>
                           <td><?php echo $lst_cars['listing_id']; ?></td>
                           <td><?php echo $lst_cars['listing_id']; ?></td>
