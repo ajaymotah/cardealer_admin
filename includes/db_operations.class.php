@@ -620,8 +620,12 @@ public function get_available_year()
 	}
 
 
+
+
+
+
 //// Web Admin functions /////////
-public function get__all_sales_listings()
+public function get_all_sales_listings()
 {
 	$sql="SELECT
 tbl_listings.listing_id,tbl_listings.user_id, tbl_listings.make_id,tbl_listings.date_posted,tbl_listing_status.listing_status,tbl_car_makes.make,tbl_listing_images.listing_id,tbl_listing_images.listing_image_url
@@ -639,6 +643,14 @@ while($row=mysqli_fetch_assoc($query))
 	}
 	return $array;
 }
+public function delete_listing()
+{
+		
+}
+
+
+
+
 //////////////////----- Admin Functions -------------////////////
 
 	//set Session

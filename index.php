@@ -154,18 +154,18 @@ include('includes/db_operations.class.php');
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Hover Data Table</h3>
+                <h3 class="card-title">List of all cars on Sale</h3>
               </div>
               <!-- /.card-header -->
               <?php
-              $get_cars=$db_operation->get__all_sales_listings();
+              $get_cars=$db_operation->get_all_sales_listings();
                ?>
               <div class="card-body">
                 <table id="example2" class="display" width="100%">
                   <thead>
                   <tr>
                     <th>Listing ID</th>
-                    <th>User_ID</th>
+                    <th>User ID</th>
                     <th>Make</th>
                     <th>Image</th>
                     <th>Date Posted</th>
@@ -180,21 +180,18 @@ include('includes/db_operations.class.php');
                     foreach ($get_cars as $lst_cars) {?>
                        <tr>
                           <td><?php echo $lst_cars['listing_id']; ?></td>
-                          <td><?php echo $lst_cars['user_id']; ?></td>
+                          <td><a href=""><?php echo $lst_cars['user_id']; ?></a></td>
                           <td><?php echo $lst_cars['make']; ?></td>
                           <td><img src="<?php echo $img_link.$lst_cars['listing_image_url'];?>" width="100" height="100"/></td>
                           <td><?php echo $lst_cars['date_posted']; ?></td>
                           <td><?php echo $lst_cars['listing_status']; ?></td>
-                          <td><?php echo $lst_cars['listing_id']; ?></td>
-                          <td><?php echo $lst_cars['listing_id']; ?></td>
-                          <td><?php echo $lst_cars['listing_id']; ?></td>
                           <td><a class="btn btn-success" href="payments.php?id=<?php ?>">Payment</a></td>
-                                      	<td><a class="btn btn-warning" href="edit_student.php?id=<?php ?>">Assign Course & Exam Modules</a></td>
-                                        <td><button id="<?php?>" type="button" class="btn btn-danger" data-toggle="modal" data-target="#DelStudent">Delete</button></td>
+                          <td><a class="btn btn-warning" href="edit_listing.php?id=<?php ?>">Edit</a></td>
+                          <td><button id="<?php echo $lst_cars['listing_id'];?>" type="button" class="btn btn-danger btn_delete" data-toggle="modal" data-target="#modal-delete">Delete</button></td>
                         </tr>
                   <?php  }  ?>
                 </tbody>
-              <tfoot>
+              <!--<tfoot>
                 <tr>
                   <th>Listing ID</th>
                   <th>user_id</th>
@@ -205,7 +202,7 @@ include('includes/db_operations.class.php');
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
-                </tfoot>
+              </tfoot>-->
                 </table>
               </div>
               <!-- /.card-body -->
@@ -213,7 +210,28 @@ include('includes/db_operations.class.php');
 
             <!--// end table-->
       <!--// Display Div-->
-
+      <!--- Modal form-->
+      <div class="modal fade" id="modal-delete">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Delete Listing</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure you want to delete the listing?</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger btn_modal_delete">Delete</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
 
             <!-- DIRECT CHAT -->
             <div class="card direct-chat direct-chat-primary">
@@ -612,23 +630,23 @@ $(function () {
     "paging": true,
     "lengthChange": false,
     "searching": true,
-    "ordering": false,
     "info": true,
     "autoWidth": false,
+    "ordering":true
   });
 });
 
-//get all Cars
-function get_all_cars() {
+//delete listing function
+$('.btn_delete').click(function () {
+  var listing_id= $(this).attr("id");
+  $('.btn_modal_delete').attr("id",listing_id);
   $.ajax({
-    url:"ajax/get_all_cars.php",
-    success:function(msg){
-      $('#car_listing').html(msg);
-    }
 
 
-  })
-}
+  });
+
+});
+
 
 $(document).ready(function(){
 $('.footer_list').load('pages/cd_footer.html');
