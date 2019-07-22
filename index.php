@@ -158,7 +158,7 @@ include('includes/db_operations.class.php');
               </div>
               <!-- /.card-header -->
               <?php
-              $get_cars=$db_operation->fetchAll('tbl_listings');
+              $get_cars=$db_operation->get__all_sales_listings();
                ?>
               <div class="card-body">
                 <table id="example2" class="display" width="100%">
@@ -182,11 +182,8 @@ include('includes/db_operations.class.php');
                     foreach ($get_cars as $lst_cars) {?>
                        <tr>
                           <td><?php echo $lst_cars['listing_id']; ?></td>
-                          <td><?php echo $lst_cars['user_id']; ?></td>
-                          <td><?php
-                          $lst_make=$lst_cars['make_id'];
-                          $lst_make_id=$db_operation->find_by_id('tbl_car_makes','make_id',$lst_make);
-                          echo $lst_make_id['make'];?></td>
+                          <td><?php echo $lst_cars['make']; ?></td>
+                          <td><?php echo $lst_cars['make'];?></td>
                           <td><?php echo $lst_cars['listing_id']; ?></td>
                           <td><?php echo $lst_cars['listing_id']; ?></td>
                           <td><?php echo $lst_cars['listing_id']; ?></td>
@@ -197,6 +194,7 @@ include('includes/db_operations.class.php');
                                         <td><button id="<?php?>" type="button" class="btn btn-danger" data-toggle="modal" data-target="#DelStudent">Delete</button></td>
                         </tr>
                   <?php  }  ?>
+                </tbody>
               <tfoot>
                 <tr>
                   <th>Listing ID</th>
