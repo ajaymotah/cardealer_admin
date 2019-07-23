@@ -10,8 +10,8 @@ foreach($data as $device_id){
 
     $msg = array
 (
-    'title'		=> '𝑴𝑰𝑻𝑺𝑼𝑩𝑰𝑺𝑯𝑰 𝑳𝑨𝑵𝑪𝑬𝑹 2008',
-	'message' 	=> 'Rs 225,000-Manual-Negociable',
+  'title'		=> 'Testing Alpha 1',
+	'message' 	=> 'This is a test message',
 	'body'       =>'test.html',
 	'subtitle'	=> 'This is a subtitle. subtitle',
 	'tickerText'	=> 'Ticker text here...Ticker text here...Ticker text here',

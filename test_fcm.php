@@ -8,12 +8,12 @@ $data=$db_operation->fetch_records('tbl_device_registration');
 foreach($data as $device_id){
     $to=array($device_id['device_id']);
 
-    $msg = array
+  /*  $msg = array
 (
-    'title'		=> '𝑴𝑰𝑻𝑺𝑼𝑩𝑰𝑺𝑯𝑰 𝑳𝑨𝑵𝑪𝑬𝑹 2008',
-	'message' 	=> 'Rs 225,000-Manual-Negociable',
+  'title'		=> 'Testing Alpha 1',
+	'message' 	=> 'This is a test message',
 	'body'       =>'test.html',
-	'subtitle'	=> 'This is a subtitle. subtitle',
+	'subtitle'	=> 'This is a subtitle',
 	'tickerText'	=> 'Ticker text here...Ticker text here...Ticker text here',
 	'vibrate'	=> 1,
 	'sound'		=> 1,
@@ -21,12 +21,21 @@ foreach($data as $device_id){
 	//'http://cardealer.webdevsolutions.biz/admin/images/push_icon.jpg'
 	//'largeIcon'	=> 'large_icon',
 	//'smallIcon'	=> 'small_icon'
-);
+);*/
 
 $fields = array
 (
 	'registration_ids' 	=> $to,
-	'data'			=> $msg
+  'priority'=>'high',
+  'mutable_content'=>true,
+  "notification"=>array(
+                      "title"=> 'Testing Alpha 3',
+                      "body"=> 'This is a test message',
+                      "click_action"=>'FCM_PLUGIN_ACTIVITY',
+          ),
+          'data'=>array(
+                       'url'=>'models.html'
+                     )
 );
 $headers = array
 (
@@ -43,6 +52,7 @@ curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
 curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fields ) );
 $result = curl_exec($ch );
 curl_close( $ch );
-echo $result;
+//echo $result;
+echo json_encode(array("data"=>$fields));
 }
 ?>
