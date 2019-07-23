@@ -1,12 +1,18 @@
 <?php
 include('../includes/db_operations.class.php');
 $listing_id=$_POST['listing_id'];
+//$listing_id=272;
 $get_images=$db_operation->get_images($listing_id);
-foreach ($get_images as $lst_images) {
-
+//print_r($get_images);
+//echo sizeof($get_images);
+foreach ($get_images as $key => $value) {
+  $del_img="../uploaded_images/".$value;
+  unlink($del_img);
+  //echo $del_img."</br>";
 }
 
-$sql="";
+$del_listing=$db_operation->delete_listing('tbl_listings','listing_id',$listing_id);
+echo $del_listing;
 
 
 

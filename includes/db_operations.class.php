@@ -643,9 +643,17 @@ while($row=mysqli_fetch_assoc($query))
 	}
 	return $array;
 }
-public function delete_listing()
+public function delete_listing($table,$field,$id)
 {
-		
+	$sql = "DELETE FROM ".$table." WHERE ".$field." = '".$id."'";
+
+	if (mysqli_query($this->con,$sql))
+	{
+			 return 1;
+		} else
+		{
+			 return "Error deleting record: " . mysqli_error($this->con);
+		}
 }
 
 

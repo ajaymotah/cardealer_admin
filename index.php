@@ -30,6 +30,8 @@ include('includes/db_operations.class.php');
   <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.css">
+  <!-- Toastr -->
+  <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -622,6 +624,8 @@ include('includes/db_operations.class.php');
 <!--<script src="dist/js/pages/dashboard.js"></script>-->
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+<!-- Toastr -->
+<script src="plugins/toastr/toastr.min.js"></script>
 <script src="custom/custom.js"></script>
 <script>
 $(function () {
@@ -636,17 +640,62 @@ $(function () {
   });
 });
 
+//Toastr Function
+$(function() {
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000
+  });
+
+/*  $('.toastrDefaultSuccess').click(function() {
+    toastr.success('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+  });
+  $('.toastrDefaultInfo').click(function() {
+    toastr.info('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+  });
+  $('.toastrDefaultError').click(function() {
+    toastr.error('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+  });*/
+  $('.toastrDefaultWarning').click(function() {
+    toastr.warning('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+  });
+});
+
 //delete listing function
 $('.btn_delete').click(function () {
   var listing_id= $(this).attr("id");
   $('.btn_modal_delete').attr("id",listing_id);
-  $.ajax({
+  //toastr.error('Listing has been deleted!!!')
+  /*$.ajax({
+    type:"POST",
+    url:"ajax/delete_listing.php",
+    data:{listing_id:listing_id},
+    success:function (data) {
+      if(data==1){
+        toastr.warning('Listing has been deleted!!!')
+      }
+    }
 
 
-  });
+  });*/
 
 });
-
+$('.btn_modal_delete').click(function () {
+    var listing_id= $(this).attr("id");
+    $.ajax({
+      type:"POST",
+      url:"ajax/delete_listing.php",
+      data:{listing_id:listing_id},
+      success:function (data) {
+        if(data==1){
+          $('#modal-delete').toggle();
+          toastr.warning('Listing has been deleted!!!')
+        }
+      }
+    });
+})
 
 $(document).ready(function(){
 $('.footer_list').load('pages/cd_footer.html');
