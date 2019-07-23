@@ -162,7 +162,7 @@ include('includes/db_operations.class.php');
               <?php
               $get_cars=$db_operation->get_all_sales_listings();
                ?>
-              <div class="card-body">
+              <div class="card-body" id="tbl_listings">
                 <table id="example2" class="display" width="100%">
                   <thead>
                   <tr>
@@ -226,7 +226,7 @@ include('includes/db_operations.class.php');
               <p>Are you sure you want to delete the listing?</p>
             </div>
             <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Close</button>
               <button type="button" class="btn btn-danger btn_modal_delete">Delete</button>
             </div>
           </div>
@@ -628,7 +628,8 @@ include('includes/db_operations.class.php');
 <script src="plugins/toastr/toastr.min.js"></script>
 <script src="custom/custom.js"></script>
 <script>
-$(function () {
+function create_table()
+{
     $('#example2').DataTable({
     "responsive": true,
     "paging": true,
@@ -638,7 +639,7 @@ $(function () {
     "autoWidth": false,
     "ordering":true
   });
-});
+}
 
 //Toastr Function
 $(function() {
@@ -682,6 +683,12 @@ $('.btn_delete').click(function () {
   });*/
 
 });
+
+
+$(document).ready(function(){
+$('.footer_list').load('pages/cd_footer.html');
+create_table();
+
 $('.btn_modal_delete').click(function () {
     var listing_id= $(this).attr("id");
     $.ajax({
@@ -690,15 +697,20 @@ $('.btn_modal_delete').click(function () {
       data:{listing_id:listing_id},
       success:function (data) {
         if(data==1){
-          $('#modal-delete').toggle();
+          $('.btn_close').trigger("click");
+          //$('#example2').DataTable();
           toastr.warning('Listing has been deleted!!!')
+          //$("#tbl_listings").remove("#example2");
+          $("#tbl_listings").load(" #example2");
+          //create_table();
         }
       }
     });
 })
 
-$(document).ready(function(){
-$('.footer_list').load('pages/cd_footer.html');
+
+
+
 
 //get all Cars
 //get_all_cars();
