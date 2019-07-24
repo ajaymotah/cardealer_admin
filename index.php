@@ -180,7 +180,7 @@ include('includes/db_operations.class.php');
                   <tbody>
                     <?php
                     foreach ($get_cars as $lst_cars) {?>
-                       <tr>
+                       <tr id="<?php echo "tr_".$lst_cars['listing_id']; ?>">
                           <td><?php echo $lst_cars['listing_id']; ?></td>
                           <td><a href=""><?php echo $lst_cars['user_id']; ?></a></td>
                           <td><?php echo $lst_cars['make']; ?></td>
@@ -189,6 +189,7 @@ include('includes/db_operations.class.php');
                           <td><?php echo $lst_cars['listing_status']; ?></td>
                           <td><a class="btn btn-success" href="payments.php?id=<?php ?>">Payment</a></td>
                           <td><a class="btn btn-warning" href="edit_listing.php?id=<?php ?>">Edit</a></td>
+
                           <td><button id="<?php echo $lst_cars['listing_id'];?>" type="button" class="btn btn-danger btn_delete" data-toggle="modal" data-target="#modal-delete">Delete</button></td>
                         </tr>
                   <?php  }  ?>
@@ -651,48 +652,22 @@ $(function() {
     showConfirmButton: false,
     timer: 3000
   });
-
-/*  $('.toastrDefaultSuccess').click(function() {
-    toastr.success('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
-  });
-  $('.toastrDefaultInfo').click(function() {
-    toastr.info('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
-  });
-  $('.toastrDefaultError').click(function() {
-    toastr.error('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
-  });*/
-  $('.toastrDefaultWarning').click(function() {
-    toastr.warning('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
-  });
 });
-
-//delete listing function
-$('.btn_delete').click(function () {
-  var listing_id= $(this).attr("id");
-  $('.btn_modal_delete').attr("id",listing_id);
-  //toastr.error('Listing has been deleted!!!')
-  /*$.ajax({
-    type:"POST",
-    url:"ajax/delete_listing.php",
-    data:{listing_id:listing_id},
-    success:function (data) {
-      if(data==1){
-        toastr.warning('Listing has been deleted!!!')
-      }
-    }
-
-
-  });*/
-
-});
-
 
 $(document).ready(function(){
 $('.footer_list').load('pages/cd_footer.html');
 create_table();
+//delete listing function
+$('.btn_delete').click(function () {
+  var listing_id= $(this).attr('id');
+  $('#tr_'+listing_id).hide();
 
+  //alert(listing_id);
+  $('.btn_modal_delete').attr('id',listing_id);
+});
 $('.btn_modal_delete').click(function () {
     var listing_id= $(this).attr("id");
+    //alert(listing_id);
     $.ajax({
       type:"POST",
       url:"ajax/delete_listing.php",
@@ -702,24 +677,13 @@ $('.btn_modal_delete').click(function () {
           $('.btn_close').trigger("click");
           //$('#example2').DataTable();
           toastr.warning('Listing has been deleted!!!')
-          //$("#tbl_listings").remove("#example2");
-          $("#tbl_listings").load(" #example2");
-          //create_table();
         }
       }
     });
-})
+    $("tr_"+listing_id).hide();
+});
 
-
-
-
-
-//get all Cars
-//get_all_cars();
-
-
-//$('.menu_list').load('pages/cd_menu.html');
-})
+});
 
 </script>
 
