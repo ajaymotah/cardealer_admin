@@ -17,6 +17,6 @@ $max_file_upload = 5;
 //$user_session=$_SESSION['user_session'];
 
 //image links
-$img_link="http://cardealer.webdevsolutions.biz/admin/uploaded_images/"
+$img_link="uploaded_images/"
 
  ?>

@@ -32,6 +32,8 @@ include('includes/db_operations.class.php');
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.css">
   <!-- Toastr -->
   <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
+  <!-- Validetta-->
+  <link rel="stylesheet" href="plugins/validetta/validetta.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -89,9 +91,12 @@ include('includes/db_operations.class.php');
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+                <?php
+                $sales_listing_count=$db_operation->get_count_tbl("tbl_listings","listing_type_id",1);
+                 ?>
+                <h3><?php echo $sales_listing_count; ?></h3>
 
-                <p>New Orders</p>
+                <p>Total Sales Listings</p>
               </div>
               <div class="icon">
                 <i class="fa fa-car"></i>
@@ -104,9 +109,12 @@ include('includes/db_operations.class.php');
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+                <?php
+                $rental_listing_count=$db_operation->get_count_tbl("tbl_listings","listing_type_id",4);
+                 ?>
+                <h3><?php echo $rental_listing_count; ?></h3>
 
-                <p>Bounce Rate</p>
+                <p>Total Car Rentals</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -119,7 +127,10 @@ include('includes/db_operations.class.php');
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>44</h3>
+                <?php
+                $active_users_count=$db_operation->get_count_tbl("tbl_users","user_status_id",1);
+                 ?>
+                <h3><?php echo $active_users_count; ?></h3>
 
                 <p>User Registrations</p>
               </div>
@@ -134,12 +145,15 @@ include('includes/db_operations.class.php');
             <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>65</h3>
+                <?php
+                $pending_listing_count=$db_operation->get_count_tbl("tbl_listings","listing_status_id",3);
+                 ?>
+                <h3><?php echo $pending_listing_count; ?></h3>
 
-                <p>Unique Visitors</p>
+                <p>Pending Listings</p>
               </div>
               <div class="icon">
-                <i class="ion ion-pie-graph"></i>
+                <i class="ion ion-alert"></i>
               </div>
               <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
@@ -236,207 +250,201 @@ include('includes/db_operations.class.php');
         <!-- /.modal-dialog -->
       </div>
 
-            <!-- DIRECT CHAT -->
-            <div class="card direct-chat direct-chat-primary">
-              <div class="card-header">
-                <h3 class="card-title">Direct Chat</h3>
+      <div class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">Add New Car Listings</h3>
+        </div>
+<!-- form-->
+<form id="frmAddListing" name="frmAddListing" method="post">
 
-                <div class="card-tools">
-                  <span data-toggle="tooltip" title="3 New Messages" class="badge badge-primary">3</span>
-                  <button type="button" class="btn btn-tool" data-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-toggle="tooltip" title="Contacts"
-                          data-widget="chat-pane-toggle">
-                    <i class="fas fa-comments"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-widget="remove"><i class="fas fa-times"></i>
-                  </button>
-                </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <!-- Conversations are loaded here -->
-                <div class="direct-chat-messages">
-                  <!-- Message. Default to the left -->
-                  <div class="direct-chat-msg">
-                    <div class="direct-chat-info clearfix">
-                      <span class="direct-chat-name float-left">Alexander Pierce</span>
-                      <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
-                    </div>
-                    <!-- /.direct-chat-info -->
-                    <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="message user image">
-                    <!-- /.direct-chat-img -->
-                    <div class="direct-chat-text">
-                      Is this template really for free? That's unbelievable!
-                    </div>
-                    <!-- /.direct-chat-text -->
-                  </div>
-                  <!-- /.direct-chat-msg -->
+        <div class="card-body">
+          <div class="row">
+            <div class="col-3">
+              <label for="slt_condition">Condition</label>
+              <select class="form-control" name="slt_condition" id="slt_condition">
+                <option value="" selected disabled hidden>Select Condition</option>
+                <?php
+                          $arr_conditions=$db_operation->fetch_records('tbl_vehicle_conditions');
 
-                  <!-- Message to the right -->
-                  <div class="direct-chat-msg right">
-                    <div class="direct-chat-info clearfix">
-                      <span class="direct-chat-name float-right">Sarah Bullock</span>
-                      <span class="direct-chat-timestamp float-left">23 Jan 2:05 pm</span>
-                    </div>
-                    <!-- /.direct-chat-info -->
-                    <img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="message user image">
-                    <!-- /.direct-chat-img -->
-                    <div class="direct-chat-text">
-                      You better believe it!
-                    </div>
-                    <!-- /.direct-chat-text -->
-                  </div>
-                  <!-- /.direct-chat-msg -->
-
-                  <!-- Message. Default to the left -->
-                  <div class="direct-chat-msg">
-                    <div class="direct-chat-info clearfix">
-                      <span class="direct-chat-name float-left">Alexander Pierce</span>
-                      <span class="direct-chat-timestamp float-right">23 Jan 5:37 pm</span>
-                    </div>
-                    <!-- /.direct-chat-info -->
-                    <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="message user image">
-                    <!-- /.direct-chat-img -->
-                    <div class="direct-chat-text">
-                      Working with AdminLTE on a great new app! Wanna join?
-                    </div>
-                    <!-- /.direct-chat-text -->
-                  </div>
-                  <!-- /.direct-chat-msg -->
-
-                  <!-- Message to the right -->
-                  <div class="direct-chat-msg right">
-                    <div class="direct-chat-info clearfix">
-                      <span class="direct-chat-name float-right">Sarah Bullock</span>
-                      <span class="direct-chat-timestamp float-left">23 Jan 6:10 pm</span>
-                    </div>
-                    <!-- /.direct-chat-info -->
-                    <img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="message user image">
-                    <!-- /.direct-chat-img -->
-                    <div class="direct-chat-text">
-                      I would love to.
-                    </div>
-                    <!-- /.direct-chat-text -->
-                  </div>
-                  <!-- /.direct-chat-msg -->
-
-                </div>
-                <!--/.direct-chat-messages-->
-
-                <!-- Contacts are loaded here -->
-                <div class="direct-chat-contacts">
-                  <ul class="contacts-list">
-                    <li>
-                      <a href="#">
-                        <img class="contacts-list-img" src="dist/img/user1-128x128.jpg">
-
-                        <div class="contacts-list-info">
-                          <span class="contacts-list-name">
-                            Count Dracula
-                            <small class="contacts-list-date float-right">2/28/2015</small>
-                          </span>
-                          <span class="contacts-list-msg">How have you been? I was...</span>
-                        </div>
-                        <!-- /.contacts-list-info -->
-                      </a>
-                    </li>
-                    <!-- End Contact Item -->
-                    <li>
-                      <a href="#">
-                        <img class="contacts-list-img" src="dist/img/user7-128x128.jpg">
-
-                        <div class="contacts-list-info">
-                          <span class="contacts-list-name">
-                            Sarah Doe
-                            <small class="contacts-list-date float-right">2/23/2015</small>
-                          </span>
-                          <span class="contacts-list-msg">I will be waiting for...</span>
-                        </div>
-                        <!-- /.contacts-list-info -->
-                      </a>
-                    </li>
-                    <!-- End Contact Item -->
-                    <li>
-                      <a href="#">
-                        <img class="contacts-list-img" src="dist/img/user3-128x128.jpg">
-
-                        <div class="contacts-list-info">
-                          <span class="contacts-list-name">
-                            Nadia Jolie
-                            <small class="contacts-list-date float-right">2/20/2015</small>
-                          </span>
-                          <span class="contacts-list-msg">I'll call you back at...</span>
-                        </div>
-                        <!-- /.contacts-list-info -->
-                      </a>
-                    </li>
-                    <!-- End Contact Item -->
-                    <li>
-                      <a href="#">
-                        <img class="contacts-list-img" src="dist/img/user5-128x128.jpg">
-
-                        <div class="contacts-list-info">
-                          <span class="contacts-list-name">
-                            Nora S. Vans
-                            <small class="contacts-list-date float-right">2/10/2015</small>
-                          </span>
-                          <span class="contacts-list-msg">Where is your new...</span>
-                        </div>
-                        <!-- /.contacts-list-info -->
-                      </a>
-                    </li>
-                    <!-- End Contact Item -->
-                    <li>
-                      <a href="#">
-                        <img class="contacts-list-img" src="dist/img/user6-128x128.jpg">
-
-                        <div class="contacts-list-info">
-                          <span class="contacts-list-name">
-                            John K.
-                            <small class="contacts-list-date float-right">1/27/2015</small>
-                          </span>
-                          <span class="contacts-list-msg">Can I take a look at...</span>
-                        </div>
-                        <!-- /.contacts-list-info -->
-                      </a>
-                    </li>
-                    <!-- End Contact Item -->
-                    <li>
-                      <a href="#">
-                        <img class="contacts-list-img" src="dist/img/user8-128x128.jpg">
-
-                        <div class="contacts-list-info">
-                          <span class="contacts-list-name">
-                            Kenneth M.
-                            <small class="contacts-list-date float-right">1/4/2015</small>
-                          </span>
-                          <span class="contacts-list-msg">Never mind I found...</span>
-                        </div>
-                        <!-- /.contacts-list-info -->
-                      </a>
-                    </li>
-                    <!-- End Contact Item -->
-                  </ul>
-                  <!-- /.contacts-list -->
-                </div>
-                <!-- /.direct-chat-pane -->
-              </div>
-              <!-- /.card-body -->
-              <div class="card-footer">
-                <form action="#" method="post">
-                  <div class="input-group">
-                    <input type="text" name="message" placeholder="Type Message ..." class="form-control">
-                    <span class="input-group-append">
-                      <button type="button" class="btn btn-primary">Send</button>
-                    </span>
-                  </div>
-                </form>
-              </div>
-              <!-- /.card-footer-->
+                          foreach ($arr_conditions as $opt_conditions) {
+                            echo'<option value="'.$opt_conditions['vehicle_condition_id'].'">'.$opt_conditions['vehicle_condition'].'</option>';
+                          }
+                         ?>
+              </select>
             </div>
-            <!--/.direct-chat -->
+            <div class="col-3">
+              <label for="slt_make">Make</label>
+              <select class="form-control" name="slt_make" id="slt_make">
+                <option value="" selected disabled hidden>Select Make</option>
+                <?php
+                         $arr_makes=$db_operation->fetch_records('tbl_car_makes');
+                         foreach ($arr_makes as $opt_makes) {
+                           echo'<option value="'.$opt_makes['make_id'].'">'.$opt_makes['make'].'</option>';
+                         }
+                        ?>
+              </select>
+            </div>
+            <div class="col-3">
+              <label for="slt_model">Model</label>
+              <div class="select_model">
+                <select class="" name="">
+                  <option value=""selected disabled hidden>First select make</option>
+                </select>
+                      </div>
+            </div>
+            <div class="col-3">
+              <label for="slt_year">Year</label>
+              <select class="form-control" name="slt_year" id="slt_year">
+                <option value="" selected disabled hidden>Select Year</option>
+                <?php
+                          $arr_year=$db_operation->GetCarYear();
+                          foreach ($arr_year as $opt_year) {
+                            echo'<option value="'.$opt_year.'">'.$opt_year.'</option>';
+                          }
+                         ?>
+              </select>
+            </div>
+          </div>
+<p></p>
+          <div class="row">
+            <div class="col-3">
+              <label for="txt_mileage">Mileage</label>
+              <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-road"></i></span>
+                  </div>
+                  <input class="form-control" placeholder="Mileage" type="number" name="txt_mileage">
+                </div>
+            </div>
+            <div class="col-3">
+              <label for="txt_engine">Engine CC</label>
+              <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-closed-captioning"></i></span>
+                  </div>
+                  <input class="form-control" placeholder="Engine CC" type="number" name="txt_engine">
+                </div>
+            </div>
+            <div class="col-3">
+              <label for="slt_fuel">fuel</label>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-gas-pump"></i></span>
+                </div>
+                      <select class="form-control" id="slt_fuel" name="slt_fuel">
+                        <option value="" selected="" disabled="" hidden="">Select Fuel</option>
+                        <?php
+                     $arr_fuel=$db_operation->fetch_records('tbl_fuel');
+                     foreach ($arr_fuel as $opt_fuel) {
+                       echo'<option value="'.$opt_fuel['fuel_id'].'">'.$opt_fuel['fuel'].'</option>';
+                     }
+                    ?>
+                      </select>
+                    </div>
+            </div>
+            <div class="col-3">
+              <label for="slt_transmission">Transmission</label>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-cogs"></i></span>
+                </div>
+                      <select class="form-control" id="slt_transmission" name="slt_transmission">
+                        <option value="" selected="" disabled="" hidden="">Select Transmission</option>
+                        <?php
+                            $arr_transmission=$db_operation->fetch_records('tbl_transmission');
+                            foreach ($arr_transmission as $opt_transmission) {
+                              echo'<option value="'.$opt_transmission['transmission_id'].'">'.$opt_transmission['transmission'].'</option>';
+                            }
+                           ?>
+                      </select>
+                    </div>
+            </div>
+          </div>
+
+          <p></p>
+                    <div class="row">
+                      <div class="col-3">
+                        <label for="slt_location">Location</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                            </div>
+                            <select class="form-control" id="slt_location" name="slt_location">
+                          <option value="" selected disabled hidden>Select Location</option>
+                          <?php
+                            $arr_location=$db_operation->fetch_records('tbl_locations');
+                            foreach ($arr_location as $opt_location) {
+                              echo'<option value="'.$opt_location['location_id'].'">'.$opt_location['locations'].'</option>';
+                            }
+                           ?>
+                        </select>
+                          </div>
+                      </div>
+                      <div class="col-3">
+                        <label for="txt_price">Price (MUR)<div class="show_price"></div></label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+                            </div>
+                            <input class="form-control" placeholder="Price (Rs)" type="number" name="txt_price" id="txt_price">
+                          </div>
+                      </div>
+                      <div class="col-3">
+                        <label for="txt_name">Username</label>
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                          </div>
+                                <input type="text" class="form-control" placeholder="User name" name="txt_name" id="txt_name">
+                              </div>
+                      </div>
+                      <div class="col-3">
+                        <label for="txt_phone">Mobile Number</label>
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-mobile"></i></span>
+                          </div>
+                              <input type="number" class="form-control" placeholder="Phone Number" name="txt_phone" id="txt_phone">
+                              </div>
+                      </div>
+                    </div>
+                      </form>
+
+                    <!-- upload image row-->
+                    <p></p>
+                              <div class="row">
+                                <div class="col-5">
+                                <form role="form" id="FrmAddImg" enctype="multipart/form-data" method="post">
+                                  <div class="form-group">
+                                    <label for="upload_file">Upload Image</label>
+                                    <input type="file" id="upload_file" name ="upload_file[]" multiple/>
+                                    <span class="text-muted">Only .jpg, .png files allowed - Max Size 5MB - Total 5 Pictures allowed</span>
+                                    <span id="error_multiple_files"></span>
+                                    <div id="img_count" count="1"></div>
+
+                                    <div id="img1"></div>
+                                    <div id="img2"></div>
+                                    <div id="img3"></div>
+                                    <div id="img4"></div>
+                                    <div id="img5"></div>
+                    <div class="image_preview"></div>
+                          </div>
+                          <div class="show_image_preview"></div>
+                                </div>
+                              </div>
+                    <!-- //.Upload image row-->
+                    <div class="row">
+                      <div class="col-5">
+                        <div class="col-5" style="padding-top:15px">
+                          <button id="btn_save_listing" name="btn_save_listing" type="button" class="btn btn-success"> Save </button>
+                          <button id="btn_cancel" name="btn_cancel" type="button" class="btn btn-danger"> Cancel </button></br>
+                        </div>
+                      </div>
+                    </div>
+                </form>
+        </div>
+        <!-- /.card-body -->
+      </div>
 
             <!-- TO DO List -->
             <div class="card">
@@ -629,6 +637,8 @@ include('includes/db_operations.class.php');
 <script src="plugins/sweetalert2/sweetalert2.min.js"></script>
 <!-- Toastr -->
 <script src="plugins/toastr/toastr.min.js"></script>
+<!-- Validetta -->
+<script src="plugins/validetta/validetta.min.js"></script>
 <script src="custom/custom.js"></script>
 <script>
 function create_table()
@@ -653,6 +663,19 @@ $(function() {
     timer: 3000
   });
 });
+
+function addCommas(nStr)
+{
+	nStr += '';
+	x = nStr.split('.');
+	x1 = x[0];
+	x2 = x.length > 1 ? '.' + x[1] : '';
+	var rgx = /(\d+)(\d{3})/;
+	while (rgx.test(x1)) {
+		x1 = x1.replace(rgx, '$1' + ',' + '$2');
+	}
+	return x1 + x2;
+}
 
 $(document).ready(function(){
 $('.footer_list').load('pages/cd_footer.html');
@@ -680,10 +703,86 @@ $('.btn_modal_delete').click(function () {
         }
       }
     });
-    $("tr_"+listing_id).hide();
+    //$("tr_"+listing_id).hide();
 });
 
+//Add listing functions
+$('#slt_make').change(function () {
+  $car_make_id=$('#slt_make').val();
+  $.ajax({
+          type: "POST",
+          url: "ajax/get_model.php",
+          data:{make_id:$car_make_id},
+          success: function(msg) {
+            $('.select_model').html(msg)
+            //console.log(msg);
+          },
+          error: function() {console.log();}
+        });
 });
+$("#slt_year").change(function () {
+  $("#row_2").removeAttr("hidden");
+});
+
+$("#slt_transmission").change(function () {
+  $("#row_3").removeAttr("hidden");
+});
+$("#txt_price").keyup(function () {
+  var txt_price=$(this).val();
+  var show_price = addCommas(txt_price);
+  $(".show_price").text(show_price);
+});
+
+
+//image upload function
+  $('#upload_file').change(function(){
+    var img_error="";
+    var max_img=<?php echo $max_file_upload; ?>
+    var img_max_size=<?php echo $max_img_file_size; ?>
+    var img_count=$('#img_count').attr('count');
+
+      //console.log(img_count);
+    if(img_count>max_img){
+      alert("You are allowed to upload only Max "+max_img+" Images")
+    }
+    else{
+    var fileUpload = $(this).get(0);
+    var user_id=window.sessionStorage.getItem("user_id");
+                        var files = fileUpload.files;
+                        //var max_img=5;
+                        if (files.length != 0) {
+                            var data = new FormData($('.frmUploadImg'));
+                              for (var i = 0; i < files.length ; i++) {
+                                data.append("img", files[i]);
+                                //data.append("user_id",user_id);
+                           }
+                            $.ajax({
+                                contentType: false,
+                                processData: false,
+                                crossDomain: true,
+                                type: 'POST',
+                                data: data,
+                                url: php_link+'upload_img.php',
+                                beforeSend:function(){
+                                  $('#error_multiple_files').html('<br /><label class="text-primary">Uploading...</label>');
+                                  },
+                                success: function (response) {
+                                  $('#error_multiple_files').html('<br /><label class="text-success">Uploaded</label>');
+                                  $('.show_image_preview').append(response);
+                                  var img_count=$('#img_count').attr('count');
+                                  img_count++;
+                                  $('#img_count').attr('count',img_count);
+                                  //$('#img'+max_img).attr('src',data);
+                                    //console.log(img_count);
+                                    //location.href = 'xxx/Index/';
+                                }
+                            });
+                        }
+            }
+});
+
+
+});// end Document Ready()
 
 </script>
 
