@@ -411,16 +411,18 @@ include('includes/db_operations.class.php');
                       </form>
 
                     <!-- upload image row-->
+                    <form class="frmUploadImg" enctype="multipart/form-data" method="post" accept="image/*">
+
                     <p></p>
                               <div class="row">
                                 <div class="col-5">
-                                <form role="form" id="FrmAddImg" enctype="multipart/form-data" method="post">
+
                                   <div class="form-group">
                                     <label for="upload_file">Upload Image</label>
                                     <input type="file" id="upload_file" name ="upload_file[]" multiple/>
                                     <span class="text-muted">Only .jpg, .png files allowed - Max Size 5MB - Total 5 Pictures allowed</span>
                                     <span id="error_multiple_files"></span>
-                                    <div id="img_count" count="1"></div>
+                                    <div id="img_count" count="0"></div>
 
                                     <div id="img1"></div>
                                     <div id="img2"></div>
@@ -432,6 +434,7 @@ include('includes/db_operations.class.php');
                           <div class="show_image_preview"></div>
                                 </div>
                               </div>
+
                     <!-- //.Upload image row-->
                     <div class="row">
                       <div class="col-5">
@@ -736,24 +739,50 @@ $("#txt_price").keyup(function () {
 
 //image upload function
   $('#upload_file').change(function(){
-    var img_error="";
-    var max_img=<?php echo $max_file_upload; ?>
-    var img_max_size=<?php echo $max_img_file_size; ?>
+    var error_images="";
+    var name= document.getElementById("upload_file").files[0].name;
+    var max_img=<?php echo $max_file_upload; ?>;
+    var img_max_size=<?php echo $max_img_file_size; ?>;
     var img_count=$('#img_count').attr('count');
-
-      //console.log(img_count);
-    if(img_count>max_img){
-      alert("You are allowed to upload only Max "+max_img+" Images")
-    }
-    else{
+    var ext = name.split('.').pop().toLowerCase();
     var fileUpload = $(this).get(0);
-    var user_id=window.sessionStorage.getItem("user_id");
-                        var files = fileUpload.files;
+    var files = fileUpload.files;
+//alert(files.length);
+      //console.log(img_count);
+    if(img_count+1>max_img){
+      error_images+="You are allowed to upload only max "+max_img+" images";
+      $(this).val("");
+      //error_images.=
+    }
+
+    if(jQuery.inArray(ext, ['gif','png','jpg','jpeg']) == -1)
+    {
+      //console.log(ext);
+     error_images += ' Invalid file type';
+     //$(this).val("");
+    }
+
+    var oFReader = new FileReader();
+    oFReader.readAsDataURL(document.getElementById("upload_file").files[img_count]);
+    var f = document.getElementById("upload_file").files[img_count];
+    var fsize = f.size||f.fileSize;
+    if(fsize > img_max_size)
+    {
+     error_images +=" You are allowed to upload more than "+img_max_size/1000000+" MB";
+    }
+alert(error_images);
+
+  if(error_images==""){
+    var frmUploadImg=$('.frmUploadImg')[0];
+    //$('.image_preview').append("<img src='"+URL.createObjectURL(event.target.files[img_count])+"' width='100' height='100' id='"+URL.createObjectURL(event.target.files[img_count])+"'><br>");
+    //var fileUpload = $(this).get(0);
+    //var user_id=window.sessionStorage.getItem("user_id");
+                        //var files = fileUpload.files;
                         //var max_img=5;
                         if (files.length != 0) {
-                            var data = new FormData($('.frmUploadImg'));
+                            var data = new FormData(frmUploadImg);
                               for (var i = 0; i < files.length ; i++) {
-                                data.append("img", files[i]);
+                                data.append("img", files[img_count]);
                                 //data.append("user_id",user_id);
                            }
                             $.ajax({
@@ -762,11 +791,12 @@ $("#txt_price").keyup(function () {
                                 crossDomain: true,
                                 type: 'POST',
                                 data: data,
-                                url: php_link+'upload_img.php',
+                                url:'ajax/set_img_link.php',
                                 beforeSend:function(){
                                   $('#error_multiple_files').html('<br /><label class="text-primary">Uploading...</label>');
                                   },
                                 success: function (response) {
+                                  console.log(response);
                                   $('#error_multiple_files').html('<br /><label class="text-success">Uploaded</label>');
                                   $('.show_image_preview').append(response);
                                   var img_count=$('#img_count').attr('count');
