@@ -748,7 +748,7 @@ $("#txt_price").keyup(function () {
     var fileUpload = $(this).get(0);
     var files = fileUpload.files;
 //alert(files.length);
-      //console.log(img_count);
+      console.log(img_count);
     if(img_count+1>max_img){
       error_images+="You are allowed to upload only max "+max_img+" images";
       $(this).val("");
@@ -782,7 +782,9 @@ alert(error_images);
                         if (files.length != 0) {
                             var data = new FormData(frmUploadImg);
                               for (var i = 0; i < files.length ; i++) {
-                                data.append("img", files[img_count]);
+                                data.append("set_temp_link",1);
+                                data.append('img_name',name);
+                                //data.append("img", files[img_count]);
                                 //data.append("user_id",user_id);
                            }
                             $.ajax({
@@ -799,7 +801,7 @@ alert(error_images);
                                   console.log(response);
                                   $('#error_multiple_files').html('<br /><label class="text-success">Uploaded</label>');
                                   $('.show_image_preview').append(response);
-                                  var img_count=$('#img_count').attr('count');
+                                  //var img_count=$('#img_count').attr('count');
                                   img_count++;
                                   $('#img_count').attr('count',img_count);
                                   //$('#img'+max_img).attr('src',data);
