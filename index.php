@@ -34,6 +34,8 @@ include('includes/db_operations.class.php');
   <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
   <!-- Validetta-->
   <link rel="stylesheet" href="plugins/validetta/validetta.min.css">
+  <!-- img upload css-->
+  <link rel="stylesheet" href="custom/upload_img.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -411,24 +413,23 @@ include('includes/db_operations.class.php');
                       </form>
 
                     <!-- upload image row-->
-                    <form class="frmUploadImg" enctype="multipart/form-data" method="post" accept="image/*">
+                    <form class="frmUploadImg" enctype="multipart/form-data" method="post">
 
                     <p></p>
                               <div class="row">
                                 <div class="col-5">
 
                                   <div class="form-group">
-                                    <label for="upload_file">Upload Image</label>
-                                    <input type="file" id="upload_file" name ="upload_file[]" multiple/>
+                                    <label for="file[]">Upload Image</label>
+                                    <div id="filediv">
+                                      <input name="file[]" type="file" class="file" id="img0" accept="image/*"/>
+                                    </div>
+                                    <input type="button" id="add_more" class="upload" value="Add More Files"/>
+                                    <p></p>
                                     <span class="text-muted">Only .jpg, .png files allowed - Max Size 5MB - Total 5 Pictures allowed</span>
                                     <span id="error_multiple_files"></span>
                                     <div id="img_count" count="0"></div>
 
-                                    <div id="img1"></div>
-                                    <div id="img2"></div>
-                                    <div id="img3"></div>
-                                    <div id="img4"></div>
-                                    <div id="img5"></div>
                     <div class="image_preview"></div>
                           </div>
                           <div class="show_image_preview"></div>
@@ -738,82 +739,97 @@ $("#txt_price").keyup(function () {
 
 
 //image upload function
-  $('#upload_file').change(function(){
-    var error_images="";
-    var name= document.getElementById("upload_file").files[0].name;
-    var max_img=<?php echo $max_file_upload; ?>;
-    var img_max_size=<?php echo $max_img_file_size; ?>;
-    var img_count=$('#img_count').attr('count');
-    var ext = name.split('.').pop().toLowerCase();
-    var fileUpload = $(this).get(0);
-    var files = fileUpload.files;
-//alert(files.length);
-      console.log(img_count);
-    if(img_count+1>max_img){
-      error_images+="You are allowed to upload only max "+max_img+" images";
-      $(this).val("");
-      //error_images.=
-    }
+//  To add new input file field dynamically, on click of "Add More Files" button below function will be executed.
+var img_count=$('#img_count').attr('count');
+var error_message=0;
+var max_img_size=<?php echo $max_img_file_size; ?>;
+var max_img=<?php echo $max_file_upload; ?>;
 
-    if(jQuery.inArray(ext, ['gif','png','jpg','jpeg']) == -1)
-    {
-      //console.log(ext);
-     error_images += ' Invalid file type';
-     //$(this).val("");
-    }
+$('#add_more').click(function() {
 
-    var oFReader = new FileReader();
-    oFReader.readAsDataURL(document.getElementById("upload_file").files[img_count]);
-    var f = document.getElementById("upload_file").files[img_count];
-    var fsize = f.size||f.fileSize;
-    if(fsize > img_max_size)
-    {
-     error_images +=" You are allowed to upload more than "+img_max_size/1000000+" MB";
-    }
-alert(error_images);
-
-  if(error_images==""){
-    var frmUploadImg=$('.frmUploadImg')[0];
-    //$('.image_preview').append("<img src='"+URL.createObjectURL(event.target.files[img_count])+"' width='100' height='100' id='"+URL.createObjectURL(event.target.files[img_count])+"'><br>");
-    //var fileUpload = $(this).get(0);
-    //var user_id=window.sessionStorage.getItem("user_id");
-                        //var files = fileUpload.files;
-                        //var max_img=5;
-                        if (files.length != 0) {
-                            var data = new FormData(frmUploadImg);
-                              for (var i = 0; i < files.length ; i++) {
-                                data.append("set_temp_link",1);
-                                data.append('img_name',name);
-                                //data.append("img", files[img_count]);
-                                //data.append("user_id",user_id);
-                           }
-                            $.ajax({
-                                contentType: false,
-                                processData: false,
-                                crossDomain: true,
-                                type: 'POST',
-                                data: data,
-                                url:'ajax/set_img_link.php',
-                                beforeSend:function(){
-                                  $('#error_multiple_files').html('<br /><label class="text-primary">Uploading...</label>');
-                                  },
-                                success: function (response) {
-                                  console.log(response);
-                                  $('#error_multiple_files').html('<br /><label class="text-success">Uploaded</label>');
-                                  $('.show_image_preview').append(response);
-                                  //var img_count=$('#img_count').attr('count');
-                                  img_count++;
-                                  $('#img_count').attr('count',img_count);
-                                  //$('#img'+max_img).attr('src',data);
-                                    //console.log(img_count);
-                                    //location.href = 'xxx/Index/';
-                                }
-                            });
-                        }
-            }
+$(this).before($("<div/>", {
+id: 'filediv'
+}).fadeIn('slow').append($("<input/>", {
+name: 'file[]',
+type: 'file',
+class: 'file',
+id:'img'+img_count,
+accept:'image/*'
+})));
 });
 
+var img_count=$('#img_count').attr('count');
+var error_images='';
+////
+// Following function will executes on change event of file input to select different file.
+$('body').on('change', '.file', function() {
+//Validate image extension
+var name= $('#img'+img_count).prop("files")[0]['name'];
+var ext = name.split('.').pop().toLowerCase();
 
+if(jQuery.inArray(ext, ['gif','png','jpg','jpeg']) == -1)
+{
+ error_images += ' Invalid file type';
+ alert(error_images);
+}
+//Validate image size
+var f =  $('#img'+img_count).prop("files")[0];
+var fsize = f.size||f.fileSize;
+//alert(fsize);
+ if(fsize > max_img_size)
+ {
+  error_images +=" You are allowed to upload more than "+max_img_size/1000000+" MB";
+  alert(error_images);
+ }
+ //Validate max image uploaded
+if(img_count>max_img-1)
+{
+error_images +=" You are allowed to upload only "+max_img+" images";
+  alert(error_images);
+}
+
+
+
+if (this.files && this.files[0] && error_images=="") {
+img_count ++; // Incrementing global variable by 1.
+$('#img_count').attr('count',img_count);
+var z = img_count - 1;
+var x = $(this).parent().find('#previewimg' + z).remove();
+$(this).before("<div id='img_preview" + img_count + "' class='img_preview'><img id='previewimg" + img_count + "' src=''/></div>");
+var reader = new FileReader();
+reader.onload = imageIsLoaded;
+reader.readAsDataURL(this.files[0]);
+$(this).hide();
+$("#img_preview" + img_count).append($("<img/>", {
+id: 'img',
+src: 'dist/img/x.png',
+alt: 'delete'
+}).click(function() {
+$(this).parent().parent().remove();
+img_count=img_count-1;
+$('#img_count').attr('count',img_count);
+}));
+}
+});
+// To Preview Image
+function imageIsLoaded(e) {
+$('#previewimg' + img_count).attr('src', e.target.result);
+};
+
+$('#upload').click(function(e) {
+var name = $(":file").val();
+if (!name) {
+alert("First Image Must Be Selected");
+e.preventDefault();
+}
+});
+
+  $('#btn_save_listing').click(function (e) {
+    e.preventDefault();
+    
+  })
+
+//
 });// end Document Ready()
 
 </script>
