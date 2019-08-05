@@ -36,6 +36,8 @@ include('includes/db_operations.class.php');
   <link rel="stylesheet" href="plugins/validetta/validetta.min.css">
   <!-- img upload css-->
   <link rel="stylesheet" href="custom/upload_img.css">
+  <!-- loading spinner-->
+  <link rel="stylesheet" type="text/css" href="p-loading/dist/css/p-loading.min.css" />
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -640,6 +642,8 @@ include('includes/db_operations.class.php');
 <script src="plugins/toastr/toastr.min.js"></script>
 <!-- Validetta -->
 <script src="plugins/validetta/validetta.min.js"></script>
+<!-- P-Loading JS -->
+<script type="text/javascript" src="p-loading/dist/js/p-loading.min.js"></script>
 <script src="custom/custom.js"></script>
 <script>
 function create_table()
@@ -679,6 +683,10 @@ function addCommas(nStr)
 }
 
 $(document).ready(function(){
+$('body').ploading({action: 'show'});
+
+
+
 $('.footer_list').load('pages/cd_footer.html');
 create_table();
 //delete listing function
