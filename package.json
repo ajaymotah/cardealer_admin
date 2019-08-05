@@ -71,6 +71,7 @@
     "jqvmap": "github:CivilError/jqvmap",
     "moment": "^2.24.0",
     "overlayscrollbars": "^1.8.0",
+    "p-loading": "^1.2.0",
     "popper.js": "^1.15.0",
     "raphael": "^2.2.8",
     "select2": "^4.0.8",

@@ -276,7 +276,7 @@ include('includes/db_operations.class.php');
             </div>
             <div class="col-3">
               <label for="slt_make">Make</label>
-              <select class="form-control" name="slt_make" id="slt_make">
+              <select class="form-control" name="slt_make" id="slt_make" data-validetta="required">
                 <option value="" selected disabled hidden>Select Make</option>
                 <?php
                          $arr_makes=$db_operation->fetch_records('tbl_car_makes');
@@ -289,14 +289,14 @@ include('includes/db_operations.class.php');
             <div class="col-3">
               <label for="slt_model">Model</label>
               <div class="select_model">
-                <select class="" name="">
+                <!-- <select class="" name="">
                   <option value=""selected disabled hidden>First select make</option>
-                </select>
+                </select> -->
                       </div>
             </div>
             <div class="col-3">
               <label for="slt_year">Year</label>
-              <select class="form-control" name="slt_year" id="slt_year">
+              <select class="form-control" name="slt_year" id="slt_year" data-validetta="required">
                 <option value="" selected disabled hidden>Select Year</option>
                 <?php
                           $arr_year=$db_operation->GetCarYear();
@@ -333,7 +333,7 @@ include('includes/db_operations.class.php');
                 <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fas fa-gas-pump"></i></span>
                 </div>
-                      <select class="form-control" id="slt_fuel" name="slt_fuel">
+                      <select class="form-control" id="slt_fuel" name="slt_fuel" data-validetta="required">
                         <option value="" selected="" disabled="" hidden="">Select Fuel</option>
                         <?php
                      $arr_fuel=$db_operation->fetch_records('tbl_fuel');
@@ -350,7 +350,7 @@ include('includes/db_operations.class.php');
                 <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fas fa-cogs"></i></span>
                 </div>
-                      <select class="form-control" id="slt_transmission" name="slt_transmission">
+                      <select class="form-control" id="slt_transmission" name="slt_transmission" data-validetta="required">
                         <option value="" selected="" disabled="" hidden="">Select Transmission</option>
                         <?php
                             $arr_transmission=$db_operation->fetch_records('tbl_transmission');
@@ -371,7 +371,7 @@ include('includes/db_operations.class.php');
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
                             </div>
-                            <select class="form-control" id="slt_location" name="slt_location">
+                            <select class="form-control" id="slt_location" name="slt_location" data-validetta="required">
                           <option value="" selected disabled hidden>Select Location</option>
                           <?php
                             $arr_location=$db_operation->fetch_records('tbl_locations');
@@ -388,7 +388,7 @@ include('includes/db_operations.class.php');
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
                             </div>
-                            <input class="form-control" placeholder="Price (Rs)" type="number" name="txt_price" id="txt_price">
+                            <input class="form-control" placeholder="Price (Rs)" type="number" name="txt_price" id="txt_price" data-validetta="required">
                           </div>
                       </div>
                       <div class="col-3">
@@ -414,11 +414,8 @@ include('includes/db_operations.class.php');
 
                     <!-- upload image row-->
                     <form class="frmUploadImg" enctype="multipart/form-data" method="post">
-
-                    <p></p>
                               <div class="row">
                                 <div class="col-5">
-
                                   <div class="form-group">
                                     <label for="file[]">Upload Image</label>
                                     <div id="filediv">
@@ -823,17 +820,41 @@ alert("First Image Must Be Selected");
 e.preventDefault();
 }
 });
-
   $('#btn_save_listing').click(function (e) {
-    e.preventDefault();
-    
+    // e.preventDefault();
+    // var images=[];
+    // $('[id^=previewimg]').each(function (key,value) {
+    //   var x=1;
+    //   var image=$(this).attr('src');
+    //   images.push(image);
+    //   x++;
+    // })
+    // var fd = new FormData();
+var formData = new FormData($('.frmUploadImg')[0]);
+console.log(formData);
+    $.ajax({
+      type:"post",
+      url:"ajax/set_img_link.php",
+      data:formData,
+      cache: false,
+    contentType: false,
+    processData: false,
+
+      success:function(response){
+        console.log(response);
+      }
+    })
+
+
+
+    //console.log(images);
+
+    // console.log(frm_img);
   })
 
 //
 });// end Document Ready()
 
 </script>
-
-
 </body>
 </html>
