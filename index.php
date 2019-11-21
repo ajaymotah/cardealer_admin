@@ -683,7 +683,8 @@ function addCommas(nStr)
 }
 
 $(document).ready(function(){
-$('body').ploading({action: 'show'});
+//Loading script//
+//$('body').ploading({action: 'show'});
 
 
 
