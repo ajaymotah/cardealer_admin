@@ -23,7 +23,7 @@ include('includes/db_operations.class.php');
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
   <!-- DataTables -->
   <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap4.css">
-  <link rel="stylesheet" href="plugins/datatables/jquery.dataTables.css">
+  <!--<link rel="stylesheet" href="plugins/datatables/jquery.dataTables.css">-->
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Daterange picker -->
@@ -168,7 +168,7 @@ include('includes/db_operations.class.php');
         <!-- Main row -->
         <div class="row">
           <!-- Left col -->
-          <section class="col">
+          <section class="col-12">
       <!-- Display Div-->
             <!-- table-->
 
@@ -181,7 +181,7 @@ include('includes/db_operations.class.php');
               $get_cars=$db_operation->get_all_sales_listings();
                ?>
               <div class="card-body" id="tbl_listings">
-                <table id="example2" class="display" width="100%">
+                <table id="example2" class="table table-bordered table-hover">
                   <thead>
                   <tr>
                     <th>Listing ID</th>
@@ -646,8 +646,8 @@ include('includes/db_operations.class.php');
 <script type="text/javascript" src="p-loading/dist/js/p-loading.min.js"></script>
 <script src="custom/custom.js"></script>
 <script>
-function create_table()
-{
+$(function (){
+  $('#test').DataTable();
     $('#example2').DataTable({
     "responsive": true,
     "paging": true,
@@ -655,9 +655,9 @@ function create_table()
     "searching": true,
     "info": true,
     "autoWidth": false,
-    "ordering":true
+    "ordering":true,
   });
-}
+});
 
 //Toastr Function
 $(function() {
@@ -685,11 +685,11 @@ function addCommas(nStr)
 $(document).ready(function(){
 //Loading script//
 //$('body').ploading({action: 'show'});
-
+//create_table();
 
 
 $('.footer_list').load('pages/cd_footer.html');
-create_table();
+
 //delete listing function
 $('.btn_delete').click(function () {
   var listing_id= $(this).attr('id');
@@ -840,7 +840,7 @@ e.preventDefault();
     // })
     // var fd = new FormData();
 var formData = new FormData($('.frmUploadImg')[0]);
-console.log(formData);
+//console.log(formData);
     $.ajax({
       type:"post",
       url:"ajax/set_img_link.php",

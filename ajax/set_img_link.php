@@ -2,11 +2,14 @@
 include('../includes/db_operations.class.php');
 // if(isset($_POST['set_temp_link']))
 // {
+$result='';
 print_r($_FILES["file"]['tmp_name']);
-foreach ($_FILES["file"]['tmp_name'] as $key) {
-  echo $key;
-}
 
+foreach ($_FILES["file"]['tmp_name'] as $key) {
+  $result.=$key;
+
+}
+echo $result;
 //$tmp_name = $_FILES["file"]['tmp_name'][0];
 //echo $tmp_name;
 // $img_location = "../uploaded_images/".time().$tmp_name;
