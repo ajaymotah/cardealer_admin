@@ -202,7 +202,7 @@ include('includes/db_operations.class.php');
                           <td><?php echo $lst_cars['listing_id']; ?></td>
                           <td><a href=""><?php echo $lst_cars['user_id']; ?></a></td>
                           <td><?php echo $lst_cars['make']; ?></td>
-                          <td><img src="<?php echo $img_link.$lst_cars['listing_image_url'];?>" width="100" height="100"/></td>
+                          <td><img src="<?php echo $remote_img_link.$lst_cars['listing_image_url'];?>" width="100" height="100"/></td>
                           <td><?php echo $lst_cars['date_posted']; ?></td>
                           <td><?php echo $lst_cars['listing_status']; ?></td>
                           <td><a class="btn btn-success" href="payments.php?id=<?php ?>">Payment</a></td>
@@ -706,6 +706,7 @@ $('.btn_modal_delete').click(function () {
       url:"ajax/delete_listing.php",
       data:{listing_id:listing_id},
       success:function (data) {
+        console.log(data);
         if(data==1){
           $('.btn_close').trigger("click");
           //$('#example2').DataTable();
