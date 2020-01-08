@@ -134,20 +134,6 @@ foreach ($fields as $key => $value) {
 			return $array;
 	}
 
-	//Find student courses
-	public function fetch_student_courses($student_id)
-	{
-		$sql="SELECT a.*,b.*,c.* FROM tbl_studentcourses a
-		JOIN tbl_students b ON a.student_id = b.student_id
-		JOIN tbl_courses c ON a.course_id = c.course_id WHERE a.student_id='".$student_id."'";
-		$array=array();
-		$query=mysqli_query($this->con,$sql);
-		while($row=mysqli_fetch_assoc($query))
-			{
-			$array[]=$row;
-			}
-			return $array;
-			}
 
 	//Is matching course
 public function IsMatching($field)
@@ -169,37 +155,7 @@ public function IsMatching($field)
 			return $array;
 
 	}
-	//Is Matching Modules from tbl_student_modules
-	public function IsMatchingModules($field)
-		{
-			$sql="SELECT
-	  c.module_id ,c.module_name,s.student_id,
-	  CASE
-	    WHEN s.module_id IS NOT NULL THEN 'Yes'
-	    ELSE 'No'
-	  END AS IsMatchingModules
-		FROM `tbl_modules`c LEFT JOIN `tbl_studentmodules` s  ON c.module_id = s.module_id
-		AND s.student_id ='".$field."'";
-		$query=mysqli_query($this->con,$sql);
-			while($row=mysqli_fetch_assoc($query))
-				{
-				$array[]=$row;
-				}
-				return $array;
-		}
-		//get all modules from course
-	public function get_course_modules()
-	{
-		$sql="SELECT m.module_id,m.module_name,c.course_id,c.course_name FROM tbl_modules m
-			JOIN tbl_courses c ON c.course_id = m.course_id";
-		$array=array();
-		$query=mysqli_query($this->con,$sql);
-		while($row=mysqli_fetch_assoc($query))
-			{
-			$array[]=$row;
-			}
-			return $array;
-			}
+
 	//get amount due
 	public function get_payment_due($student_id,$course_id)
 	{
@@ -625,6 +581,8 @@ public function get_available_year()
 
 
 //// Web Admin functions /////////
+
+//get all car listings
 public function get_all_sales_listings()
 {
 	$sql="SELECT
@@ -643,6 +601,29 @@ while($row=mysqli_fetch_assoc($query))
 	}
 	return $array;
 }
+
+//Get all pending listings
+public function get_all_pending_listings()
+{
+	$sql="SELECT
+tbl_listings.listing_id,tbl_listings.user_id, tbl_listings.make_id,tbl_listings.date_posted,tbl_listing_status.listing_status,tbl_car_makes.make,tbl_listing_images.listing_id,tbl_listing_images.listing_image_url
+FROM
+tbl_listings,tbl_car_makes,tbl_listing_images,tbl_listing_status
+WHERE
+tbl_listings.make_id=tbl_car_makes.make_id AND
+tbl_listings.listing_id=tbl_listing_images.listing_id AND
+tbl_listings.listing_status_id=tbl_listing_status.listing_status_id AND
+tbl_listing_images.default_image=1 AND
+tbl_listings.listing_status_id=3";
+$query=mysqli_query($this->con,$sql);
+while($row=mysqli_fetch_assoc($query))
+	{
+	$array[]=$row;
+	}
+	return $array;
+}
+
+
 public function delete_listing($table,$field,$id)
 {
 	$sql = "DELETE FROM ".$table." WHERE ".$field." = '".$id."'";

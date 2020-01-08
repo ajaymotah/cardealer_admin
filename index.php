@@ -172,6 +172,85 @@ include('includes/db_operations.class.php');
       <!-- Display Div-->
             <!-- table-->
 
+
+            <!-- Pending listings-->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">List of Pending Listings</h3>
+              </div>
+              <!-- /.card-header -->
+              <?php
+              $get_pending_listings=$db_operation->get_all_pending_listings();
+               ?>
+              <div class="card-body" id="tbl_listings">
+                <table id="lst_pendings" class="table table-bordered table-hover">
+                  <thead>
+                  <tr>
+                    <th>Listing ID</th>
+                    <th>User ID</th>
+                    <th>Make</th>
+                    <th>Image</th>
+                    <th>Date Posted</th>
+                    <th>Status</th>
+                    <th>Payment</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                    foreach ($get_pending_listings as $lst_penging_cars) {?>
+                       <tr id="<?php echo "tr_".$lst_penging_cars['listing_id']; ?>">
+                          <td><a class="td_pending" id ="<?php echo $lst_penging_cars['listing_id']; ?>" href="#"data-toggle="modal" data-target="#modal_view_details"><?php echo $lst_penging_cars['listing_id']; ?></a></td>
+                          <td><a href=""><?php echo $lst_penging_cars['user_id']; ?></a></td>
+                          <td><?php echo $lst_penging_cars['make']; ?></td>
+                          <td><img src="<?php echo $remote_img_link.$lst_penging_cars['listing_image_url'];?>" width="100" height="100"/></td>
+                          <td><?php echo $lst_penging_cars['date_posted']; ?></td>
+                          <td><?php echo $lst_penging_cars['listing_status']; ?></td>
+                          <td><a class="btn btn-success" href="payments.php?id=<?php ?>">Payment</a></td>
+                          <td><a class="btn btn-warning" href="approve_listing.php?id=<?php ?>">Approve</a></td>
+
+                          <td><button id="<?php echo $lst_penging_cars['listing_id'];?>" type="button" class="btn btn-danger btn_delete" data-toggle="modal" data-target="#modal-delete">Delete</button></td>
+                        </tr>
+                  <?php  }  ?>
+                </tbody>
+            </table>
+          </div>
+              <!-- /.card-body -->
+        </div>
+        <!-- modal for view all details -->
+
+        <!-- End modal for view all details -->
+        <div class="modal fade" id="modal_view_details">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Listing Details</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="modal_lst">
+
+                </div>
+                <p>Are you sure you want to delete the listing?</p>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger btn_modal_delete">Delete</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+
+
+
+
+        <!--//End Pending Listings-->
+
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">List of all cars on Sale</h3>
@@ -647,7 +726,16 @@ include('includes/db_operations.class.php');
 <script src="custom/custom.js"></script>
 <script>
 $(function (){
-  $('#test').DataTable();
+  //$('#test').DataTable();
+  $('#lst_pendings').DataTable({
+  "responsive": true,
+  "paging": true,
+  "lengthChange": false,
+  "searching": false,
+  "info": true,
+  "autoWidth": false,
+  "ordering":true,
+});
     $('#example2').DataTable({
     "responsive": true,
     "paging": true,
@@ -689,6 +777,25 @@ $(document).ready(function(){
 
 
 $('.footer_list').load('pages/cd_footer.html');
+//show pending listing details on modal
+$('.td_pending').click(function () {
+  var listing_id=$(this).attr('id');
+  $.ajax({
+    type:"POST",
+    url:"ajax/get_all_pending_details.php",
+    data:{listing_id:listing_id},
+    success:function (data) {
+      $('.modal_lst').html(data);
+      //console.log(data);
+      if(data==1){
+        $('.btn_close').trigger("click");
+        //$('#example2').DataTable();
+        toastr.warning('Listing has been deleted!!!')
+      }
+    }
+  });
+
+});
 
 //delete listing function
 $('.btn_delete').click(function () {
