@@ -958,7 +958,7 @@ var formData = new FormData($('.frmUploadImg')[0]);
     processData: false,
 
       success:function(response){
-        console.log(response);
+        //console.log(response);
       }
     })
 
