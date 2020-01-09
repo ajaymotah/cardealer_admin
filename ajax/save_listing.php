@@ -5,8 +5,8 @@ include('../cd_fb_postpage.php');
  $fb_message="CAR ON SALE - Download our mobile app from https://play.google.com/store/apps/details?id=com.cardealer.app to see all cars that are on sale";
     $fb_image="http://cardealer.webdevsolutions.biz/admin/uploaded_images/".$_POST['img0'];
     //.$_POST['img0'];
-    
-   
+
+
     //page_post($fb_message,$fb_image);
 
 $fields=array(
@@ -41,14 +41,16 @@ $fields1=array(
 "negotiable"=>"Y",
 "date_posted"=>date('d/m/Y'));
 
-$data=$db_operation->insert_record('tbl_listings',$fields);
+// $data=$db_operation->insert_record('tbl_listings',$fields);
+//
+// if($data){
+//   $last_id=$db_operation->getLastInserted();
+//   $msg="Saved to tbl_listing";
+// }
 
-if($data){
-  $last_id=$db_operation->getLastInserted();
-  $msg="Saved to tbl_listing";
-}
+
 /*
-    
+
 }
 //save image link to tbl_listing_images
 $img1_field=array("listing_id"=>$last_id,"listing_image_url"=>$_POST['img0']);

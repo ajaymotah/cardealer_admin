@@ -189,11 +189,11 @@ include('includes/db_operations.class.php');
                     <th>Listing ID</th>
                     <th>User ID</th>
                     <th>Make</th>
-                    <th>Image</th>
+                    <th>Model</th>
+                    <th>Images</th>
                     <th>Date Posted</th>
-                    <th>Status</th>
-                    <th>Payment</th>
-                    <th>Edit</th>
+                    <th>Sale Price</th>
+                    <th>Approve</th>
                     <th>Delete</th>
                   </tr>
                   </thead>
@@ -204,10 +204,20 @@ include('includes/db_operations.class.php');
                           <td><a class="td_pending" id ="<?php echo $lst_penging_cars['listing_id']; ?>" href="#"data-toggle="modal" data-target="#modal_view_details"><?php echo $lst_penging_cars['listing_id']; ?></a></td>
                           <td><a href=""><?php echo $lst_penging_cars['user_id']; ?></a></td>
                           <td><?php echo $lst_penging_cars['make']; ?></td>
-                          <td><img src="<?php echo $remote_img_link.$lst_penging_cars['listing_image_url'];?>" width="100" height="100"/></td>
+                          <td><?php echo $lst_penging_cars['model']; ?></td>
+                          <td><?php
+                            $img_listing_id=$lst_penging_cars['listing_id'];
+                            $lst_images=$db_operation->get_images($img_listing_id);
+                            foreach ($lst_images as $arr_images) {
+                              print_r($arr_images);
+                            }
+                            ?>
+                            <img src="<?php echo $remote_img_link.$lst_penging_cars['listing_image_url'];?>" width="100" height="100"/>
+
+                          </td>
                           <td><?php echo $lst_penging_cars['date_posted']; ?></td>
-                          <td><?php echo $lst_penging_cars['listing_status']; ?></td>
-                          <td><a class="btn btn-success" href="payments.php?id=<?php ?>">Payment</a></td>
+                          <td><?php echo $lst_penging_cars['sale_price']; ?></td>
+                          <!-- <td><a class="btn btn-success" href="payments.php?id=<?php ?>">Payment</a></td> -->
                           <td><a class="btn btn-warning" href="approve_listing.php?id=<?php ?>">Approve</a></td>
 
                           <td><button id="<?php echo $lst_penging_cars['listing_id'];?>" type="button" class="btn btn-danger btn_delete" data-toggle="modal" data-target="#modal-delete">Delete</button></td>
@@ -958,9 +968,25 @@ var formData = new FormData($('.frmUploadImg')[0]);
     processData: false,
 
       success:function(response){
-        //console.log(response);
+        console.log(response);
       }
     })
+  //save listing td DB
+  var frm_save_listing= new FormData($('#frmAddListing')[0]);
+  $.ajax({
+    type:"post",
+    url:"ajax/save_listing.php",
+    data:frm_save_listing,
+    cache: false,
+    contentType: false,
+    processData: false,
+
+    success:function(response){
+      console.log(response);
+    }
+  })
+
+
 
 
 
