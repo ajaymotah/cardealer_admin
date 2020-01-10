@@ -6,6 +6,6 @@ include('vendor/autoload.php');
 $fb=new Facebook\Facebook([
   'app_id'=>'335525583674554',
   'app_secret'=>'420900cfdbef73492ffa0dc1502287fe',
-  'default_graph_version'=>'v3.1'
+  'default_graph_version' => 'v2.9',
 ]);
 ?>
