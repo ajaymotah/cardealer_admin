@@ -3,7 +3,7 @@ include('../includes/db_operations.class.php');
 // if(isset($_POST['set_temp_link']))
 // {
 $result='';
-print_r($_FILES["file"]['tmp_name']);
+//print_r($_FILES["file"]['tmp_name']);
 
 foreach ($_FILES["file"]['tmp_name'] as $key) {
   $result.=$key;

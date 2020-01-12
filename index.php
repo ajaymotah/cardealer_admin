@@ -208,11 +208,12 @@ include('includes/db_operations.class.php');
                           <td><?php
                             $img_listing_id=$lst_penging_cars['listing_id'];
                             $lst_images=$db_operation->get_images($img_listing_id);
-                            foreach ($lst_images as $arr_images) {
-                              print_r($arr_images);
-                            }
-                            ?>
-                            <img src="<?php echo $remote_img_link.$lst_penging_cars['listing_image_url'];?>" width="100" height="100"/>
+                            foreach ($lst_images as $key=>$arr_images) {?>
+
+                              <img src="<?php echo $remote_img_link.$arr_images;?>" width="100" height="100"/>
+                          <?php  }?>
+
+
 
                           </td>
                           <td><?php echo $lst_penging_cars['date_posted']; ?></td>
@@ -957,6 +958,26 @@ e.preventDefault();
     //   x++;
     // })
     // var fd = new FormData();
+
+//save form data to DB
+var frm_save_listing= new FormData($('#frmAddListing')[0]);
+//frm_save_listing.push(img_arr);
+$.ajax({
+  type:"post",
+  url:"ajax/save_listing.php",
+  data:frm_save_listing,
+  cache: false,
+  contentType: false,
+  processData: false,
+
+  success:function(response){
+    console.log(response);
+  }
+})
+
+
+/*
+
 var formData = new FormData($('.frmUploadImg')[0]);
 //console.log(formData);
     $.ajax({
@@ -967,24 +988,15 @@ var formData = new FormData($('.frmUploadImg')[0]);
     contentType: false,
     processData: false,
 
-      success:function(response){
-        console.log(response);
-      }
-    })
-  //save listing td DB
-  var frm_save_listing= new FormData($('#frmAddListing')[0]);
-  $.ajax({
-    type:"post",
-    url:"ajax/save_listing.php",
-    data:frm_save_listing,
-    cache: false,
-    contentType: false,
-    processData: false,
+      success:function(img_arr){
+        console.log(img_arr);
 
-    success:function(response){
-      console.log(response);
-    }
-  })
+
+
+      }
+    })*/
+  //save listing td DB
+
 
 
 

@@ -1,13 +1,5 @@
 <?php
 include('../includes/db_operations.class.php');
-include('../cd_fb_postpage.php');
-
- $fb_message="CAR ON SALE - Download our mobile app from https://play.google.com/store/apps/details?id=com.cardealer.app to see all cars that are on sale";
-    $fb_image="http://cardealer.webdevsolutions.biz/admin/uploaded_images/".$_POST['img0'];
-    //.$_POST['img0'];
-
-
-    //page_post($fb_message,$fb_image);
 
 $fields=array(
   "name"=>$_POST['txt_name'],
@@ -27,7 +19,7 @@ $fields1=array(
 "vehicle_type_id"=>1,
 "listing_type_id"=>1,
 "condition_id"=>$_POST['slt_condition'],
-"listing_status_id"=>1,
+"listing_status_id"=>3,// to save as pending
 "transmission_id"=>$_POST['slt_transmission'],
 "fuel_id"=>$_POST['slt_fuel'],
 "location_id"=>$_POST['slt_location'],
@@ -41,7 +33,7 @@ $fields1=array(
 "negotiable"=>"Y",
 "date_posted"=>date('d/m/Y'));
 
-// $data=$db_operation->insert_record('tbl_listings',$fields);
+$data=$db_operation->insert_record('tbl_listings',$fields);
 //
 // if($data){
 //   $last_id=$db_operation->getLastInserted();
@@ -66,6 +58,6 @@ $db_operation->insert_record('tbl_listing_images',$img3_field);
 $db_operation->insert_record('tbl_listing_images',$img4_field);
 $db_operation->insert_record('tbl_listing_images',$img5_field);
 */
-print_r($_POST);
-//echo $data;
+//print_r($_POST);
+echo $data;
 ?>

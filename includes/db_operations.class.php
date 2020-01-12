@@ -638,12 +638,7 @@ public function delete_listing($table,$field,$id)
 		}
 }
 
-
-
-
-//////////////////----- Admin Functions -------------////////////
-
-	//set Session
+//set Session
 	public function set_session($session_id)
 	{
 	    $_SESSION[".$session_id."] = $session_id;
@@ -656,7 +651,17 @@ public function delete_listing($table,$field,$id)
 	    $my_session=$_SESSION[$session_id];
 	    return $my_session;
 	}
+	public function check_admin_session($session,$page)
+		{
+			if (!isset($session))
+	{?>
+    <script language="javascript">
+    window.location.href = <?php echo $page; ?>
+</script>
+<?php
 
+	}
+		}
 
 }//end of class
 
