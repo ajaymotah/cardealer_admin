@@ -29,8 +29,7 @@ foreach ($_FILES["file"]['name'] as $key=>$value) {
     //save image links to DB
       $tbl="tbl_listing_images";
       $sql=$db_operation->insert_record($tbl,${'field'.$key});
-      echo $sql;
-}
+    }
 
 //upload images to server
 foreach ($_FILES["file"]['tmp_name'] as $key=>$value) {
