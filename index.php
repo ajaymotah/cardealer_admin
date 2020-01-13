@@ -30,6 +30,8 @@ include('includes/db_operations.class.php');
   <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.css">
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="plugins/sweetalert2/sweetalert2.min.css">
   <!-- Toastr -->
   <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
   <!-- Validetta-->
@@ -219,7 +221,7 @@ include('includes/db_operations.class.php');
                           <td><?php echo $lst_penging_cars['date_posted']; ?></td>
                           <td><?php echo $lst_penging_cars['sale_price']; ?></td>
                           <!-- <td><a class="btn btn-success" href="payments.php?id=<?php ?>">Payment</a></td> -->
-                          <td><a class="btn btn-warning" href="approve_listing.php?id=<?php ?>">Approve</a></td>
+                          <td><button id="<?php echo $lst_penging_cars['listing_id'];?>" type="button" class="btn btn-success btn_approve_pending" data-toggle="modal" data-target="#modal-approve">Approve</button></td>
 
                           <td><button id="<?php echo $lst_penging_cars['listing_id'];?>" type="button" class="btn btn-danger btn_delete" data-toggle="modal" data-target="#modal-delete">Delete</button></td>
                         </tr>
@@ -230,13 +232,11 @@ include('includes/db_operations.class.php');
               <!-- /.card-body -->
         </div>
         <!-- modal for view all details -->
-
-        <!-- End modal for view all details -->
-        <div class="modal fade" id="modal_view_details">
+        <div class="modal fade" id="modal-approve">
           <div class="modal-dialog modal-sm">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Listing Details</h4>
+                <h4 class="modal-title">Approve Listing</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -245,17 +245,19 @@ include('includes/db_operations.class.php');
                 <div class="modal_lst">
 
                 </div>
-                <p>Are you sure you want to delete the listing?</p>
+                <p>Are you sure you want to approve the listing?</p>
               </div>
               <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger btn_modal_delete">Delete</button>
+                <button type="button" class="btn btn-success btn_modal_approve">Approve</button>
               </div>
             </div>
             <!-- /.modal-content -->
           </div>
           <!-- /.modal-dialog -->
         </div>
+        <!-- End modal for view all details -->
+
 
 
 
@@ -834,6 +836,38 @@ $('.btn_modal_delete').click(function () {
     });
     //$("tr_"+listing_id).hide();
 });
+//Approve btn functions
+$('.btn_approve_pending').click(function () {
+  var listing_id= $(this).attr('id');
+  $('#tr_'+listing_id).hide();
+  $('.btn_modal_approve').attr('id',listing_id);
+})
+//Approve modal btn click
+$('.btn_modal_approve').click(function () {
+    var listing_id= $(this).attr("id");
+    //alert(listing_id);
+    $.ajax({
+      type:"POST",
+      url:"ajax/approve_listing.php",
+      data:{listing_id:listing_id},
+      success:function (data) {
+        console.log(data);
+        if(data==1){
+          $('.btn_close').trigger("click");
+          //$('#example2').DataTable();
+          Toast.fire({
+       type: 'success',
+       title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+     })
+        }
+      }
+    });
+    //$("tr_"+listing_id).hide();
+});
+
+
+
+
 
 //Add listing functions
 $('#slt_make').change(function () {

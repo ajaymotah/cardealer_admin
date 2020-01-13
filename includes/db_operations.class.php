@@ -79,22 +79,8 @@ class DataOperation extends Database
    			 return "Error deleting record: " . mysqli_error($this->con);
 			}
 	}
-	//function to delete data witk 2 fields SELECT
-	public function delete_student_modules($field1,$field2,$value1,$value2)
-	{
-		$sql= "DELETE FROM tbl_studentmodules WHERE ".$field1." = '".$value1."' AND ".$field2."='".$value2."'";
-		if (mysqli_query($this->con,$sql))
-		{
-   			 return "Record deleted successfully";
-			} else
-			{
-   			 return "Error deleting record: " . mysqli_error($this->con);
-			}
-	}
-
 
 	//function to Update Data
-
 		public function update_records($table,$where,$fields)
 	{
 		$sql="";
