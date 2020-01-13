@@ -210,7 +210,7 @@ include('includes/db_operations.class.php');
                             $lst_images=$db_operation->get_images($img_listing_id);
                             foreach ($lst_images as $key=>$arr_images) {?>
 
-                              <img src="<?php echo $remote_img_link.$arr_images;?>" width="100" height="100"/>
+                              <img src="<?php echo $img_link.$arr_images;?>" width="100" height="100"/>
                           <?php  }?>
 
 
