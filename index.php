@@ -948,7 +948,9 @@ alert("First Image Must Be Selected");
 e.preventDefault();
 }
 });
-  $('#btn_save_listing').click(function (e) {
+
+
+$('#btn_save_listing').click(function (e) {
     // e.preventDefault();
     // var images=[];
     // $('[id^=previewimg]').each(function (key,value) {
@@ -960,8 +962,8 @@ e.preventDefault();
     // var fd = new FormData();
 
 //save form data to DB
+
 var frm_save_listing= new FormData($('#frmAddListing')[0]);
-//frm_save_listing.push(img_arr);
 $.ajax({
   type:"post",
   url:"ajax/save_listing.php",
@@ -970,42 +972,28 @@ $.ajax({
   contentType: false,
   processData: false,
 
-  success:function(response){
-    console.log(response);
-  }
-})
+  success:function(listing_id){
+    console.log(listing_id);
+    //var listing_id=1;
+    var formData = new FormData($('.frmUploadImg')[0]);
+      $.ajax({
+          type:"post",
+          url:"ajax/upload_img.php?id="+listing_id,
+          data:formData,
+          cache: false,
+        contentType: false,
+        processData: false,
 
-
-/*
-
-var formData = new FormData($('.frmUploadImg')[0]);
-//console.log(formData);
-    $.ajax({
-      type:"post",
-      url:"ajax/set_img_link.php",
-      data:formData,
-      cache: false,
-    contentType: false,
-    processData: false,
-
-      success:function(img_arr){
-        console.log(img_arr);
+          success:function(img_arr){
+            console.log(img_arr);
 
 
 
+          }
+        })
       }
-    })*/
-  //save listing td DB
-
-
-
-
-
-
-    //console.log(images);
-
-    // console.log(frm_img);
   })
+})
 
 //
 });// end Document Ready()

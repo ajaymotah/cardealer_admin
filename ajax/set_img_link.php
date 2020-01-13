@@ -5,11 +5,14 @@ include('../includes/db_operations.class.php');
 $result='';
 //print_r($_FILES["file"]['tmp_name']);
 
-foreach ($_FILES["file"]['tmp_name'] as $key) {
-  $result.=$key;
+foreach ($_FILES["file"]['tmp_name'] as $key=>$value) {
+  $result.=$key.' '.$value ;
 
 }
-echo $result;
+
+print_r($_FILES);
+
+//echo $result;
 //$tmp_name = $_FILES["file"]['tmp_name'][0];
 //echo $tmp_name;
 // $img_location = "../uploaded_images/".time().$tmp_name;

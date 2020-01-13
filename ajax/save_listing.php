@@ -1,6 +1,8 @@
 <?php
 include('../includes/db_operations.class.php');
 
+//creates new user on the spot
+
 $fields=array(
   "name"=>$_POST['txt_name'],
   "phone"=>$_POST['txt_phone'],
@@ -33,31 +35,10 @@ $fields1=array(
 "negotiable"=>"Y",
 "date_posted"=>date('d/m/Y'));
 
-$data=$db_operation->insert_record('tbl_listings',$fields);
-//
-// if($data){
-//   $last_id=$db_operation->getLastInserted();
-//   $msg="Saved to tbl_listing";
-// }
+$data=$db_operation->insert_record('tbl_listings',$fields1);
 
+$last_id=$db_operation->getLastInserted();
 
-/*
+echo $last_id;
 
-}
-//save image link to tbl_listing_images
-$img1_field=array("listing_id"=>$last_id,"listing_image_url"=>$_POST['img0']);
-$img2_field=array("listing_id"=>$last_id,"listing_image_url"=>$_POST['img1']);
-$img3_field=array("listing_id"=>$last_id,"listing_image_url"=>$_POST['img2']);
-$img4_field=array("listing_id"=>$last_id,"listing_image_url"=>$_POST['img3']);
-$img5_field=array("listing_id"=>$last_id,"listing_image_url"=>$_POST['img4']);
-
-//insert into tbl_listing_images
-$db_operation->insert_record('tbl_listing_images',$img1_field);
-$db_operation->insert_record('tbl_listing_images',$img2_field);
-$db_operation->insert_record('tbl_listing_images',$img3_field);
-$db_operation->insert_record('tbl_listing_images',$img4_field);
-$db_operation->insert_record('tbl_listing_images',$img5_field);
-*/
-//print_r($_POST);
-echo $data;
 ?>
