@@ -10,11 +10,21 @@ foreach ($_FILES["file"]['name'] as $key=>$value) {
   //set image names
   ${'img'.$key}=time().$value;
   //set field names
+  if($key==0){
     ${'field'.$key}=array(
       "listing_id"=>$listing_id,
       "listing_image_url"=>${'img'.$key},
-      "default_image"=>0
-    );
+      "default_image"=>1
+        );
+    }
+    else{
+      ${'field'.$key}=array(
+        "listing_id"=>$listing_id,
+        "listing_image_url"=>${'img'.$key},
+        "default_image"=>0
+          );
+
+    }
     //print_r( ${'field'.$key});
     //save image links to DB
       $tbl="tbl_listing_images";
