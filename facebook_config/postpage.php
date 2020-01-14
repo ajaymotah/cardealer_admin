@@ -5,8 +5,11 @@ $listing_id=$_POST['listing_id'];
 
 //$listing_id=468;
 $car_preview=$db_operation->get_car_preview($listing_id);
-if($car_preview['sale_price']!=0){
+if($car_preview['sale_price']>100){
   $car_price=number_format($car_preview['sale_price']);
+}
+else{
+  $car_price="Price is Negotiable";
 }
 /*
 $linkData = [
