@@ -723,14 +723,30 @@ $('.btn_modal_approve').click(function () {
       url:"ajax/approve_listing.php",
       data:{listing_id:listing_id},
       success:function (data) {
-        console.log(data);
+        //console.log(data);
         if(data==1){
           $('.btn_close').trigger("click");
           //$('#example2').DataTable();
           Swal.fire({
        type: 'success',
-       title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+       title: 'Listing has been successfully put on live'
      })
+
+     // post to Facebook Page
+     $.ajax({
+       type:"POST",
+       url:"facebook_config/postpage.php",
+       data:{listing_id:listing_id},
+       success:function (posted) {
+         console.log(posted);
+
+       }
+     });
+
+
+
+
+
         }
       }
     });
