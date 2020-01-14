@@ -9,6 +9,10 @@ $fields=array(
   "listing_status_id"=>1
 );
 if($db_operation->update_records($table,$where,$fields))
+// calls the postpage to post on Facebook
+
+
+
   echo 1;
 
  ?>
