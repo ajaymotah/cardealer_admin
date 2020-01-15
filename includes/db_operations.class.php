@@ -579,7 +579,7 @@ WHERE
 tbl_listings.make_id=tbl_car_makes.make_id AND
 tbl_listings.listing_id=tbl_listing_images.listing_id AND
 tbl_listings.listing_status_id=tbl_listing_status.listing_status_id AND
-tbl_listing_images.default_image=1";
+tbl_listing_images.default_image=1 ORDER BY tbl_listings.listing_id DESC";
 $query=mysqli_query($this->con,$sql);
 while($row=mysqli_fetch_assoc($query))
 	{
@@ -601,7 +601,7 @@ tbl_listings.model_id=tbl_car_models.model_id AND
 tbl_listings.listing_id=tbl_listing_images.listing_id AND
 tbl_listings.listing_status_id=tbl_listing_status.listing_status_id AND
 tbl_listing_images.default_image=1 AND
-tbl_listings.listing_status_id=3";
+tbl_listings.listing_status_id=3 ORDER BY tbl_listings.listing_id DESC";
 $query=mysqli_query($this->con,$sql);
 while($row=mysqli_fetch_assoc($query))
 	{
