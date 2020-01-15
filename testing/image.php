@@ -15,6 +15,6 @@
     imagedestroy($watermark);
 }
 
-watermark_image('image_name.jpg','watermark.png', 'new_image_name.jpg');
+watermark_image('image_name.jpg','watermark.png', '../uploaded_images/new_image_name.jpg');
 
  ?>

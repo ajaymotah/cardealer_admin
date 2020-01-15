@@ -620,6 +620,7 @@ $(function (){
   "info": true,
   "autoWidth": false,
   "ordering":true,
+  "order":[[0,"desc"]],
 });
     $('#example2').DataTable({
     "responsive": true,
@@ -629,6 +630,7 @@ $(function (){
     "info": true,
     "autoWidth": false,
     "ordering":true,
+    "order":[[0,"desc"]],
   });
 });
 
