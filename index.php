@@ -355,7 +355,7 @@ include('includes/db_operations.class.php');
 
         <div class="card-body">
           <div class="row">
-            <div class="col-3">
+            <div class="col-md-3">
               <label for="slt_condition">Condition</label>
               <select class="form-control" name="slt_condition" id="slt_condition">
                 <option value="" selected disabled hidden>Select Condition</option>
@@ -368,7 +368,7 @@ include('includes/db_operations.class.php');
                          ?>
               </select>
             </div>
-            <div class="col-3">
+            <div class="col-md-3">
               <label for="slt_make">Make</label>
               <select class="form-control" name="slt_make" id="slt_make" data-validetta="required">
                 <option value="" selected disabled hidden>Select Make</option>
@@ -380,15 +380,15 @@ include('includes/db_operations.class.php');
                         ?>
               </select>
             </div>
-            <div class="col-3">
+            <div class="col-md-3">
               <label for="slt_model">Model</label>
-              <div class="select_model">
+              <div class="select_model col-3-xs-1">
                 <!-- <select class="" name="">
                   <option value=""selected disabled hidden>First select make</option>
                 </select> -->
                       </div>
             </div>
-            <div class="col-3">
+            <div class="col-md-3">
               <label for="slt_year">Year</label>
               <select class="form-control" name="slt_year" id="slt_year" data-validetta="required">
                 <option value="" selected disabled hidden>Select Year</option>
@@ -403,7 +403,7 @@ include('includes/db_operations.class.php');
           </div>
 <p></p>
           <div class="row">
-            <div class="col-3">
+            <div class="col-md-3">
               <label for="txt_mileage">Mileage</label>
               <div class="input-group mb-3">
                   <div class="input-group-prepend">
@@ -412,7 +412,7 @@ include('includes/db_operations.class.php');
                   <input class="form-control" placeholder="Mileage" type="number" name="txt_mileage">
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-md-3">
               <label for="txt_engine">Engine CC</label>
               <div class="input-group mb-3">
                   <div class="input-group-prepend">
@@ -421,7 +421,7 @@ include('includes/db_operations.class.php');
                   <input class="form-control" placeholder="Engine CC" type="number" name="txt_engine">
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-md-3">
               <label for="slt_fuel">fuel</label>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -438,7 +438,7 @@ include('includes/db_operations.class.php');
                       </select>
                     </div>
             </div>
-            <div class="col-3">
+            <div class="col-md-3">
               <label for="slt_transmission">Transmission</label>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -459,7 +459,7 @@ include('includes/db_operations.class.php');
 
           <p></p>
                     <div class="row">
-                      <div class="col-3">
+                      <div class="col-md-3">
                         <label for="slt_location">Location</label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -476,7 +476,7 @@ include('includes/db_operations.class.php');
                         </select>
                           </div>
                       </div>
-                      <div class="col-3">
+                      <div class="col-md-3">
                         <label for="txt_price">Price (MUR)<div class="show_price"></div></label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -485,7 +485,7 @@ include('includes/db_operations.class.php');
                             <input class="form-control" placeholder="Price (Rs)" type="number" name="txt_price" id="txt_price" data-validetta="required">
                           </div>
                       </div>
-                      <div class="col-3">
+                      <div class="col-md-3">
                         <label for="txt_name">Username</label>
                         <div class="input-group mb-3">
                           <div class="input-group-prepend">
@@ -494,7 +494,7 @@ include('includes/db_operations.class.php');
                                 <input type="text" class="form-control" placeholder="User name" name="txt_name" id="txt_name">
                               </div>
                       </div>
-                      <div class="col-3">
+                      <div class="col-md-3">
                         <label for="txt_phone">Mobile Number</label>
                         <div class="input-group mb-3">
                           <div class="input-group-prepend">
@@ -509,7 +509,7 @@ include('includes/db_operations.class.php');
                     <!-- upload image row-->
                     <form class="frmUploadImg" enctype="multipart/form-data" method="post">
                               <div class="row">
-                                <div class="col-5">
+                                <div class="col-md-6">
                                   <div class="form-group">
                                     <label for="file[]">Upload Image</label>
                                     <div id="filediv">
@@ -529,12 +529,12 @@ include('includes/db_operations.class.php');
 
                     <!-- //.Upload image row-->
                     <div class="row">
-                      <div class="col-5">
-                        <div class="col-5" style="padding-top:15px">
+
+                        <div class="col-md-6" style="padding-top:15px">
                           <button id="btn_save_listing" name="btn_save_listing" type="button" class="btn btn-success"> Save </button>
                           <button id="btn_cancel" name="btn_cancel" type="button" class="btn btn-danger"> Cancel </button></br>
                         </div>
-                      </div>
+
                     </div>
                 </form>
         </div>
