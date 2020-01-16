@@ -20,10 +20,27 @@ function watermark_image($target, $wtrmrk_file, $newcopy) {
     imagedestroy($watermark);
 }
 
-// to insert code to compress or resize images here
-//
-//
-//
+//Function to compress image files before uploaded
+// created compressed JPEG file from source file
+function compressImage($source_image, $compress_image) {
+$image_info = getimagesize($source_image);
+if ($image_info['mime'] == 'image/jpeg') {
+$source_image = imagecreatefromjpeg($source_image);
+imagejpeg($source_image, $compress_image, 75);
+} elseif ($image_info['mime'] == 'image/gif') {
+$source_image = imagecreatefromgif($source_image);
+imagegif($source_image, $compress_image, 75);
+} elseif ($image_info['mime'] == 'image/png') {
+$source_image = imagecreatefrompng($source_image);
+imagepng($source_image, $compress_image, 6);
+}
+return $compress_image;
+}
+
+
+
+
+
 foreach ($_FILES["file"]['name'] as $key=>$value) {
   //set image names
   ${'img'.$key}=time().$value;
