@@ -1,7 +1,7 @@
 <?php
 $api_key='AIzaSyC9cNCwPDnxfN4sCdpIJBUceCOyhwCVOY0';
 //define( 'API_ACCESS_KEY', 'AIzaSyC9cNCwPDnxfN4sCdpIJBUceCOyhwCVOY0' ); // get API access
-include('includes/db_operations.class.php');
+include('../includes/db_operations.class.php');
 //find all device_id
 $data=$db_operation->fetch_records('tbl_device_registration');
 
@@ -10,7 +10,7 @@ foreach($data as $device_id){
 
     $msg = array
 (
-  'title'		=> 'Test Title',
+  'title'		=> 'Car @ Only Rs 28,000',
 	'message' 	=> 'Test Notification Message Here',
 	'body'       =>'test.html',
 	'subtitle'	=> 'This is a subtitle. subtitle',

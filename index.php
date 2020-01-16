@@ -886,7 +886,7 @@ $.ajax({
   processData: false,
 
   success:function(listing_id){
-    console.log(listing_id);
+    //console.log(listing_id);
     //var listing_id=1;
     var formData = new FormData($('.frmUploadImg')[0]);
       $.ajax({
@@ -896,9 +896,16 @@ $.ajax({
           cache: false,
         contentType: false,
         processData: false,
-
+          beforeSend:function () {
+            console.log("Saving");
+          },
           success:function(img_arr){
             console.log(img_arr);
+            Swal.fire({
+         type: 'success',
+         title: 'Listing has been saved'
+       })
+            //console.log(img_arr);
 
 
 

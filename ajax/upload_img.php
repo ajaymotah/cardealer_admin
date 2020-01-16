@@ -49,14 +49,14 @@ foreach ($_FILES["file"]['name'] as $key=>$value) {
   if($key==0){
     ${'field'.$key}=array(
       "listing_id"=>$listing_id,
-      "listing_image_url"=>"new".${'img'.$key},
+      "listing_image_url"=>"min_".${'img'.$key},
       "default_image"=>1
         );
     }
     else{
       ${'field'.$key}=array(
         "listing_id"=>$listing_id,
-        "listing_image_url"=>"new".${'img'.$key},
+        "listing_image_url"=>"min_".${'img'.$key},
         "default_image"=>0
           );
 
@@ -72,10 +72,17 @@ foreach ($_FILES["file"]['tmp_name'] as $key=>$value) {
 move_uploaded_file($value, "../uploaded_images/".${'img'.$key});
 $target="../uploaded_images/".${'img'.$key};
 $wtrmrk_file="../watermark/watermark.png";
-$newcopy="../uploaded_images/new".${'img'.$key};
+$newcopy="../uploaded_images/new_".${'img'.$key};
+
 //watermark each uploaded images
 watermark_image($target,$wtrmrk_file,$newcopy);
+
+//compress images on uploaded
+$min_image="../uploaded_images/min_".${'img'.$key};
+compressImage($newcopy,$min_image);
+
 unlink($target);
+unlink($newcopy);
 }
 
 echo "Listing Saved";
