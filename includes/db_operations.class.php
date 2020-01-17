@@ -428,15 +428,18 @@ tbl_listing_images.default_image=1 LIMIT 5";
 			}
 			return $array;
 	}
+
+	//Login function
 	public function login($phone,$pin)
 	{
-	    $sql="SELECT user_id,pin,phone FROM tbl_users WHERE phone = '".$phone."'";
-		$query=mysqli_query($this->con,$sql);
-		$count=mysqli_num_rows($query);
+	    $sql="SELECT user_id,pin,phone,user_role_id FROM tbl_users WHERE phone = '".$phone."'";
+			$query=mysqli_query($this->con,$sql);
+			$count=mysqli_num_rows($query);
+			$row=mysqli_fetch_array($query);
 
 		if($count>0)
 			{
-				$row=mysqli_fetch_array($query);
+
 				if($row['pin']==$pin)
 					{
 						$msg=$row['user_id'];
@@ -447,9 +450,13 @@ tbl_listing_images.default_image=1 LIMIT 5";
 			}
 			else
 			{
-			  $msg="Sorry! Your Phone Number/PIN is Not correct";
+			  $msg="Sorry! Your Phone Number or PIN is Not correct";
 			}
-			return $msg;
+			$arr_msg=array(
+				"user_role_id"=>$row['user_role_id'],
+				"msg"=>$msg
+			);
+			return $arr_msg;
 	}
 
 	//admin

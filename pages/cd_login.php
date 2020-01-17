@@ -44,12 +44,9 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-8">
+       <div class="col-8">
             <div class="icheck-primary">
-              <input type="checkbox" id="remember">
-              <label for="remember">
-                Remember Me
-              </label>
+
             </div>
           </div>
           <!-- /.col -->
@@ -104,7 +101,7 @@ function check_session() {
   $(document).ready(function(){
   //check_session();
 $('#btn_login').click(function () {
-  $('#frm_login').validetta({
+    $('#frm_login').validetta({
     bubblePosition: 'bottom',
     realTime:true,
         bubbleGapTop: 10,
@@ -113,31 +110,15 @@ $('#btn_login').click(function () {
              event.preventDefault();
             $.ajax({
               type:"POST",
-              url:php_link+"admin_login.php",
+              url:"../ajax/do_login.php",
               data:$('#frm_login').serialize(),
-              crossDomain:true,
-              cache:false,
               success:function (data) {
                 $('#frm_login')[0].reset();
-                //alert(data);
+                console.log(data);
                 if(data==0){
-                  alert("Phone/PIN Incorrect, try Again");
+                  //alert("Phone/PIN Incorrect, try Again");
 
                 }
-                else{
-                  //alert(data);
-                  $.ajax({
-                    type:"POST",
-                    url:php_link+"admin_login.php",
-                    data:$('#frm_login').serialize(),
-                    crossDomain:true,
-                    cache:false,
-                    success:function (data) {
-                      window.location.href="../../index.html";
-                    }
-                  })
-                }
-
                 //alert(data);
                 // store session
                 //window.sessionStorage.setItem("user_id",data);
