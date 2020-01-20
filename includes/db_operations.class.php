@@ -436,7 +436,7 @@ tbl_listing_images.default_image=1 LIMIT 5";
 			$query=mysqli_query($this->con,$sql);
 			$count=mysqli_num_rows($query);
 			$row=mysqli_fetch_array($query);
-
+			$error=0;
 		if($count>0)
 			{
 
@@ -446,15 +446,18 @@ tbl_listing_images.default_image=1 LIMIT 5";
 					}
 					else {
 						$msg="Wrong PIN !!";
+						$error=1;
 					}
 			}
 			else
 			{
-			  $msg="Sorry! Your Phone Number or PIN is Not correct";
+			  $msg="Sorry! Mobile No not Found";
+				$error=1;
 			}
 			$arr_msg=array(
 				"user_role_id"=>$row['user_role_id'],
-				"msg"=>$msg
+				"msg"=>$msg,
+				"error"=>$error
 			);
 			return $arr_msg;
 	}

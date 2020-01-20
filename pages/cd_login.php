@@ -19,6 +19,8 @@
   <link rel="stylesheet" href="../plugins/validetta/validetta.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="../plugins/sweetalert2/sweetalert2.min.css">
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -32,9 +34,9 @@
 
       <form method="post" id="frm_login" action="">
         <div class="input-group mb-3">
-           <input class="form-control" placeholder="Enter your mobile no" name="txtPhone" maxlength="8" data-validetta="required,number,minLength[8],maxLength[8]">
+           <input class="form-control" placeholder="Mobile No" name="txtPhone" maxlength="8" data-validetta="required,number,minLength[8],maxLength[8]">
           <div class="input-group-append input-group-text">
-              <span class="fas fa-envelope"></span>
+              <span class="fas fa-mobile"></span>
           </div>
         </div>
         <div class="input-group mb-3">
@@ -51,7 +53,17 @@
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block btn-flat" id="btn_login">Sign In</button>
+            <button type="submit" class="btn btn-primary btn-block btn-flat" id="btn_login">
+              <div class="loading" hidden>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Loading...
+              </div>
+              <div class="sign_in">
+                Sign In
+              </div>
+
+            </button>
+
           </div>
           <!-- /.col -->
         </div>
@@ -86,6 +98,8 @@
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- custom script-->
 <script src="../plugins/validetta/validetta.min.js"></script>
+<!-- SweetAlert2 -->
+<script src="../plugins/sweetalert2/sweetalert2.min.js"></script>
 <!-- custom script-->
 <script src="../custom/custom.js"></script>
 <script type="text/javascript">
@@ -112,19 +126,23 @@ $('#btn_login').click(function () {
               type:"POST",
               url:"../ajax/do_login.php",
               data:$('#frm_login').serialize(),
+              //async: false,
+            beforeSend:function () {
+                $('.sign_in').attr('hidden','true');
+                $('.loading').removeAttr('hidden');
+              },
               success:function (data) {
                 $('#frm_login')[0].reset();
-                console.log(data);
-                if(data==0){
-                  //alert("Phone/PIN Incorrect, try Again");
 
+                    var get_data=JSON.parse(data);
+                if(get_data.error==1){
+                  Swal.fire({
+               type: 'error',
+               title: 'Error :'+get_data.msg
+             })
                 }
-                //alert(data);
-                // store session
-                //window.sessionStorage.setItem("user_id",data);
-                //redirect to cd_admin.HTML5
-                  //var test=window.sessionStorage.getItem("user_id");
-                //  window.location.href="index.html";
+                $('.loading').attr('hidden','true');
+                $('.sign_in').removeAttr('hidden');
               },
             })
          },

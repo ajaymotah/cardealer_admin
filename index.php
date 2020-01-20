@@ -659,7 +659,7 @@ function addCommas(nStr)
 
 $(document).ready(function(){
 //Loading script//
-//$('body').ploading({action: 'show'});
+//$('html').ploading({action: 'show'});
 //create_table();
 
 
