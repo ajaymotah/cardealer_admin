@@ -621,6 +621,58 @@ while($row=mysqli_fetch_assoc($query))
 	return $array;
 }
 
+//send push notifications
+public function send_notification($listing_id)
+{
+	$api_key='AIzaSyC9cNCwPDnxfN4sCdpIJBUceCOyhwCVOY0';
+	$car_details->get_car_preview($listing_id);
+
+	//find all device_id
+	$data->fetch_records('tbl_device_registration');
+
+	foreach($data as $device_id){
+	    $to=array($device_id['device_id']);
+
+	    $msg = array
+	(
+	  'title'		=> 'SALE! '.$car_details['make'].'-'.$car_details[model],
+		'message' 	=> 'Year '.$car_details['year'].' Price - '.$car_details['sale_price'],
+		'body'       =>'test.html',
+		'subtitle'	=> 'This is a subtitle. subtitle',
+		'tickerText'	=> 'Ticker text here...Ticker text here...Ticker text here',
+		'vibrate'	=> 1,
+		'sound'		=> 1,
+		'image'     =>$remote_img_link.$car_details['listing_image_url']
+		//'https://scontent.fmru3-1.fna.fbcdn.net/v/t1.0-9/55674647_1045478028973387_4643989919159549952_o.jpg?_nc_cat=110&_nc_ht=scontent.fmru3-1.fna&oh=1e0053d91df8b3720d9ec75698a56887&oe=5D0FF5E9'
+		//'http://cardealer.webdevsolutions.biz/admin/images/push_icon.jpg'
+		//'largeIcon'	=> 'large_icon',
+		//'smallIcon'	=> 'small_icon'
+	);
+
+	$fields = array
+	(
+		'registration_ids' 	=> $to,
+		'data'			=> $msg
+	);
+	$headers = array
+	(
+		'Authorization: key='.$api_key,
+		//. API_ACCESS_KEY,
+		'Content-Type: application/json'
+	);
+	$ch = curl_init();
+	curl_setopt( $ch,CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send' );
+	curl_setopt( $ch,CURLOPT_POST, true );
+	curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
+	curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
+	curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
+	curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fields ) );
+	$result = curl_exec($ch );
+	curl_close( $ch );
+	echo $result;
+	}
+}
+
 
 public function delete_listing($table,$field,$id)
 {

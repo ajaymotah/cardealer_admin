@@ -8,6 +8,12 @@ $where=array(
 $fields=array(
   "listing_status_id"=>1
 );
-if($db_operation->update_records($table,$where,$fields))
+if($db_operation->update_records($table,$where,$fields)){
+//send push notification
+$send_notofocation->send_notification($listing_id);
+
+
+
+}
   echo 1;
  ?>
