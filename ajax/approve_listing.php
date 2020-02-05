@@ -11,9 +11,7 @@ $fields=array(
 if($db_operation->update_records($table,$where,$fields)){
 //send push notification
 $send_notofocation->send_notification($listing_id);
-
-
-
-}
   echo 1;
+}
+
  ?>
