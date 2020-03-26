@@ -5,13 +5,13 @@ include('config.php');
 class Database
 {
 	public $con;
-/*REmote DB Config*/
+/*REmote DB Config profit server ru
 public $server_link = "";
-public $servername = "66.198.240.15";
+public $servername = "localhost";
 public $username = "beaumond_cardealer_admin";
-public $password = "766935300";
+public $password = "Admin@766935300";
 public $dbname = "beaumond_cardealer";
-/**/
+*/
 
 
 	/*External DB config
@@ -20,14 +20,14 @@ public $dbname = "beaumond_cardealer";
 	public $username = "beaumond_cardealer_admin";
 	public $password = "766935300";
 	public $dbname = "beaumond_cardealer";
-	*/
+	/**/
 
-	/*Localhost DB config
+	/*Localhost DB config*/
 	public $servername = "localhost";
 	public $username = "root";
 	public $password = "";
 	public $dbname = "beaumond_cardealer";
-*/
+
 	//Salt for encryption
 	public $salt="car_dealer_app";
  //Session Timeout
