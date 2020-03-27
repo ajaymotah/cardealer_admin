@@ -165,7 +165,14 @@ public function IsMatching($field)
 			return md5($salt);
 		}
 
-#####Check Session######
+#####Session######
+public function SetSession($session_id,$value)
+{
+			$_SESSION[$session_id]=$value;
+}
+
+
+
 	public function check_session($session)
 		{
 			if (!isset($session))
@@ -443,6 +450,7 @@ tbl_listing_images.default_image=1 LIMIT 5";
 				if($row['pin']==$pin)
 					{
 						$msg=$row['user_id'];
+
 					}
 					else {
 						$msg="Wrong PIN !!";

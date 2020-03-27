@@ -1,6 +1,10 @@
 <?php
 include('pages/cd_menu.php');
 include('includes/db_operations.class.php');
+if(!isset($_SESSION['user_id'])){
+  header('location:pages/cd_login.php');
+  exit();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -60,7 +64,7 @@ include('includes/db_operations.class.php');
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index.html" class="brand-link">
+    <a href="index.php" class="brand-link">
       <img src="dist/img/logo-light.png" alt="CARDEALER" width="200" style="opacity: .8">
       <!-- <span class="brand-text font-weight-light">CARDEALER</span> -->
     </a>
@@ -79,8 +83,8 @@ include('includes/db_operations.class.php');
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Home</li>
+              <li class="breadcrumb-item active"><a href="index.php">Home</a></li>
+              <!-- <li class="breadcrumb-item active">Home</li> -->
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -348,12 +352,28 @@ include('includes/db_operations.class.php');
 
       <div class="card card-primary">
         <div class="card-header">
-          <h3 class="card-title">Add New Car Listings</h3>
+          <h3 class="card-title">Add Car Listings</h3>
         </div>
 <!-- form-->
 <form id="frmAddListing" name="frmAddListing" method="post">
 
         <div class="card-body">
+          <div class="row">
+            <div class="col-md-3">
+              <label for="slt_listing_type">Listing Type</label>
+              <select class="form-control" name="slt_listing_type" id="slt_listing_type">
+                <option value="" selected disabled hidden>Select Listing Type</option>
+                <?php
+                          $arr_listing_type=$db_operation->fetch_records('tbl_listing_types');
+
+                          foreach ($arr_listing_type as $opt_listing_type) {
+                            echo'<option value="'.$opt_listing_type['listing_type_id'].'">'.$opt_listing_type['listing_type'].'</option>';
+                          }
+                         ?>
+              </select>
+
+            </div>
+          </div>
           <div class="row">
             <div class="col-md-3">
               <label for="slt_condition">Condition</label>

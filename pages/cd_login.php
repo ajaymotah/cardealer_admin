@@ -25,7 +25,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../index.html"><img src="../dist/img/logo-dark.png" width="250" alt=""></a>
+    <a href="#"><img src="../dist/img/logo-dark.png" width="250" alt=""></a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
@@ -40,7 +40,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input class="form-control" name="txtPin" placeholder="PIN" maxlength="4" data-validetta="required,number,minLength[4],maxLength[4]">
+          <input class="form-control" name="txtPin" placeholder="PIN" maxlength="4" type="password" data-validetta="required,number,minLength[4],maxLength[4]">
           <div class="input-group-append input-group-text">
               <span class="fas fa-lock"></span>
           </div>
@@ -107,7 +107,7 @@
 function check_session() {
   var user_id=window.sessionStorage.getItem("user_id");
   if(user_id){
-  window.location.href="../../index.html";
+  window.location.href="../../index.php";
   //console.log(user_id);
     }
   }
@@ -141,6 +141,29 @@ $('#btn_login').click(function () {
                title: 'Error :'+get_data.msg
              })
                 }
+                else{
+                  //successfully logged in
+                  Swal.fire({
+               type: 'success',
+               title: 'Successfully logged in'
+             }),
+               // set session_start
+               $.ajax({
+                 type:"POST",
+                 url:"../ajax/set_session.php",
+                 data:{user_id:'user_id',value:get_data.msg},
+               success:function(data){
+                 console.log(data);
+                 //window.location.href="../index.php";
+               }
+
+             })
+
+
+
+
+
+         }
                 $('.loading').attr('hidden','true');
                 $('.sign_in').removeAttr('hidden');
               },
