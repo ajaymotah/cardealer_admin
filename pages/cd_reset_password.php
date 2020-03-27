@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>CAR DEALER | Log in</title>
+  <title>CAR DEALER | Reset Password</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -30,25 +30,18 @@
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
-      <p class="login-box-msg">Sign in to start your session</p>
+      <p class="login-box-msg">Reset Password - Please enter your email address</p>
 
-      <form method="post" id="frm_login" action="">
+      <form method="post" id="frm_reset_password" action="">
         <div class="input-group mb-3">
-           <input class="form-control" placeholder="Mobile No" name="txtPhone" maxlength="8" data-validetta="required,number,minLength[8],maxLength[8]">
+           <input class="form-control" placeholder="email" name="txtEmail" data-validetta="required,email">
           <div class="input-group-append input-group-text">
-              <span class="fas fa-mobile"></span>
-          </div>
-        </div>
-        <div class="input-group mb-3">
-          <input class="form-control" name="txtPin" placeholder="PIN" maxlength="4" type="password" data-validetta="required,number,minLength[4],maxLength[4]">
-          <div class="input-group-append input-group-text">
-              <span class="fas fa-lock"></span>
+              <span class="fas fa-envelope"></span>
           </div>
         </div>
         <div class="row">
        <div class="col-8">
             <div class="icheck-primary">
-
             </div>
           </div>
           <!-- /.col -->
@@ -59,7 +52,7 @@
       Loading...
               </div>
               <div class="sign_in">
-                Sign In
+                Reset
               </div>
 
             </button>
@@ -80,12 +73,12 @@
       </div>
       /.social-auth-links -->
 
-      <p class="mb-1">
-        <a href="cd_reset_password.php">I forgot my password</a>
+      <!-- <p class="mb-1">
+        <a href="#">I forgot my password</a>
       </p>
       <p class="mb-0">
         <a href="examples/register.html" class="text-center">Register a new membership</a>
-      </p>
+      </p> -->
     </div>
     <!-- /.login-card-body -->
   </div>
@@ -103,19 +96,10 @@
 <!-- custom script-->
 <script src="../custom/custom.js"></script>
 <script type="text/javascript">
-
-function check_session() {
-  var user_id=window.sessionStorage.getItem("user_id");
-  if(user_id){
-  window.location.href="../../index.php";
-  //console.log(user_id);
-    }
-  }
-
-  $(document).ready(function(){
+$(document).ready(function(){
   //check_session();
 $('#btn_login').click(function () {
-    $('#frm_login').validetta({
+    $('#frm_reset_password').validetta({
     bubblePosition: 'bottom',
     realTime:true,
         bubbleGapTop: 10,
