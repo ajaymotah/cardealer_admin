@@ -153,8 +153,8 @@ $('#btn_login').click(function () {
                  url:"../ajax/set_session.php",
                  data:{user_id:'user_id',value:get_data.msg},
                success:function(data){
-                 console.log(data);
-                 //window.location.href="../index.php";
+                 //console.log(data);
+                 window.location.href="../index.php";
                }
 
              })

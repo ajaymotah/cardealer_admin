@@ -46,11 +46,20 @@ $menu_list='
         </ul>
       </li>
       <li class="nav-item">
-        <a href="pages/widgets.html" class="nav-link">
+        <a href="cd_car_rentals.php" class="nav-link">
           <i class="nav-icon fas fa-th"></i>
           <p>
-            Widgets
-            <span class="right badge badge-danger">New</span>
+            Car Rentals
+            <!--<span class="right badge badge-danger">New</span>-->
+          </p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="ajax/do_logout.php" class="nav-link">
+          <i class="nav-icon fas fa-th"></i>
+          <p>
+            Log Out
+            <!--<span class="right badge badge-danger">New</span>-->
           </p>
         </a>
       </li>

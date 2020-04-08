@@ -199,6 +199,11 @@ public function SetSession($session_id,$value)
 			}
 
 		}
+		public function session_logout()
+		{
+			session_destroy();
+			return true;
+		}
 	//////////////////////* Car Dealer App Functions*///////////////////////
 
 	//Get All the makes
@@ -608,18 +613,19 @@ while($row=mysqli_fetch_assoc($query))
 }
 
 //Get all pending listings
-public function get_all_pending_listings()
+public function get_all_pending_listings($listing_type)
 {
 	$sql="SELECT
-tbl_listings.listing_id,tbl_listings.user_id,tbl_listings.make_id,tbl_listings.model_id,tbl_listings.date_posted,tbl_listings.sale_price,tbl_listing_status.listing_status,tbl_car_makes.make,tbl_car_models.model,tbl_listing_images.listing_id,tbl_listing_images.listing_image_url
+tbl_listings.listing_id,tbl_listing_types.listing_type_id,tbl_listings.user_id,tbl_listings.make_id,tbl_listings.model_id,tbl_listings.date_posted,tbl_listings.sale_price,tbl_listing_status.listing_status,tbl_car_makes.make,tbl_car_models.model,tbl_listing_images.listing_id,tbl_listing_images.listing_image_url
 FROM
-tbl_listings,tbl_car_makes,tbl_car_models,tbl_listing_images,tbl_listing_status
+tbl_listings,tbl_listing_types,tbl_car_makes,tbl_car_models,tbl_listing_images,tbl_listing_status
 WHERE
 tbl_listings.make_id=tbl_car_makes.make_id AND
 tbl_listings.model_id=tbl_car_models.model_id AND
 tbl_listings.listing_id=tbl_listing_images.listing_id AND
 tbl_listings.listing_status_id=tbl_listing_status.listing_status_id AND
 tbl_listing_images.default_image=1 AND
+tbl_listing_types.listing_type_id=$listing_type AND
 tbl_listings.listing_status_id=3 ORDER BY tbl_listings.listing_id DESC";
 $query=mysqli_query($this->con,$sql);
 while($row=mysqli_fetch_assoc($query))

@@ -79,7 +79,7 @@ if(!isset($_SESSION['user_id'])){
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Dashboard</h1>
+            <h1 class="m-0 text-dark">Dashboard - Car Rentals</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -96,80 +96,7 @@ if(!isset($_SESSION['user_id'])){
     <section class="content">
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
-        <div class="row">
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <?php
-                $sales_listing_count=$db_operation->get_count_tbl("tbl_listings","listing_type_id",1);
-                 ?>
-                <h3><?php echo $sales_listing_count; ?></h3>
-
-                <p>Total Sales Listings</p>
-              </div>
-              <div class="icon">
-                <i class="fa fa-car"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <?php
-                $rental_listing_count=$db_operation->get_count_tbl("tbl_listings","listing_type_id",4);
-                 ?>
-                <h3><?php echo $rental_listing_count; ?></h3>
-
-                <p>Total Car Rentals</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <?php
-                $active_users_count=$db_operation->get_count_tbl("tbl_users","user_status_id",1);
-                 ?>
-                <h3><?php echo $active_users_count; ?></h3>
-
-                <p>User Registrations</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-person-add"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <?php
-                $pending_listing_count=$db_operation->get_count_tbl("tbl_listings","listing_status_id",3);
-                 ?>
-                <h3><?php echo $pending_listing_count; ?></h3>
-
-                <p>Pending Listings</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-alert"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-        </div>
+        
         <!-- /.row -->
         <!-- Main row -->
         <div class="row">
@@ -182,11 +109,11 @@ if(!isset($_SESSION['user_id'])){
             <!-- Pending listings-->
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">List of Pending Listings</h3>
+                <h3 class="card-title">List of Pending Car Rental Listings</h3>
               </div>
               <!-- /.card-header -->
               <?php
-              $get_pending_listings=$db_operation->get_all_pending_listings(1);
+              $get_pending_listings=$db_operation->get_all_pending_listings();
                ?>
               <div class="card-body" id="tbl_listings">
                 <table id="lst_pendings" class="table table-bordered table-hover">
@@ -352,28 +279,13 @@ if(!isset($_SESSION['user_id'])){
 
       <div class="card card-primary">
         <div class="card-header">
-          <h3 class="card-title">Add Car Listings</h3>
+          <h3 class="card-title">Add Car Rental</h3>
         </div>
 <!-- form-->
 <form id="frmAddListing" name="frmAddListing" method="post">
 
         <div class="card-body">
-          <div class="row">
-            <div class="col-md-3">
-              <label for="slt_listing_type">Listing Type</label>
-              <select class="form-control" name="slt_listing_type" id="slt_listing_type">
-                <option value="" selected disabled hidden>Select Listing Type</option>
-                <?php
-                          $arr_listing_type=$db_operation->fetch_records('tbl_listing_types');
 
-                          foreach ($arr_listing_type as $opt_listing_type) {
-                            echo'<option value="'.$opt_listing_type['listing_type_id'].'">'.$opt_listing_type['listing_type'].'</option>';
-                          }
-                         ?>
-              </select>
-
-            </div>
-          </div>
           <div class="row">
             <div class="col-md-3">
               <label for="slt_condition">Condition</label>
@@ -497,7 +409,7 @@ if(!isset($_SESSION['user_id'])){
                           </div>
                       </div>
                       <div class="col-md-3">
-                        <label for="txt_price">Price (MUR)<div class="show_price"></div></label>
+                        <label for="txt_price">Price (MUR) /Per Day<div class="show_price"></div></label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
