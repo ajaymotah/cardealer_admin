@@ -26,10 +26,7 @@ class DataOperation extends Database
 		$array=array();
 		$query=mysqli_query($this->con,$sql);
 		$row=mysqli_fetch_assoc($query)or die(mysqli_error());
-
-			//echo $sql;
-			return $row;
-
+				return $row;
 	}
 	public function findAll_by_id($table,$field,$id)
 	{
@@ -757,7 +754,20 @@ while($row=mysqli_fetch_assoc($query))
 		return false;
 	}
 }
-
+public function find_user_phone_exists($id)
+{
+	$sql="SELECT phone FROM tbl_users WHERE phone like '%$id'";
+	$query=mysqli_query($this->con,$sql);
+	while($row=mysqli_fetch_assoc($query))
+		{
+		$array[]=$row;
+		}
+		if (!empty($array))
+		return $array;
+		else {
+			return false;
+		}
+}
 
 
 

@@ -12,7 +12,7 @@ if(!isset($_SESSION['user_id'])){
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <title>CARDEALER | Dashboard</title>
+  <title>CARDEALER | Users</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -259,53 +259,42 @@ if(!isset($_SESSION['user_id'])){
 
       <div class="card card-primary">
         <div class="card-header">
-          <h3 class="card-title">Add Car Listings</h3>
+          <h3 class="card-title">Add New Users</h3>
         </div>
 <!-- form-->
-<form id="frmAddListing" name="frmAddListing" method="post">
+<form id="frmAddUsers" name="frmAddUsers" method="post">
 
         <div class="card-body">
           <div class="row">
             <div class="col-md-3">
-              <label for="slt_listing_type">Listing Type</label>
+              <label for="slt_listing_type">User Type</label>
               <select class="form-control" name="slt_listing_type" id="slt_listing_type">
                 <option value="" selected disabled hidden>Select Listing Type</option>
                 <?php
-                          $arr_listing_type=$db_operation->fetch_records('tbl_listing_types');
+                          $get_user_roles=$db_operation->fetch_records('tbl_user_roles');
 
-                          foreach ($arr_listing_type as $opt_listing_type) {
-                            echo'<option value="'.$opt_listing_type['listing_type_id'].'">'.$opt_listing_type['listing_type'].'</option>';
+                          foreach ($get_user_roles as $lst_user_roles) {
+                            echo'<option value="'.$lst_user_roles['user_role_id'].'">'.$lst_user_roles['role'].'</option>';
                           }
                          ?>
               </select>
-
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-3">
-              <label for="slt_condition">Condition</label>
-              <select class="form-control" name="slt_condition" id="slt_condition">
-                <option value="" selected disabled hidden>Select Condition</option>
-                <?php
-                          $arr_conditions=$db_operation->fetch_records('tbl_vehicle_conditions');
+          <div id="phone_search_result">
 
-                          foreach ($arr_conditions as $opt_conditions) {
-                            echo'<option value="'.$opt_conditions['vehicle_condition_id'].'">'.$opt_conditions['vehicle_condition'].'</option>';
-                          }
-                         ?>
-              </select>
-            </div>
+          </div>
+          <div class="row">
+
             <div class="col-md-3">
-              <label for="slt_make">Make</label>
-              <select class="form-control" name="slt_make" id="slt_make" data-validetta="required">
-                <option value="" selected disabled hidden>Select Make</option>
-                <?php
-                         $arr_makes=$db_operation->fetch_records('tbl_car_makes');
-                         foreach ($arr_makes as $opt_makes) {
-                           echo'<option value="'.$opt_makes['make_id'].'">'.$opt_makes['make'].'</option>';
-                         }
-                        ?>
-              </select>
+              <label for="txt_phone">Phone Number</label>
+              <input type="text" name="txt_phone" id="txt_phone" class="form-control" maxlength="8">
+            </div>
+
+
+
+            <div class="col-md-3">
+              <label for="txt_name">Name</label>
+              <input type="text" name="txt_name" id="txt_name" class="form-control">
             </div>
             <div class="col-md-3">
               <label for="slt_model">Model</label>
@@ -467,12 +456,9 @@ if(!isset($_SESSION['user_id'])){
         </div>
         <!-- /.card-body -->
       </div>
-
             <!-- TO DO List -->
-
           </section>
           <!-- /.Left col -->
-
         </div>
         <!-- /.row (main row) -->
       </div><!-- /.container-fluid -->
@@ -481,8 +467,6 @@ if(!isset($_SESSION['user_id'])){
   </div>
   <!-- /.content-wrapper -->
   <div class="footer_list"></div>
-
-
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
@@ -564,20 +548,6 @@ $(function() {
     timer: 3000
   });
 });
-
-function addCommas(nStr)
-{
-	nStr += '';
-	x = nStr.split('.');
-	x1 = x[0];
-	x2 = x.length > 1 ? '.' + x[1] : '';
-	var rgx = /(\d+)(\d{3})/;
-	while (rgx.test(x1)) {
-		x1 = x1.replace(rgx, '$1' + ',' + '$2');
-	}
-	return x1 + x2;
-}
-
 $(document).ready(function(){
 //Loading script//
 //$('html').ploading({action: 'show'});
@@ -639,6 +609,7 @@ $('.btn_approve_pending').click(function () {
   $('#tr_'+listing_id).hide();
   $('.btn_modal_approve').attr('id',listing_id);
 })
+
 //Approve modal btn click
 $('.btn_modal_approve').click(function () {
     var listing_id= $(this).attr("id");
@@ -667,136 +638,18 @@ $('.btn_modal_approve').click(function () {
 
        }
      });
-
-
-
-
-
         }
       }
     });
     //$("tr_"+listing_id).hide();
 });
 
+//find user details by Phone number if already exists
+$('txt_phone').keyup(function () {
 
+})
 
-
-
-//Add listing functions
-$('#slt_make').change(function () {
-  $car_make_id=$('#slt_make').val();
-  $.ajax({
-          type: "POST",
-          url: "ajax/get_model.php",
-          data:{make_id:$car_make_id},
-          success: function(msg) {
-            $('.select_model').html(msg)
-            //console.log(msg);
-          },
-          error: function() {console.log();}
-        });
-});
-$("#slt_year").change(function () {
-  $("#row_2").removeAttr("hidden");
-});
-
-$("#slt_transmission").change(function () {
-  $("#row_3").removeAttr("hidden");
-});
-$("#txt_price").keyup(function () {
-  var txt_price=$(this).val();
-  var show_price = addCommas(txt_price);
-  $(".show_price").text(show_price);
-});
-
-
-//image upload function
-//  To add new input file field dynamically, on click of "Add More Files" button below function will be executed.
-var img_count=$('#img_count').attr('count');
-var error_message=0;
-var max_img_size=<?php echo $max_img_file_size; ?>;
-var max_img=<?php echo $max_file_upload; ?>;
-
-$('#add_more').click(function() {
-
-$(this).before($("<div/>", {
-id: 'filediv'
-}).fadeIn('slow').append($("<input/>", {
-name: 'file[]',
-type: 'file',
-class: 'file',
-id:'img'+img_count,
-accept:'image/*'
-})));
-});
-
-var img_count=$('#img_count').attr('count');
-var error_images='';
-////
-// Following function will executes on change event of file input to select different file.
-$('body').on('change', '.file', function() {
-//Validate image extension
-var name= $('#img'+img_count).prop("files")[0]['name'];
-var ext = name.split('.').pop().toLowerCase();
-
-if(jQuery.inArray(ext, ['gif','png','jpg','jpeg']) == -1)
-{
- error_images += ' Invalid file type';
- alert(error_images);
-}
-//Validate image size
-var f =  $('#img'+img_count).prop("files")[0];
-var fsize = f.size||f.fileSize;
-//alert(fsize);
- if(fsize > max_img_size)
- {
-  error_images +=" You are allowed to upload more than "+max_img_size/1000000+" MB";
-  alert(error_images);
- }
- //Validate max image uploaded
-if(img_count>max_img-1)
-{
-error_images +=" You are allowed to upload only "+max_img+" images";
-  alert(error_images);
-}
-
-
-
-if (this.files && this.files[0] && error_images=="") {
-img_count ++; // Incrementing global variable by 1.
-$('#img_count').attr('count',img_count);
-var z = img_count - 1;
-var x = $(this).parent().find('#previewimg' + z).remove();
-$(this).before("<div id='img_preview" + img_count + "' class='img_preview'><img id='previewimg" + img_count + "' src=''/></div>");
-var reader = new FileReader();
-reader.onload = imageIsLoaded;
-reader.readAsDataURL(this.files[0]);
-$(this).hide();
-$("#img_preview" + img_count).append($("<img/>", {
-id: 'img',
-src: 'dist/img/x.png',
-alt: 'delete'
-}).click(function() {
-$(this).parent().parent().remove();
-img_count=img_count-1;
-$('#img_count').attr('count',img_count);
-}));
-}
-});
-// To Preview Image
-function imageIsLoaded(e) {
-$('#previewimg' + img_count).attr('src', e.target.result);
-};
-
-$('#upload').click(function(e) {
-var name = $(":file").val();
-if (!name) {
-alert("First Image Must Be Selected");
-e.preventDefault();
-}
-});
-
-
+//save new user as pending
 $('#btn_save_listing').click(function (e) {
 //save form data to DB
 var frm_save_listing= new FormData($('#frmAddListing')[0]);
