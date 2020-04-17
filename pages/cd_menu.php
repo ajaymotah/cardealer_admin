@@ -46,6 +46,15 @@ $menu_list='
         </ul>
       </li>
       <li class="nav-item">
+        <a href="cd_list_users.php" class="nav-link">
+          <i class="nav-icon fas fa-users"></i>
+          <p>
+            Users
+            <!--<span class="right badge badge-danger">New</span>-->
+          </p>
+        </a>
+      </li>
+      <li class="nav-item">
         <a href="cd_car_rentals.php" class="nav-link">
           <i class="nav-icon fas fa-th"></i>
           <p>

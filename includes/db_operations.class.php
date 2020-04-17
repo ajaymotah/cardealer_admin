@@ -73,7 +73,7 @@ class DataOperation extends Database
 
 		if (mysqli_query($this->con,$sql))
 		{
-   			 return "Record deleted successfully";
+   			 return true;
 			} else
 			{
    			 return "Error deleting record: " . mysqli_error($this->con);
@@ -725,6 +725,48 @@ public function delete_listing($table,$field,$id)
 
 	}
 		}
+public function get_user_details($args)
+{
+	if($args==0)
+	{
+		$user_status_id="tbl_user_status.user_status_id";
+	}
+	else{
+		$user_status_id=$args;
+	}
+	$sql="SELECT
+tbl_users.user_id,tbl_users.name,tbl_users.surname,tbl_users.phone,tbl_users.user_role_id,
+tbl_users.user_status_id,
+tbl_user_roles.user_role_id,tbl_user_roles.role,
+tbl_user_status.user_status_id,tbl_user_status.user_status
+FROM
+tbl_users,tbl_user_roles,tbl_user_status
+WHERE
+tbl_users.user_role_id=tbl_user_roles.user_role_id AND
+tbl_users.user_status_id=tbl_user_status.user_status_id AND
+tbl_users.user_status_id=$user_status_id
+ORDER BY tbl_users.user_id DESC";
+$query=mysqli_query($this->con,$sql);
+while($row=mysqli_fetch_assoc($query))
+	{
+	$array[]=$row;
+	}
+	if (!empty($array))
+	return $array;
+	else {
+		return false;
+	}
+}
+
+
+
+
+
+
+
+
+
+
 
 }//end of class
 

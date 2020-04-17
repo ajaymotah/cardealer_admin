@@ -78,7 +78,7 @@ if(!isset($_SESSION['user_id'])){
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Dashboard</h1>
+            <h1 class="m-0 text-dark">Users List</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -94,81 +94,6 @@ if(!isset($_SESSION['user_id'])){
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <!-- Small boxes (Stat box) -->
-        <div class="row">
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <?php
-                $sales_listing_count=$db_operation->get_count_tbl("tbl_listings","listing_type_id",1);
-                 ?>
-                <h3><?php echo $sales_listing_count; ?></h3>
-
-                <p>Total Sales Listings</p>
-              </div>
-              <div class="icon">
-                <i class="fa fa-car"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <?php
-                $rental_listing_count=$db_operation->get_count_tbl("tbl_listings","listing_type_id",4);
-                 ?>
-                <h3><?php echo $rental_listing_count; ?></h3>
-
-                <p>Total Car Rentals</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <?php
-                $active_users_count=$db_operation->get_count_tbl("tbl_users","user_status_id",1);
-                 ?>
-                <h3><?php echo $active_users_count; ?></h3>
-
-                <p>User Registrations</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-person-add"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <?php
-                $pending_listing_count=$db_operation->get_count_tbl("tbl_listings","listing_status_id",3);
-                 ?>
-                <h3><?php echo $pending_listing_count; ?></h3>
-
-                <p>Pending Listings</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-alert"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-        </div>
         <!-- /.row -->
         <!-- Main row -->
         <div class="row">
@@ -176,59 +101,49 @@ if(!isset($_SESSION['user_id'])){
           <section class="col-12">
       <!-- Display Div-->
             <!-- table-->
-
-
-            <!-- Pending listings-->
+      <!-- Lis all Pending users-->
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">List of Pending Listings</h3>
+                <h3 class="card-title">List of All Pending Users</h3>
               </div>
               <!-- /.card-header -->
               <?php
-              $get_pending_listings=$db_operation->get_all_pending_listings(1);
+              $user_data=$db_operation->get_user_details(2);
                ?>
               <div class="card-body" id="tbl_listings">
                 <table id="lst_pendings" class="table table-bordered table-hover">
                   <thead>
                   <tr>
-                    <th>Listing ID</th>
                     <th>User ID</th>
-                    <th>Make</th>
-                    <th>Model</th>
-                    <th>Images</th>
-                    <th>Date Posted</th>
-                    <th>Sale Price</th>
-                    <th>Approve</th>
+                    <th>Surname</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>User Role</th>
+                    <th>User Status</th>
+                    <th>Payment</th>
+                    <th>Edit</th>
                     <th>Delete</th>
                   </tr>
                   </thead>
                   <tbody>
                     <?php
-                    foreach ($get_pending_listings as $lst_penging_cars) {?>
-                       <tr id="<?php echo "tr_".$lst_penging_cars['listing_id']; ?>">
-                          <td><a class="td_pending" id ="<?php echo $lst_penging_cars['listing_id']; ?>" href="#"data-toggle="modal" data-target="#modal_view_details"><?php echo $lst_penging_cars['listing_id']; ?></a></td>
-                          <td><a href=""><?php echo $lst_penging_cars['user_id']; ?></a></td>
-                          <td><?php echo $lst_penging_cars['make']; ?></td>
-                          <td><?php echo $lst_penging_cars['model']; ?></td>
-                          <td><?php
-                            $img_listing_id=$lst_penging_cars['listing_id'];
-                            $lst_images=$db_operation->get_images($img_listing_id);
-                            foreach ($lst_images as $key=>$arr_images) {?>
-
-                              <img src="<?php echo $img_link.$arr_images;?>" width="100" height="100"/>
-                          <?php  }?>
-
-
-
-                          </td>
-                          <td><?php echo $lst_penging_cars['date_posted']; ?></td>
-                          <td><?php echo $lst_penging_cars['sale_price']; ?></td>
+                    if($user_data){
+                    foreach ($user_data as $lst_user_data) {?>
+                       <tr id="<?php echo "tr_".$lst_user_data['user_id']; ?>">
+                          <td><?php echo $lst_user_data['user_id']; ?></td>
+                          <td><?php echo $lst_user_data['surname']; ?></td>
+                          <td><?php echo $lst_user_data['name']; ?></td>
+                          <td><?php echo $lst_user_data['phone']; ?></td>
+                          <td><?php echo $lst_user_data['role']; ?></td>
+                          <td><?php echo $lst_user_data['user_status']; ?></td>
+                          <td>payments</td>
                           <!-- <td><a class="btn btn-success" href="payments.php?id=<?php ?>">Payment</a></td> -->
-                          <td><button id="<?php echo $lst_penging_cars['listing_id'];?>" type="button" class="btn btn-success btn_approve_pending" data-toggle="modal" data-target="#modal-approve">Approve</button></td>
+                          <td><button id="<?php echo $lst_penging_cars['listing_id'];?>" type="button" class="btn btn-success btn_approve_pending" data-toggle="modal" data-target="#modal-approve" table="tbl_users">Approve</button></td>
 
-                          <td><button id="<?php echo $lst_penging_cars['listing_id'];?>" type="button" class="btn btn-danger btn_delete" data-toggle="modal" data-target="#modal-delete">Delete</button></td>
+                          <td><button id="<?php echo $lst_penging_cars['listing_id'];?>" type="button" class="btn btn-danger btn_delete" data-toggle="modal" data-target="#modal-delete" table="tbl_users">Delete</button></td>
                         </tr>
-                  <?php  }  ?>
+                  <?php  }
+                }?>
                 </tbody>
             </table>
           </div>
@@ -260,50 +175,44 @@ if(!isset($_SESSION['user_id'])){
           <!-- /.modal-dialog -->
         </div>
         <!-- End modal for view all details -->
+        <!--//End Pending Users-->
 
-
-
-
-
-        <!--//End Pending Listings-->
-
+        <!-- List all Active Users Details-->
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">List of all cars on Sale</h3>
+                <h3 class="card-title">List of all Active Users</h3>
               </div>
               <!-- /.card-header -->
               <?php
-              $get_cars=$db_operation->get_all_sales_listings();
+              $get_active_users=$db_operation->get_user_details(1);
                ?>
               <div class="card-body" id="tbl_listings">
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
                   <tr>
-                    <th>Listing ID</th>
                     <th>User ID</th>
-                    <th>Make</th>
-                    <th>Image</th>
-                    <th>Date Posted</th>
-                    <th>Status</th>
-                    <th>Payment</th>
+                    <th>Surname</th>
+                    <th>name</th>
+                    <th>Phone</th>
+                    <th>User Role</th>
+                    <th>User Status</th>
+                    <!-- <th>Payment</th> -->
                     <th>Edit</th>
                     <th>Delete</th>
                   </tr>
                   </thead>
                   <tbody>
                     <?php
-                    foreach ($get_cars as $lst_cars) {?>
-                       <tr id="<?php echo "tr_".$lst_cars['listing_id']; ?>">
-                          <td><?php echo $lst_cars['listing_id']; ?></td>
-                          <td><a href=""><?php echo $lst_cars['user_id']; ?></a></td>
-                          <td><?php echo $lst_cars['make']; ?></td>
-                          <td><img src="<?php echo $remote_img_link.$lst_cars['listing_image_url'];?>" width="100" height="100"/></td>
-                          <td><?php echo $lst_cars['date_posted']; ?></td>
-                          <td><?php echo $lst_cars['listing_status']; ?></td>
-                          <td><a class="btn btn-success" href="payments.php?id=<?php ?>">Payment</a></td>
+                    foreach ($get_active_users as $lst_active_users) {?>
+                       <tr id="<?php echo "tr_".$lst_active_users['user_id']; ?>">
+                          <td><?php echo $lst_active_users['user_id']; ?></td>
+                          <td><?php echo $lst_active_users['surname']; ?></td>
+                          <td><?php echo $lst_active_users['name']; ?></td>
+                          <td><?php echo $lst_active_users['phone']; ?></td>
+                          <td><?php echo $lst_active_users['role']; ?></td>
+                          <td><?php echo $lst_active_users['user_status']; ?></td>
                           <td><a class="btn btn-warning" href="edit_listing.php?id=<?php ?>">Edit</a></td>
-
-                          <td><button id="<?php echo $lst_cars['listing_id'];?>" type="button" class="btn btn-danger btn_delete" data-toggle="modal" data-target="#modal-delete">Delete</button></td>
+                          <td><button id="<?php echo $lst_active_users['user_id'];?>" type="button" class="btn btn-danger btn_delete" data-toggle="modal" data-target="#modal-delete" table="tbl_users">Delete</button></td>
                         </tr>
                   <?php  }  ?>
                 </tbody>
@@ -323,8 +232,7 @@ if(!isset($_SESSION['user_id'])){
               </div>
               <!-- /.card-body -->
             </div>
-
-            <!--// end table-->
+            <!--// End List of All Active Users-->
       <!--// Display Div-->
       <!--- Modal form-->
       <div class="modal fade" id="modal-delete">
@@ -699,24 +607,26 @@ $('.td_pending').click(function () {
 
 //delete listing function
 $('.btn_delete').click(function () {
-  var listing_id= $(this).attr('id');
-  $('#tr_'+listing_id).hide();
-
-  //alert(listing_id);
-  $('.btn_modal_delete').attr('id',listing_id);
+  var id= $(this).attr('id');
+  var table=$(this).attr('table');
+  $('.btn_modal_delete').attr('id',id);
+  $('.btn_modal_delete').attr('table',table);
 });
 $('.btn_modal_delete').click(function () {
-    var listing_id= $(this).attr("id");
+    var id= $(this).attr("id");
+    var table= $(this).attr("table");
     //alert(listing_id);
     $.ajax({
       type:"POST",
-      url:"ajax/delete_listing.php",
-      data:{listing_id:listing_id},
+      url:"ajax/delete_record.php",
+      data:{id:id,table:table,field:'user_id'},
       success:function (data) {
-        console.log(data);
+        //console.log(data);
         if(data==1){
+
           $('.btn_close').trigger("click");
-          //$('#example2').DataTable();
+          $('#example2 #tr_'+id).hide();
+
           toastr.warning('Listing has been deleted!!!')
         }
       }
