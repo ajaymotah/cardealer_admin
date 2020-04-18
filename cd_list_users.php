@@ -239,13 +239,13 @@ if(!isset($_SESSION['user_id'])){
         <div class="modal-dialog modal-sm">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Delete Listing</h4>
+              <h4 class="modal-title">Delete User</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-              <p>Are you sure you want to delete the listing?</p>
+              <p>Are you sure you want to delete this user?</p>
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Close</button>
@@ -402,12 +402,12 @@ if(!isset($_SESSION['user_id'])){
                           </div>
                       </div>
                       <div class="col-md-3">
-                        <label for="txt_name">Username</label>
+                        <label for="txt_name1">Username</label>
                         <div class="input-group mb-3">
                           <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                           </div>
-                                <input type="text" class="form-control" placeholder="User name" name="txt_name" id="txt_name">
+                                <input type="text" class="form-control" placeholder="User name" name="txt_name1" id="txt_name1">
                               </div>
                       </div>
                       <div class="col-md-3">
@@ -416,7 +416,7 @@ if(!isset($_SESSION['user_id'])){
                           <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-mobile"></i></span>
                           </div>
-                              <input type="number" class="form-control" placeholder="Phone Number" name="txt_phone" id="txt_phone">
+                              <input type="number" class="form-control" placeholder="Phone Number" name="txt_phone1" id="txt_phone1">
                               </div>
                       </div>
                     </div>
@@ -576,7 +576,7 @@ $('.td_pending').click(function () {
 });
 
 //delete listing function
-$('.btn_delete').click(function () {
+$('#example2').on('click','.btn_delete',function(){
   var id= $(this).attr('id');
   var table=$(this).attr('table');
   $('.btn_modal_delete').attr('id',id);
@@ -591,7 +591,7 @@ $('.btn_modal_delete').click(function () {
       url:"ajax/delete_record.php",
       data:{id:id,table:table,field:'user_id'},
       success:function (data) {
-        //console.log(data);
+        console.log(data);
         if(data==1){
 
           $('.btn_close').trigger("click");
