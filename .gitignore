@@ -13,3 +13,4 @@ test.html
 .vscode/
 uploaded_images
 includes/database.class.php
+facebook_config/fb_init.php
