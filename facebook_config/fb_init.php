@@ -1,6 +1,6 @@
 <?php
 // start of session - Required
-//session_start();
+session_start();
 //include autoload file from vendor folder
 include('vendor/autoload.php');
 $fb=new Facebook\Facebook([
