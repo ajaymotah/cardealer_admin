@@ -756,7 +756,7 @@ while($row=mysqli_fetch_assoc($query))
 }
 public function find_user_phone_exists($id)
 {
-	$sql="SELECT phone FROM tbl_users WHERE phone like '%$id'";
+	$sql="SELECT phone FROM tbl_users WHERE phone like '%$id%'";
 	$query=mysqli_query($this->con,$sql);
 	while($row=mysqli_fetch_assoc($query))
 		{

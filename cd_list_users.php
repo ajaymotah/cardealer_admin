@@ -269,7 +269,7 @@ if(!isset($_SESSION['user_id'])){
             <div class="col-md-3">
               <label for="slt_listing_type">User Type</label>
               <select class="form-control" name="slt_listing_type" id="slt_listing_type">
-                <option value="" selected disabled hidden>Select Listing Type</option>
+                <option value="" selected disabled hidden>Select user Type</option>
                 <?php
                           $get_user_roles=$db_operation->fetch_records('tbl_user_roles');
 
@@ -287,35 +287,41 @@ if(!isset($_SESSION['user_id'])){
 
             <div class="col-md-3">
               <label for="txt_phone">Phone Number</label>
-              <input type="text" name="txt_phone" id="txt_phone" class="form-control" maxlength="8">
+              <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+    type = "number" maxlength = "8" name="txt_phone" id="txt_phone" class="form-control">
             </div>
 
 
 
             <div class="col-md-3">
-              <label for="txt_name">Name</label>
-              <input type="text" name="txt_name" id="txt_name" class="form-control">
+              <label for="txt_surname">Surname</label>
+              <input type="text" name="txt_surname" id="txt_surname" class="form-control" data-validetta="required">
             </div>
             <div class="col-md-3">
-              <label for="slt_model">Model</label>
-              <div class="select_model col-3-xs-1">
-                <!-- <select class="" name="">
-                  <option value=""selected disabled hidden>First select make</option>
-                </select> -->
-                      </div>
+              <label for="txt_surname">Name</label>
+              <input type="text" name="txt_name" id="txt_name" class="form-control" data-validetta="required">
             </div>
-            <div class="col-md-3">
-              <label for="slt_year">Year</label>
-              <select class="form-control" name="slt_year" id="slt_year" data-validetta="required">
-                <option value="" selected disabled hidden>Select Year</option>
-                <?php
-                          $arr_year=$db_operation->GetCarYear();
-                          foreach ($arr_year as $opt_year) {
-                            echo'<option value="'.$opt_year.'">'.$opt_year.'</option>';
-                          }
-                         ?>
-              </select>
+
             </div>
+            <div class="row">
+            <div class="col-3">
+              <label for="txt_pin">Pin</label>
+              <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+    type = "number" maxlength = "4" name="txt_pin" id="txt_pin" class="form-control" data-validetta="required">
+            </div>
+
+            <div class="col-3">
+              <label for="txt_re_pin">Re Enter Pin</label>
+              <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+    type = "number" maxlength = "4" name="txt_re_pin" id="txt_re_pin" class="form-control" data-validetta="required, equalTo[txt_pin]">
+            </div>
+            <div class="col-3">
+              <label for="txt_email">Email</label>
+              <input type = "email" name="txt_email" id="txt_email" class="form-control" data-validetta="required,email">
+            </div>
+          </div>
+
+
           </div>
 <p></p>
           <div class="row">
@@ -411,20 +417,20 @@ if(!isset($_SESSION['user_id'])){
                               </div>
                       </div>
                       <div class="col-md-3">
-                        <label for="txt_phone">Mobile Number</label>
+                        <label for="txt_1">Mobile Number</label>
                         <div class="input-group mb-3">
                           <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-mobile"></i></span>
                           </div>
-                              <input type="number" class="form-control" placeholder="Phone Number" name="txt_phone1" id="txt_phone1">
+                              <input type="number" class="form-control" placeholder="Phone Number" name="txt_1" id="txt_1">
                               </div>
                       </div>
                     </div>
                       </form>
 
-                    <!-- upload image row-->
-                    <form class="frmUploadImg" enctype="multipart/form-data" method="post">
-                              <div class="row">
+
+
+                              <!-- <div class="row">
                                 <div class="col-md-6">
                                   <div class="form-group">
                                     <label for="file[]">Upload Image</label>
@@ -441,18 +447,18 @@ if(!isset($_SESSION['user_id'])){
                           </div>
                           <div class="show_image_preview"></div>
                                 </div>
-                              </div>
+                              </div> -->
 
                     <!-- //.Upload image row-->
                     <div class="row">
 
                         <div class="col-md-6" style="padding-top:15px">
-                          <button id="btn_save_listing" name="btn_save_listing" type="button" class="btn btn-success"> Save </button>
+                          <button id="btn_save_user" name="btn_save_user" type="button" class="btn btn-success"> Save </button>
                           <button id="btn_cancel" name="btn_cancel" type="button" class="btn btn-danger"> Cancel </button></br>
                         </div>
 
                     </div>
-                </form>
+
         </div>
         <!-- /.card-body -->
       </div>
@@ -645,8 +651,30 @@ $('.btn_modal_approve').click(function () {
 });
 
 //find user details by Phone number if already exists
-$('txt_phone').keyup(function () {
+$('#txt_phone').keyup(function () {
+  var lst_phone=$(this).val();
+  //alert(lst_phone);
+  if(lst_phone!='' && lst_phone.length>=8){
+  $.ajax({
+    type:"POST",
+    url:"ajax/find_user_phone_exists.php",
+    data:{$txt_phone_num:lst_phone},
+    success:function (data) {
+      //console.log(data);
+      if(data!=false){
+        $('#phone_search_result').html(data);
+      }
+      else {
+        $('#phone_search_result').html('Phone number not found');
+      }
+    }
+  });//end ajax
+}
+else{
+  $('#phone_search_result').html('');
+}
 
+  //$('#phone_search_result').html(lst_phone);
 })
 
 //save new user as pending
