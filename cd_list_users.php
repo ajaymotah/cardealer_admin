@@ -138,9 +138,9 @@ if(!isset($_SESSION['user_id'])){
                           <td><?php echo $lst_user_data['user_status']; ?></td>
                           <td>payments</td>
                           <!-- <td><a class="btn btn-success" href="payments.php?id=<?php ?>">Payment</a></td> -->
-                          <td><button id="<?php echo $lst_penging_cars['listing_id'];?>" type="button" class="btn btn-success btn_approve_pending" data-toggle="modal" data-target="#modal-approve" table="tbl_users">Approve</button></td>
+                          <td><button id="<?php echo $lst_user_data['user_id'];?>" type="button" class="btn btn-success btn_approve_pending" data-toggle="modal" data-target="#modal-approve" table="tbl_users">Approve</button></td>
 
-                          <td><button id="<?php echo $lst_penging_cars['listing_id'];?>" type="button" class="btn btn-danger btn_delete" data-toggle="modal" data-target="#modal-delete" table="tbl_users">Delete</button></td>
+                          <td><button id="<?php echo $lst_user_data['user_id'];?>" table="tbl_users" type="button" class="btn btn-danger btn_delete" data-toggle="modal" data-target="#modal-delete" table="tbl_users">Delete</button></td>
                         </tr>
                   <?php  }
                 }?>
@@ -154,7 +154,7 @@ if(!isset($_SESSION['user_id'])){
           <div class="modal-dialog modal-sm">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Approve Listing</h4>
+                <h4 class="modal-title">Approve New User</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -163,7 +163,7 @@ if(!isset($_SESSION['user_id'])){
                 <div class="modal_lst">
 
                 </div>
-                <p>Are you sure you want to approve the listing?</p>
+                <p>Are you sure you want to approve This user?</p>
               </div>
               <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Close</button>
@@ -262,13 +262,13 @@ if(!isset($_SESSION['user_id'])){
           <h3 class="card-title">Add New Users</h3>
         </div>
 <!-- form-->
-<form id="frmAddUsers" name="frmAddUsers" method="post">
+<form id="frmAddUsers" method="post" action="">
 
         <div class="card-body">
           <div class="row">
             <div class="col-md-3">
               <label for="slt_listing_type">User Type</label>
-              <select class="form-control" name="slt_listing_type" id="slt_listing_type">
+              <select class="form-control" name="slt_user_role_type" id="slt_user_role_type">
                 <option value="" selected disabled hidden>Select user Type</option>
                 <?php
                           $get_user_roles=$db_operation->fetch_records('tbl_user_roles');
@@ -288,7 +288,7 @@ if(!isset($_SESSION['user_id'])){
             <div class="col-md-3">
               <label for="txt_phone">Phone Number</label>
               <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-    type = "number" maxlength = "8" name="txt_phone" id="txt_phone" class="form-control">
+    type = "number" maxlength = "8" name="txt_phone" id="txt_phone" class="form-control" data-validetta="required">
             </div>
 
 
@@ -307,158 +307,30 @@ if(!isset($_SESSION['user_id'])){
             <div class="col-3">
               <label for="txt_pin">Pin</label>
               <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-    type = "number" maxlength = "4" name="txt_pin" id="txt_pin" class="form-control" data-validetta="required">
+    type = "number" maxlength = "4" name="txt_pin" id="txt_pin" class="form-control" data-validetta="required,number,minLength[4],maxLength[4]">
             </div>
 
             <div class="col-3">
               <label for="txt_re_pin">Re Enter Pin</label>
               <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-    type = "number" maxlength = "4" name="txt_re_pin" id="txt_re_pin" class="form-control" data-validetta="required, equalTo[txt_pin]">
+    type = "number" maxlength = "4" name="txt_re_pin" id="txt_re_pin" class="form-control" data-validetta="required, required,number,minLength[4],maxLength[4],equalTo[txt_pin]">
             </div>
             <div class="col-3">
               <label for="txt_email">Email</label>
               <input type = "email" name="txt_email" id="txt_email" class="form-control" data-validetta="required,email">
             </div>
           </div>
-
-
-          </div>
-<p></p>
-          <div class="row">
-            <div class="col-md-3">
-              <label for="txt_mileage">Mileage</label>
-              <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-road"></i></span>
-                  </div>
-                  <input class="form-control" placeholder="Mileage" type="number" name="txt_mileage">
-                </div>
-            </div>
-            <div class="col-md-3">
-              <label for="txt_engine">Engine CC</label>
-              <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-closed-captioning"></i></span>
-                  </div>
-                  <input class="form-control" placeholder="Engine CC" type="number" name="txt_engine">
-                </div>
-            </div>
-            <div class="col-md-3">
-              <label for="slt_fuel">fuel</label>
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="fas fa-gas-pump"></i></span>
-                </div>
-                      <select class="form-control" id="slt_fuel" name="slt_fuel" data-validetta="required">
-                        <option value="" selected="" disabled="" hidden="">Select Fuel</option>
-                        <?php
-                     $arr_fuel=$db_operation->fetch_records('tbl_fuel');
-                     foreach ($arr_fuel as $opt_fuel) {
-                       echo'<option value="'.$opt_fuel['fuel_id'].'">'.$opt_fuel['fuel'].'</option>';
-                     }
-                    ?>
-                      </select>
-                    </div>
-            </div>
-            <div class="col-md-3">
-              <label for="slt_transmission">Transmission</label>
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="fas fa-cogs"></i></span>
-                </div>
-                      <select class="form-control" id="slt_transmission" name="slt_transmission" data-validetta="required">
-                        <option value="" selected="" disabled="" hidden="">Select Transmission</option>
-                        <?php
-                            $arr_transmission=$db_operation->fetch_records('tbl_transmission');
-                            foreach ($arr_transmission as $opt_transmission) {
-                              echo'<option value="'.$opt_transmission['transmission_id'].'">'.$opt_transmission['transmission'].'</option>';
-                            }
-                           ?>
-                      </select>
-                    </div>
-            </div>
           </div>
 
-          <p></p>
-                    <div class="row">
-                      <div class="col-md-3">
-                        <label for="slt_location">Location</label>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
-                            </div>
-                            <select class="form-control" id="slt_location" name="slt_location" data-validetta="required">
-                          <option value="" selected disabled hidden>Select Location</option>
-                          <?php
-                            $arr_location=$db_operation->fetch_records('tbl_locations');
-                            foreach ($arr_location as $opt_location) {
-                              echo'<option value="'.$opt_location['location_id'].'">'.$opt_location['locations'].'</option>';
-                            }
-                           ?>
-                        </select>
-                          </div>
-                      </div>
-                      <div class="col-md-3">
-                        <label for="txt_price">Price (MUR)<div class="show_price"></div></label>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
-                            </div>
-                            <input class="form-control" placeholder="Price (Rs)" type="number" name="txt_price" id="txt_price" data-validetta="required">
-                          </div>
-                      </div>
-                      <div class="col-md-3">
-                        <label for="txt_name1">Username</label>
-                        <div class="input-group mb-3">
-                          <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                          </div>
-                                <input type="text" class="form-control" placeholder="User name" name="txt_name1" id="txt_name1">
-                              </div>
-                      </div>
-                      <div class="col-md-3">
-                        <label for="txt_1">Mobile Number</label>
-                        <div class="input-group mb-3">
-                          <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-mobile"></i></span>
-                          </div>
-                              <input type="number" class="form-control" placeholder="Phone Number" name="txt_1" id="txt_1">
-                              </div>
-                      </div>
-                    </div>
-                      </form>
-
-
-
-                              <!-- <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label for="file[]">Upload Image</label>
-                                    <div id="filediv">
-                                      <input name="file[]" type="file" class="file" id="img0" accept="image/*"/>
-                                    </div>
-                                    <input type="button" id="add_more" class="upload" value="Add More Files"/>
-                                    <p></p>
-                                    <span class="text-muted">Only .jpg, .png files allowed - Max Size 5MB - Total 5 Pictures allowed</span>
-                                    <span id="error_multiple_files"></span>
-                                    <div id="img_count" count="0"></div>
-
-                    <div class="image_preview"></div>
-                          </div>
-                          <div class="show_image_preview"></div>
-                                </div>
-                              </div> -->
-
-                    <!-- //.Upload image row-->
                     <div class="row">
 
                         <div class="col-md-6" style="padding-top:15px">
-                          <button id="btn_save_user" name="btn_save_user" type="button" class="btn btn-success"> Save </button>
+                          <button id="btn_save_user" name="btn_save_user" type="submit" class="btn btn-success"> Save </button>
                           <button id="btn_cancel" name="btn_cancel" type="button" class="btn btn-danger"> Cancel </button></br>
                         </div>
 
                     </div>
-
+                  </form>
         </div>
         <!-- /.card-body -->
       </div>
@@ -559,7 +431,6 @@ $(document).ready(function(){
 //$('html').ploading({action: 'show'});
 //create_table();
 
-
 $('.footer_list').load('pages/cd_footer.html');
 //show pending listing details on modal
 $('.td_pending').click(function () {
@@ -582,7 +453,7 @@ $('.td_pending').click(function () {
 });
 
 //delete listing function
-$('#example2').on('click','.btn_delete',function(){
+$('#example2,#lst_pendings').on('click','.btn_delete',function(){
   var id= $(this).attr('id');
   var table=$(this).attr('table');
   $('.btn_modal_delete').attr('id',id);
@@ -597,11 +468,12 @@ $('.btn_modal_delete').click(function () {
       url:"ajax/delete_record.php",
       data:{id:id,table:table,field:'user_id'},
       success:function (data) {
-        console.log(data);
+        //console.log(data);
         if(data==1){
 
           $('.btn_close').trigger("click");
           $('#example2 #tr_'+id).hide();
+          $('#lst_pendings #tr_'+id).hide();
 
           toastr.warning('Listing has been deleted!!!')
         }
@@ -610,40 +482,42 @@ $('.btn_modal_delete').click(function () {
     //$("tr_"+listing_id).hide();
 });
 //Approve btn functions
-$('.btn_approve_pending').click(function () {
-  var listing_id= $(this).attr('id');
-  $('#tr_'+listing_id).hide();
-  $('.btn_modal_approve').attr('id',listing_id);
+$('#lst_pendings').on('click','.btn_approve_pending',function () {
+  var user_id= $(this).attr('id');
+$('.btn_modal_approve').attr('id',user_id);
+$('.btn_modal_approve').attr('table','tbl_users');
 })
 
 //Approve modal btn click
 $('.btn_modal_approve').click(function () {
-    var listing_id= $(this).attr("id");
-    //alert(listing_id);
+    var user_id= $(this).attr('id');
+    var table=$(this).attr('table');
+    //alert(user_id);
     $.ajax({
       type:"POST",
-      url:"ajax/approve_listing.php",
-      data:{listing_id:listing_id},
+      url:"ajax/update_record.php",
+      data:{where_field:user_id,where_value:'user_id',table:table,set_field:'user_status_id',set_value:'1'},
       success:function (data) {
-        //console.log(data);
+        console.log(data);
         if(data==1){
           $('.btn_close').trigger("click");
           //$('#example2').DataTable();
           Swal.fire({
        type: 'success',
-       title: 'Listing has been successfully put on live'
-     })
+       title: 'User has been successfully set Active'
+     }),
+     $('#lst_pendings #tr_'+user_id).hide();
+     $("#example2").load(location.href + " #example2");
 
-     // post to Facebook Page
-     $.ajax({
-       type:"POST",
-       url:"facebook_config/postpage.php",
-       data:{listing_id:listing_id},
-       success:function (posted) {
-         console.log(posted);
-
-       }
-     });
+     // post to Facebook Page - NEW User Joined
+     // $.ajax({
+     //   type:"POST",
+     //   url:"facebook_config/postpage.php",
+     //   data:{listing_id:listing_id},
+     //   success:function (posted) {
+     //     console.log(posted);
+     //   }
+     // });
         }
       }
     });
@@ -675,49 +549,47 @@ else{
 }
 
   //$('#phone_search_result').html(lst_phone);
-})
+});
 
 //save new user as pending
-$('#btn_save_listing').click(function (e) {
-//save form data to DB
-var frm_save_listing= new FormData($('#frmAddListing')[0]);
-$.ajax({
-  type:"post",
-  url:"ajax/save_listing.php",
-  data:frm_save_listing,
-  cache: false,
-  contentType: false,
-  processData: false,
+$('#btn_save_user').click(function () {
 
-  success:function(listing_id){
-    //console.log(listing_id);
-    //var listing_id=1;
-    var formData = new FormData($('.frmUploadImg')[0]);
-      $.ajax({
-          type:"post",
-          url:"ajax/upload_img.php?id="+listing_id,
-          data:formData,
-          cache: false,
-        contentType: false,
-        processData: false,
-          beforeSend:function () {
-            console.log("Saving");
-          },
-          success:function(img_arr){
-            console.log(img_arr);
-            Swal.fire({
-         type: 'success',
-         title: 'Listing has been saved'
-       })
-            //console.log(img_arr);
+  $('#frmAddUsers').validetta({
+    display : 'inline',
+    errorTemplateClass : 'validetta-inline',
+    realTime:true,
 
+       onValid : function( event ) {
+            event.preventDefault();
+            var frm_add_user_data={
+              user_role_id:$('#slt_user_role_type').val(),
+              user_status_id:2,
+              phone:$('#txt_phone').val(),
+              surname:$('#txt_surname').val(),
+              name:$('#txt_name').val(),
+              pin:$('#txt_pin').val(),
+              email:$('#txt_email').val(),
+              table:'tbl_users'
+            }
+            $.ajax({
+              type:"POST",
+              url:"ajax/insert_record.php",
+              data:frm_add_user_data,
+              success:function (data) {
+                //console.log(data);
+                Swal.fire({
+             type: 'success',
+             title: 'User has been saved'
+           }),
+           //relaods the div data !!! :)
+           $("#lst_pendings").load(location.href + " #lst_pendings");
 
-
-          }
-        })
-      }
+              }
+            });
+        }
   })
-})
+
+});
 
 //
 });// end Document Ready()
