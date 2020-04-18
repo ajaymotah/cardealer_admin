@@ -1,28 +1,11 @@
 <?php
 include('fb_init.php');
 include('../includes/db_operations.class.php');
-$listing_id=$_POST['listing_id'];
-
-//$listing_id=468;
-$car_preview=$db_operation->get_car_preview($listing_id);
-if($car_preview['sale_price']>100){
-  $car_price=number_format($car_preview['sale_price']);
-}
-else{
-  $car_price="Price is Negotiable";
-}
-/*
-$linkData = [
- 'link' => 'www.yoururl.com',
- 'message' => 'Your message here'
-];
-*/
-
 
 /*Token expired by March 2020*/
-$pageAccessToken ='EAAExKKM6XLoBAIQK7QLlIZATCUcAltaZBbTfHNsPGBnPo3FaIEyUbkDtTJKcsybfV5xvqTz2FrXhXLZAi40GQWAh65SVMbobZCpcZBy4wBWjc6KzPHG3Cxm2eU41jgVhAU9yYZBWsD3oFwaR3U7csVi0lr3Yi6r4xcqfpVXoWvnQZDZD';
+$pageAccessToken ='EAAExKKM6XLoBAHucTBZByvPS9UFVioKxKZBdYW3FYANqFAjYOZBqjvYlvza2acXGUMYhduuaJ0fVlshVAIwBun0bBej1uHR2DiPQrreXn55Kz4PTuDNToWHZAtXZBLZAjelHmvTHv0crx4eq0zv2N0N87PPwqQRcRhuWNEycf0UwO5W0scVtvnXYhSwhSa7BMijiPTTkw6LT5uAtgg5Qb32IMiim61j1ZASaCIpmZBoTkwZDZD';
 $imageData=[
-  'source'=>$fb->fileToUpload('http://cardealer.webdevsolutions.biz/admin/uploaded_images/'.$car_preview['listing_image_url']),
+  'source'=>$fb->fileToUpload('http://cardealer.webdevsolutions.biz/admin/uploaded_images/15468360683.jpg'),
   'message'=>'Testing!!!'
 
 ];
