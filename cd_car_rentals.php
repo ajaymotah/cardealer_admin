@@ -12,7 +12,7 @@ if(!isset($_SESSION['user_id'])){
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <title>CARDEALER | Dashboard</title>
+  <title>CARDEALER | Car Rentals</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -78,7 +78,7 @@ if(!isset($_SESSION['user_id'])){
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Dashboard</h1>
+            <h1 class="m-0 text-dark">Car Rentals</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -181,11 +181,11 @@ if(!isset($_SESSION['user_id'])){
             <!-- Pending listings-->
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">List of Pending Listings</h3>
+                <h3 class="card-title">List of Pending Car Rentals </h3>
               </div>
               <!-- /.card-header -->
               <?php
-              $get_pending_listings=$db_operation->get_all_pending_listings(1);
+              $get_pending_listings=$db_operation->get_all_pending_listings(4);
                ?>
               <div class="card-body" id="tbl_listings">
                 <table id="lst_pendings" class="table table-bordered table-hover">
@@ -204,14 +204,14 @@ if(!isset($_SESSION['user_id'])){
                   </thead>
                   <tbody>
                     <?php
-                    foreach ($get_pending_listings as $lst_penging_cars) {?>
-                       <tr id="<?php echo "tr_".$lst_penging_cars['listing_id']; ?>">
-                          <td><a class="td_pending" id ="<?php echo $lst_penging_cars['listing_id']; ?>" href="#"data-toggle="modal" data-target="#modal_view_details"><?php echo $lst_penging_cars['listing_id']; ?></a></td>
-                          <td><a href=""><?php echo $lst_penging_cars['user_id']; ?></a></td>
-                          <td><?php echo $lst_penging_cars['make']; ?></td>
-                          <td><?php echo $lst_penging_cars['model']; ?></td>
+                    foreach ($get_pending_listings as $lst_pending_cars) {?>
+                       <tr id="<?php echo "tr_".$lst_pending_cars['listing_id']; ?>">
+                          <td><a class="td_pending" id ="<?php echo $lst_pending_cars['listing_id']; ?>" href="#"data-toggle="modal" data-target="#modal_view_details"><?php echo $lst_pending_cars['listing_id']; ?></a></td>
+                          <td><a href=""><?php echo $lst_pending_cars['user_id']; ?></a></td>
+                          <td><?php echo $lst_pending_cars['make']; ?></td>
+                          <td><?php echo $lst_pending_cars['model']; ?></td>
                           <td><?php
-                            $img_listing_id=$lst_penging_cars['listing_id'];
+                            $img_listing_id=$lst_pending_cars['listing_id'];
                             $lst_images=$db_operation->get_images($img_listing_id);
                             foreach ($lst_images as $key=>$arr_images) {?>
 
@@ -221,12 +221,12 @@ if(!isset($_SESSION['user_id'])){
 
 
                           </td>
-                          <td><?php echo $lst_penging_cars['date_posted']; ?></td>
-                          <td><?php echo $lst_penging_cars['sale_price']; ?></td>
+                          <td><?php echo $lst_pending_cars['date_posted']; ?></td>
+                          <td><?php echo $lst_pending_cars['sale_price']; ?></td>
                           <!-- <td><a class="btn btn-success" href="payments.php?id=<?php ?>">Payment</a></td> -->
-                          <td><button id="<?php echo $lst_penging_cars['listing_id'];?>" type="button" class="btn btn-success btn_approve_pending" data-toggle="modal" data-target="#modal-approve">Approve</button></td>
+                          <td><button id="<?php echo $lst_pending_cars['listing_id'];?>" type="button" class="btn btn-success btn_approve_pending" data-toggle="modal" data-target="#modal-approve">Approve</button></td>
 
-                          <td><button id="<?php echo $lst_penging_cars['listing_id'];?>" type="button" class="btn btn-danger btn_delete" data-toggle="modal" data-target="#modal-delete">Delete</button></td>
+                          <td><button id="<?php echo $lst_pending_cars['listing_id'];?>" type="button" class="btn btn-danger btn_delete" data-toggle="modal" data-target="#modal-delete">Delete</button></td>
                         </tr>
                   <?php  }  ?>
                 </tbody>
@@ -269,11 +269,11 @@ if(!isset($_SESSION['user_id'])){
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">List of all cars on Sale</h3>
+                <h3 class="card-title">List of all Car Rentals</h3>
               </div>
               <!-- /.card-header -->
               <?php
-              $get_cars=$db_operation->get_all_sales_listings();
+              $get_cars=$db_operation->get_all_rental_listings();
                ?>
               <div class="card-body" id="tbl_listings">
                 <table id="example2" class="table table-bordered table-hover">
@@ -351,7 +351,7 @@ if(!isset($_SESSION['user_id'])){
 
       <div class="card card-primary">
         <div class="card-header">
-          <h3 class="card-title">Add Car Listings</h3>
+          <h3 class="card-title">Add Car Rental Listings</h3>
         </div>
 <!-- form-->
 <form id="frmAddListing" name="frmAddListing" method="post">
@@ -360,19 +360,49 @@ if(!isset($_SESSION['user_id'])){
           <div class="row">
             <div class="col-md-3">
               <label for="slt_listing_type">Listing Type</label>
+              <div class="input-group mb-3">
               <select class="form-control" name="slt_listing_type" id="slt_listing_type">
-                <option value="" selected disabled hidden>Select Listing Type</option>
-                <?php
-                          $arr_listing_type=$db_operation->fetch_records('tbl_listing_types');
-
-                          foreach ($arr_listing_type as $opt_listing_type) {
-                            echo'<option value="'.$opt_listing_type['listing_type_id'].'">'.$opt_listing_type['listing_type'].'</option>';
-                          }
-                         ?>
+              <option value="4">Car Rentals</option>
               </select>
+            </div>
+            </div>
 
+            <div class="col-md-3">
+              <label for="slt_listing_type">Region</label>
+              <div class="input-group mb-3">
+              <select class="form-control" name="slt_region" id="slt_region">
+              <option value="" selected disabled hidden>Select Region</option>
+              <?php
+                        $arr_regions=$db_operation->fetch_records('tbl_regions');
+
+                        foreach (  $arr_regions as $opt_regions) {
+                          echo'<option value="'.$opt_regions['region_id'].'">'.$opt_regions['region'].'</option>';
+                        }
+                       ?>
+              </select>
+            </div>
+            </div>
+            <div class="col-md-3">
+              <label for="slt_location">Location</label>
+              <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                  </div>
+                  <select class="form-control" id="slt_location" name="slt_location" data-validetta="required">
+                <option value="" selected disabled hidden>Select Location</option>
+                <?php
+                  $arr_location=$db_operation->fetch_records('tbl_locations');
+                  foreach ($arr_location as $opt_location) {
+                    echo'<option value="'.$opt_location['location_id'].'">'.$opt_location['locations'].'</option>';
+                  }
+                 ?>
+              </select>
+                </div>
             </div>
           </div>
+
+
+
           <div class="row">
             <div class="col-md-3">
               <label for="slt_condition">Condition</label>
@@ -478,25 +508,9 @@ if(!isset($_SESSION['user_id'])){
 
           <p></p>
                     <div class="row">
+
                       <div class="col-md-3">
-                        <label for="slt_location">Location</label>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
-                            </div>
-                            <select class="form-control" id="slt_location" name="slt_location" data-validetta="required">
-                          <option value="" selected disabled hidden>Select Location</option>
-                          <?php
-                            $arr_location=$db_operation->fetch_records('tbl_locations');
-                            foreach ($arr_location as $opt_location) {
-                              echo'<option value="'.$opt_location['location_id'].'">'.$opt_location['locations'].'</option>';
-                            }
-                           ?>
-                        </select>
-                          </div>
-                      </div>
-                      <div class="col-md-3">
-                        <label for="txt_price">Price (MUR)<div class="show_price"></div></label>
+                        <label for="txt_price">Price (MUR) / Per Day<div class="show_price"></div></label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
@@ -889,17 +903,18 @@ e.preventDefault();
 
 $('#btn_save_listing').click(function (e) {
 //save form data to DB
+alert('asdasd');
 var frm_save_listing= new FormData($('#frmAddListing')[0]);
 $.ajax({
   type:"post",
-  url:"ajax/save_listing.php",
+  url:"ajax/save_rental_listing.php",
   data:frm_save_listing,
   cache: false,
   contentType: false,
   processData: false,
 
   success:function(listing_id){
-    //console.log(listing_id);
+    console.log(listing_id);
     //var listing_id=1;
     var formData = new FormData($('.frmUploadImg')[0]);
       $.ajax({
@@ -918,10 +933,7 @@ $.ajax({
          type: 'success',
          title: 'Listing has been saved'
        })
-            //console.log(img_arr);
-
-
-
+            console.log(img_arr);
           }
         })
       }
