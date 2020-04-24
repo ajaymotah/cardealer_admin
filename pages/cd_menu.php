@@ -56,7 +56,7 @@ $menu_list='
       </li>
       <li class="nav-item">
         <a href="cd_car_rentals.php" class="nav-link">
-          <i class="nav-icon fas fa-th"></i>
+          <i class="nav-icon fas fa-ad"></i>
           <p>
             Car Rentals
             <!--<span class="right badge badge-danger">New</span>-->

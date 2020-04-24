@@ -41,6 +41,8 @@ if(!isset($_SESSION['user_id'])){
   <link rel="stylesheet" href="plugins/validetta/validetta.min.css">
   <!-- img upload css-->
   <link rel="stylesheet" href="custom/upload_img.css">
+  <!-- tooltip css-->
+  <link rel="stylesheet" href="custom/tooltip.css">
   <!-- loading spinner-->
   <link rel="stylesheet" type="text/css" href="p-loading/dist/css/p-loading.min.css" />
   <!-- Google Font: Source Sans Pro -->
@@ -207,7 +209,7 @@ if(!isset($_SESSION['user_id'])){
                     foreach ($get_pending_listings as $lst_pending_cars) {?>
                        <tr id="<?php echo "tr_".$lst_pending_cars['listing_id']; ?>">
                           <td><a class="td_pending" id ="<?php echo $lst_pending_cars['listing_id']; ?>" href="#"data-toggle="modal" data-target="#modal_view_details"><?php echo $lst_pending_cars['listing_id']; ?></a></td>
-                          <td><a href=""><?php echo $lst_pending_cars['user_id']; ?></a></td>
+                          <td><a class="td_user_id" id="<?php echo $lst_pending_cars['user_id']; ?>" href="#"><?php echo $lst_pending_cars['user_id']; ?></a></td>
                           <td><?php echo $lst_pending_cars['make']; ?></td>
                           <td><?php echo $lst_pending_cars['model']; ?></td>
                           <td><?php
@@ -223,9 +225,9 @@ if(!isset($_SESSION['user_id'])){
                           </td>
                           <td><?php echo $lst_pending_cars['date_posted']; ?></td>
                           <td><?php echo $lst_pending_cars['sale_price']; ?></td>
-                          <!-- <td><a class="btn btn-success" href="payments.php?id=<?php ?>">Payment</a></td> -->
-                          <td><button id="<?php echo $lst_pending_cars['listing_id'];?>" type="button" class="btn btn-success btn_approve_pending" data-toggle="modal" data-target="#modal-approve">Approve</button></td>
 
+                          <!--<td><button id="btn_details" type="button" class="btn btn-success btn_approve_pending" data-toggle="modal" data-target="#modal-user-details">Details</button></td>-->
+                          <td><button id="<?php echo $lst_pending_cars['listing_id'];?>" type="button" class="btn btn-success btn_approve_pending" data-toggle="modal" data-target="#modal-approve">Approve</button></td>
                           <td><button id="<?php echo $lst_pending_cars['listing_id'];?>" type="button" class="btn btn-danger btn_delete" data-toggle="modal" data-target="#modal-delete">Delete</button></td>
                         </tr>
                   <?php  }  ?>
@@ -234,7 +236,7 @@ if(!isset($_SESSION['user_id'])){
           </div>
               <!-- /.card-body -->
         </div>
-        <!-- modal for view all details -->
+              <!-- modal for view all details -->
         <div class="modal fade" id="modal-approve">
           <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -836,7 +838,7 @@ accept:'image/*'
 
 var img_count=$('#img_count').attr('count');
 var error_images='';
-////
+
 // Following function will executes on change event of file input to select different file.
 $('body').on('change', '.file', function() {
 //Validate image extension
@@ -903,7 +905,7 @@ e.preventDefault();
 
 $('#btn_save_listing').click(function (e) {
 //save form data to DB
-alert('asdasd');
+//alert('asdasd');
 var frm_save_listing= new FormData($('#frmAddListing')[0]);
 $.ajax({
   type:"post",
@@ -938,10 +940,20 @@ $.ajax({
         })
       }
   })
-})
+});
+//modal to show user details
+$(".td_user_id").mouseover(function()
+  {
+    var id=$(this).attr('id');
+    $.ajax({
 
-//
-});// end Document Ready()
+
+
+    });
+    alert(id);
+  });
+
+});// end Document Ready()//
 
 </script>
 </body>
