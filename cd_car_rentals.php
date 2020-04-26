@@ -687,11 +687,7 @@ function addCommas(nStr)
 }
 
 $(document).ready(function(){
-//Loading script//
-//$('html').ploading({action: 'show'});
-//create_table();
-
-
+activate_link();
 $('.footer_list').load('pages/cd_footer.html');
 //show pending listing details on modal
 $('.td_pending').click(function () {
@@ -944,8 +940,14 @@ $.ajax({
 //modal to show user details
 $(".td_user_id").mouseover(function()
   {
-    var id=$(this).attr('id');
+    var user_id=$(this).attr('id');
     $.ajax({
+      type:"post",
+      url:"ajax/find_by_id.php?id="+user_id,
+      data:formData,
+      cache: false,
+      contentType: false,
+      processData: false,
 
 
 

@@ -1,6 +1,6 @@
 <?php
-include('pages/cd_menu.php');
 include('includes/db_operations.class.php');
+include('pages/cd_menu.php');
 if(!isset($_SESSION['user_id'])){
   header('location:pages/cd_login.php');
   exit();
@@ -678,11 +678,7 @@ function addCommas(nStr)
 }
 
 $(document).ready(function(){
-//Loading script//
-//$('html').ploading({action: 'show'});
-//create_table();
-
-
+activate_link();
 $('.footer_list').load('pages/cd_footer.html');
 //show pending listing details on modal
 $('.td_pending').click(function () {

@@ -1,6 +1,6 @@
 <?php
-include('pages/cd_menu.php');
 include('includes/db_operations.class.php');
+include('pages/cd_menu.php');
 if(!isset($_SESSION['user_id'])){
   header('location:pages/cd_login.php');
   exit();
@@ -391,8 +391,9 @@ if(!isset($_SESSION['user_id'])){
 <script src="plugins/validetta/validetta.min.js"></script>
 <!-- P-Loading JS -->
 <script type="text/javascript" src="p-loading/dist/js/p-loading.min.js"></script>
-<script src="custom/custom.js"></script>
+<script type="text/javascript" src="custom/custom.js"></script>
 <script>
+
 $(function (){
   //$('#test').DataTable();
   $('#lst_pendings').DataTable({
@@ -426,11 +427,9 @@ $(function() {
     timer: 3000
   });
 });
-$(document).ready(function(){
-//Loading script//
-//$('html').ploading({action: 'show'});
-//create_table();
 
+$(document).ready(function(){
+activate_link();
 $('.footer_list').load('pages/cd_footer.html');
 //show pending listing details on modal
 $('.td_pending').click(function () {

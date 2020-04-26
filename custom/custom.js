@@ -11,5 +11,14 @@ var max_user_listings=5;
 var menu_items="cd_menu.html";
 var footer_items="cd_footer.html";
 
+
+function activate_link(){
+  var page_url=location.pathname.split('/').slice(-1)[0]
+$('a[href="'+page_url+'"').addClass('active');
+}
+
+
+
+
 //menu
 //list menu items
