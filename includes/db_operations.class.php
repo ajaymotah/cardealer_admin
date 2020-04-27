@@ -629,7 +629,11 @@ while($row=mysqli_fetch_assoc($query))
 	{
 	$array[]=$row;
 	}
-	return $array;
+	if(!empty($array))
+		return $array;
+	else
+		return false;
+
 }
 
 //get all active rental listings
@@ -651,7 +655,10 @@ while($row=mysqli_fetch_assoc($query))
 	{
 	$array[]=$row;
 	}
-	return $array;
+	if(!empty($array))
+		return $array;
+	else
+		return false;
 }
 
 

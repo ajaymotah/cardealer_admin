@@ -206,6 +206,7 @@ if(!isset($_SESSION['user_id'])){
                   </thead>
                   <tbody>
                     <?php
+                    if($get_pending_listings){
                     foreach ($get_pending_listings as $lst_pending_cars) {?>
                        <tr id="<?php echo "tr_".$lst_pending_cars['listing_id']; ?>">
                           <td><a class="td_pending" id ="<?php echo $lst_pending_cars['listing_id']; ?>" href="#"data-toggle="modal" data-target="#modal_view_details"><?php echo $lst_pending_cars['listing_id']; ?></a></td>
@@ -218,7 +219,8 @@ if(!isset($_SESSION['user_id'])){
                             foreach ($lst_images as $key=>$arr_images) {?>
 
                               <img src="<?php echo $img_link.$arr_images;?>" width="100" height="100"/>
-                          <?php  }?>
+                          <?php  }
+                        ?>
 
 
 
@@ -230,7 +232,8 @@ if(!isset($_SESSION['user_id'])){
                           <td><button id="<?php echo $lst_pending_cars['listing_id'];?>" type="button" class="btn btn-success btn_approve_pending" data-toggle="modal" data-target="#modal-approve">Approve</button></td>
                           <td><button id="<?php echo $lst_pending_cars['listing_id'];?>" type="button" class="btn btn-danger btn_delete" data-toggle="modal" data-target="#modal-delete">Delete</button></td>
                         </tr>
-                  <?php  }  ?>
+                  <?php  }
+                }?>
                 </tbody>
             </table>
           </div>
@@ -275,7 +278,7 @@ if(!isset($_SESSION['user_id'])){
               </div>
               <!-- /.card-header -->
               <?php
-              $get_cars=$db_operation->get_all_rental_listings();
+              $get_rental_cars=$db_operation->get_all_rental_listings();
                ?>
               <div class="card-body" id="tbl_listings">
                 <table id="example2" class="table table-bordered table-hover">
@@ -294,7 +297,8 @@ if(!isset($_SESSION['user_id'])){
                   </thead>
                   <tbody>
                     <?php
-                    foreach ($get_cars as $lst_cars) {?>
+                    if($get_rental_cars){
+                    foreach ($get_rental_cars as $lst_cars) {?>
                        <tr id="<?php echo "tr_".$lst_cars['listing_id']; ?>">
                           <td><?php echo $lst_cars['listing_id']; ?></td>
                           <td><a href=""><?php echo $lst_cars['user_id']; ?></a></td>
@@ -307,7 +311,8 @@ if(!isset($_SESSION['user_id'])){
 
                           <td><button id="<?php echo $lst_cars['listing_id'];?>" type="button" class="btn btn-danger btn_delete" data-toggle="modal" data-target="#modal-delete">Delete</button></td>
                         </tr>
-                  <?php  }  ?>
+                  <?php  }
+                } ?>
                 </tbody>
               <!--<tfoot>
                 <tr>
@@ -912,8 +917,6 @@ $.ajax({
   processData: false,
 
   success:function(listing_id){
-    console.log(listing_id);
-    //var listing_id=1;
     var formData = new FormData($('.frmUploadImg')[0]);
       $.ajax({
           type:"post",
@@ -923,15 +926,13 @@ $.ajax({
         contentType: false,
         processData: false,
           beforeSend:function () {
-            console.log("Saving");
           },
           success:function(img_arr){
-            console.log(img_arr);
             Swal.fire({
          type: 'success',
          title: 'Listing has been saved'
-       })
-            console.log(img_arr);
+       }),
+       $("#lst_pendings").load(location.href + " #lst_pendings");
           }
         })
       }
@@ -948,9 +949,6 @@ $(".td_user_id").mouseover(function()
       cache: false,
       contentType: false,
       processData: false,
-
-
-
     });
     alert(id);
   });
