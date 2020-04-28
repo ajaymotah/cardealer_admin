@@ -720,7 +720,7 @@ $('#btn_modal_delete').click(function () {
           $('.btn_close').trigger("click");
           //$('#example2').DataTable();
           toastr.warning('Listing has been deleted!!!');
-          $("#example2").load(location.href + " #example2");
+          //$("#example2").load(location.href + " #example2");
         }
       }
     });
