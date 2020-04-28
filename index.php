@@ -705,9 +705,6 @@ $('.td_pending').click(function () {
 //delete listing function
 $(document).on('click','.btn_delete',function () {
   var listing_id= $(this).attr('id');
-  //$('#tr_'+listing_id).hide();
-
-  alert(listing_id);
   $('#btn_modal_delete').attr('listing_id',listing_id);
 });
 $('#btn_modal_delete').click(function () {
@@ -722,14 +719,15 @@ $('#btn_modal_delete').click(function () {
         if(data==1){
           $('.btn_close').trigger("click");
           //$('#example2').DataTable();
-          toastr.warning('Listing has been deleted!!!')
+          toastr.warning('Listing has been deleted!!!');
+          $("#example2").load(location.href + " #example2");
         }
       }
     });
     //$("tr_"+listing_id).hide();
 });
 //Approve btn functions
-$('.btn_approve_pending').click(function () {
+$(document).on('click','.btn_approve_pending'function () {
   var listing_id= $(this).attr('id');
   $('#tr_'+listing_id).hide();
   $('.btn_modal_approve').attr('id',listing_id);
@@ -750,7 +748,11 @@ $('.btn_modal_approve').click(function () {
           Swal.fire({
        type: 'success',
        title: 'Listing has been successfully put on live'
-     })
+     });
+     $("#lst_pendings").load(location.href + " #lst_pendings");
+     $("#example2").load(location.href + " #example2");
+
+
 
      // post to Facebook Page
      $.ajax({
