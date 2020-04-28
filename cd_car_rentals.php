@@ -942,14 +942,14 @@ $.ajax({
 $(".td_user_id").mouseover(function()
   {
     var user_id=$(this).attr('id');
-    $.ajax({
+    /*$.ajax({
       type:"post",
       url:"ajax/find_by_id.php?id="+user_id,
       data:formData,
       cache: false,
       contentType: false,
       processData: false,
-    });
+    });*/
     alert(id);
   });
 

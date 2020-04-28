@@ -922,15 +922,11 @@ $.ajax({
          title: 'Listing has been saved'
        })
             //console.log(img_arr);
-
-
-
           }
         })
       }
   })
 })
-
 //
 });// end Document Ready()
 
