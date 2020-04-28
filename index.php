@@ -706,10 +706,10 @@ $('.btn_delete').click(function () {
   $('#tr_'+listing_id).hide();
 
   //alert(listing_id);
-  $('.btn_modal_delete').attr('id',listing_id);
+  $('.btn_modal_delete').attr('listing_id',listing_id);
 });
 $('.btn_modal_delete').click(function () {
-    var listing_id= $(this).attr("id");
+    var listing_id= $(this).attr("listing_id");
     //alert(listing_id);
     $.ajax({
       type:"POST",

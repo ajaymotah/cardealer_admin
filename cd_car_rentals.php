@@ -96,82 +96,6 @@ if(!isset($_SESSION['user_id'])){
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <!-- Small boxes (Stat box) -->
-        <div class="row">
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <?php
-                $sales_listing_count=$db_operation->get_count_tbl("tbl_listings","listing_type_id",1);
-                 ?>
-                <h3><?php echo $sales_listing_count; ?></h3>
-
-                <p>Total Sales Listings</p>
-              </div>
-              <div class="icon">
-                <i class="fa fa-car"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <?php
-                $rental_listing_count=$db_operation->get_count_tbl("tbl_listings","listing_type_id",4);
-                 ?>
-                <h3><?php echo $rental_listing_count; ?></h3>
-
-                <p>Total Car Rentals</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <?php
-                $active_users_count=$db_operation->get_count_tbl("tbl_users","user_status_id",1);
-                 ?>
-                <h3><?php echo $active_users_count; ?></h3>
-
-                <p>User Registrations</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-person-add"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <?php
-                $pending_listing_count=$db_operation->get_count_tbl("tbl_listings","listing_status_id",3);
-                 ?>
-                <h3><?php echo $pending_listing_count; ?></h3>
-
-                <p>Pending Listings</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-alert"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-        </div>
-        <!-- /.row -->
         <!-- Main row -->
         <div class="row">
           <!-- Left col -->
@@ -187,7 +111,7 @@ if(!isset($_SESSION['user_id'])){
               </div>
               <!-- /.card-header -->
               <?php
-              $get_pending_listings=$db_operation->get_all_pending_listings(4);
+              $get_pending_listings=$db_operation->get_all_pending_listings(3);
                ?>
               <div class="card-body" id="tbl_listings">
                 <table id="lst_pendings" class="table table-bordered table-hover">
@@ -278,7 +202,7 @@ if(!isset($_SESSION['user_id'])){
               </div>
               <!-- /.card-header -->
               <?php
-              $get_rental_cars=$db_operation->get_all_rental_listings();
+              $get_rental_cars=$db_operation->get_all_rental_listings(1);
                ?>
               <div class="card-body" id="tbl_listings">
                 <table id="example2" class="table table-bordered table-hover">
@@ -720,10 +644,10 @@ $('.btn_delete').click(function () {
   $('#tr_'+listing_id).hide();
 
   //alert(listing_id);
-  $('.btn_modal_delete').attr('id',listing_id);
+  $('.btn_modal_delete').attr('listing_id',listing_id);
 });
 $('.btn_modal_delete').click(function () {
-    var listing_id= $(this).attr("id");
+    var listing_id= $(this).attr("listing_id");
     //alert(listing_id);
     $.ajax({
       type:"POST",
@@ -917,6 +841,7 @@ $.ajax({
   processData: false,
 
   success:function(listing_id){
+    console.log(listing_id);
     var formData = new FormData($('.frmUploadImg')[0]);
       $.ajax({
           type:"post",
