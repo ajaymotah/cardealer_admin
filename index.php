@@ -205,6 +205,7 @@ if(!isset($_SESSION['user_id'])){
                   </thead>
                   <tbody>
                     <?php
+                    if($get_pending_listings){
                     foreach ($get_pending_listings as $lst_penging_cars) {?>
                        <tr id="<?php echo "tr_".$lst_penging_cars['listing_id']; ?>">
                           <td><a class="td_pending" id ="<?php echo $lst_penging_cars['listing_id']; ?>" href="#"data-toggle="modal" data-target="#modal_view_details"><?php echo $lst_penging_cars['listing_id']; ?></a></td>
@@ -229,7 +230,8 @@ if(!isset($_SESSION['user_id'])){
 
                           <td><button id="<?php echo $lst_penging_cars['listing_id'];?>" type="button" class="btn btn-danger btn_delete" data-toggle="modal" data-target="#modal-delete">Delete</button></td>
                         </tr>
-                  <?php  }  ?>
+                  <?php  }
+                }?>
                 </tbody>
             </table>
           </div>
@@ -342,7 +344,7 @@ if(!isset($_SESSION['user_id'])){
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-danger btn_modal_delete">Delete</button>
+              <button type="button" class="btn btn-danger" id="btn_modal_delete">Delete</button>
             </div>
           </div>
           <!-- /.modal-content -->
@@ -701,14 +703,14 @@ $('.td_pending').click(function () {
 });
 
 //delete listing function
-$('.btn_delete').click(function () {
+$(document).on('click','.btn_delete',function () {
   var listing_id= $(this).attr('id');
-  $('#tr_'+listing_id).hide();
+  //$('#tr_'+listing_id).hide();
 
-  //alert(listing_id);
-  $('.btn_modal_delete').attr('listing_id',listing_id);
+  alert(listing_id);
+  $('#btn_modal_delete').attr('listing_id',listing_id);
 });
-$('.btn_modal_delete').click(function () {
+$('#btn_modal_delete').click(function () {
     var listing_id= $(this).attr("listing_id");
     //alert(listing_id);
     $.ajax({
