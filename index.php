@@ -727,7 +727,7 @@ $('#btn_modal_delete').click(function () {
     //$("tr_"+listing_id).hide();
 });
 //Approve btn functions
-$(document).on('click','.btn_approve_pending'function () {
+$(document).on('click','.btn_approve_pending',function () {
   var listing_id= $(this).attr('id');
   $('#tr_'+listing_id).hide();
   $('.btn_modal_approve').attr('id',listing_id);
