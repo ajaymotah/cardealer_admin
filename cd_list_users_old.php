@@ -1,7 +1,6 @@
 <?php
 include('includes/db_operations.class.php');
 include('pages/cd_menu.php');
-
 if(!isset($_SESSION['user_id'])){
   header('location:pages/cd_login.php');
   exit();
@@ -13,7 +12,7 @@ if(!isset($_SESSION['user_id'])){
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <title>CARDEALER | Car Rentals</title>
+  <title>CARDEALER | Users</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -42,8 +41,6 @@ if(!isset($_SESSION['user_id'])){
   <link rel="stylesheet" href="plugins/validetta/validetta.min.css">
   <!-- img upload css-->
   <link rel="stylesheet" href="custom/upload_img.css">
-  <!-- tooltip css-->
-  <link rel="stylesheet" href="custom/tooltip.css">
   <!-- loading spinner-->
   <link rel="stylesheet" type="text/css" href="p-loading/dist/css/p-loading.min.css" />
   <!-- Google Font: Source Sans Pro -->
@@ -81,7 +78,7 @@ if(!isset($_SESSION['user_id'])){
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">List of Users</h1>
+            <h1 class="m-0 text-dark">Users List</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -97,15 +94,14 @@ if(!isset($_SESSION['user_id'])){
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
+        <!-- /.row -->
         <!-- Main row -->
         <div class="row">
           <!-- Left col -->
           <section class="col-12">
       <!-- Display Div-->
             <!-- table-->
-
-
-            <!-- Pending listings-->
+      <!-- Lis all Pending users-->
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">List of All Pending Users</h3>
@@ -114,7 +110,7 @@ if(!isset($_SESSION['user_id'])){
               <?php
               $user_data=$db_operation->get_user_details(2);
                ?>
-              <div class="card-body" id="tbl_pending_users">
+              <div class="card-body" id="tbl_listings">
                 <table id="lst_pendings" class="table table-bordered table-hover">
                   <thead>
                   <tr>
@@ -153,8 +149,7 @@ if(!isset($_SESSION['user_id'])){
           </div>
               <!-- /.card-body -->
         </div>
-
-              <!-- modal for view all details -->
+        <!-- modal for view all details -->
         <div class="modal fade" id="modal-approve">
           <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -168,7 +163,7 @@ if(!isset($_SESSION['user_id'])){
                 <div class="modal_lst">
 
                 </div>
-                <p>Are you sure you want to approve this user?</p>
+                <p>Are you sure you want to approve This user?</p>
               </div>
               <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Close</button>
@@ -180,52 +175,64 @@ if(!isset($_SESSION['user_id'])){
           <!-- /.modal-dialog -->
         </div>
         <!-- End modal for view all details -->
-        <!--//End Pending Listings-->
+        <!--//End Pending Users-->
 
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">List of all Active Users</h3>
-          </div>
-          <!-- /.card-header -->
-          <?php
-          $get_active_users=$db_operation->get_user_details(1);
-           ?>
-          <div class="card-body" id="tbl_listings">
-            <table id="example2" class="table table-bordered table-hover">
-              <thead>
-              <tr>
-                <th>User ID</th>
-                <th>Surname</th>
-                <th>name</th>
-                <th>Phone</th>
-                <th>User Role</th>
-                <th>User Status</th>
-                <!-- <th>Payment</th> -->
-                <th>Edit</th>
-                <th>Delete</th>
-              </tr>
-              </thead>
-              <tbody>
-                <?php
-                foreach ($get_active_users as $lst_active_users) {?>
-                   <tr id="<?php echo "tr_".$lst_active_users['user_id']; ?>">
-                      <td><?php echo $lst_active_users['user_id']; ?></td>
-                      <td><?php echo $lst_active_users['surname']; ?></td>
-                      <td><?php echo $lst_active_users['name']; ?></td>
-                      <td><?php echo $lst_active_users['phone']; ?></td>
-                      <td><?php echo $lst_active_users['role']; ?></td>
-                      <td><?php echo $lst_active_users['user_status']; ?></td>
-                      <td><a class="btn btn-warning" href="edit_listing.php?id=<?php ?>">Edit</a></td>
-                      <td><button id="<?php echo $lst_active_users['user_id'];?>" type="button" class="btn btn-danger btn_delete" data-toggle="modal" data-target="#modal-delete" table="tbl_users">Delete</button></td>
-                    </tr>
-              <?php  }  ?>
-            </tbody>
-          </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
-
-            <!--// end table-->
+        <!-- List all Active Users Details-->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">List of all Active Users</h3>
+              </div>
+              <!-- /.card-header -->
+              <?php
+              $get_active_users=$db_operation->get_user_details(1);
+               ?>
+              <div class="card-body" id="tbl_listings">
+                <table id="example2" class="table table-bordered table-hover">
+                  <thead>
+                  <tr>
+                    <th>User ID</th>
+                    <th>Surname</th>
+                    <th>name</th>
+                    <th>Phone</th>
+                    <th>User Role</th>
+                    <th>User Status</th>
+                    <!-- <th>Payment</th> -->
+                    <th>Edit</th>
+                    <th>Delete</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                    foreach ($get_active_users as $lst_active_users) {?>
+                       <tr id="<?php echo "tr_".$lst_active_users['user_id']; ?>">
+                          <td><?php echo $lst_active_users['user_id']; ?></td>
+                          <td><?php echo $lst_active_users['surname']; ?></td>
+                          <td><?php echo $lst_active_users['name']; ?></td>
+                          <td><?php echo $lst_active_users['phone']; ?></td>
+                          <td><?php echo $lst_active_users['role']; ?></td>
+                          <td><?php echo $lst_active_users['user_status']; ?></td>
+                          <td><a class="btn btn-warning" href="edit_listing.php?id=<?php ?>">Edit</a></td>
+                          <td><button id="<?php echo $lst_active_users['user_id'];?>" type="button" class="btn btn-danger btn_delete" data-toggle="modal" data-target="#modal-delete" table="tbl_users">Delete</button></td>
+                        </tr>
+                  <?php  }  ?>
+                </tbody>
+              <!--<tfoot>
+                <tr>
+                  <th>Listing ID</th>
+                  <th>user_id</th>
+                  <th>Make</th>
+                  <th>Model</th>
+                  <th>Image</th>
+                  <th>Date Posted</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </tfoot>-->
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!--// End List of All Active Users-->
       <!--// Display Div-->
       <!--- Modal form-->
       <div class="modal fade" id="modal-delete">
@@ -252,38 +259,40 @@ if(!isset($_SESSION['user_id'])){
 
       <div class="card card-primary">
         <div class="card-header">
-          <h3 class="card-title">Add New User</h3>
+          <h3 class="card-title">Add New Users</h3>
         </div>
 <!-- form-->
-<form id="frmAddUsers" name="frmAddUsers" method="post">
+<form id="frmAddUsers" method="post" action="">
 
         <div class="card-body">
           <div class="row">
             <div class="col-md-3">
-              <label for="slt_user_type">User Type</label>
-              <div class="input-group mb-3">
-                <select class="form-control" name="slt_user_role_type" id="slt_user_role_type">
-                  <option value="" selected disabled hidden>Select user Type</option>
-                  <?php
-                            $get_user_roles=$db_operation->fetch_records('tbl_user_roles');
+              <label for="slt_listing_type">User Type</label>
+              <select class="form-control" name="slt_user_role_type" id="slt_user_role_type">
+                <option value="" selected disabled hidden>Select user Type</option>
+                <?php
+                          $get_user_roles=$db_operation->fetch_records('tbl_user_roles');
 
-                            foreach ($get_user_roles as $lst_user_roles) {
-                              echo'<option value="'.$lst_user_roles['user_role_id'].'">'.$lst_user_roles['role'].'</option>';
-                            }
-                           ?>
-                </select>
-            </div>
-            </div>
-            <div id="phone_search_result">
-
+                          foreach ($get_user_roles as $lst_user_roles) {
+                            echo'<option value="'.$lst_user_roles['user_role_id'].'">'.$lst_user_roles['role'].'</option>';
+                          }
+                         ?>
+              </select>
             </div>
           </div>
-            <div class="row">
+          <div id="phone_search_result">
+
+          </div>
+          <div class="row">
+
             <div class="col-md-3">
               <label for="txt_phone">Phone Number</label>
               <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
     type = "number" maxlength = "8" name="txt_phone" id="txt_phone" class="form-control" data-validetta="required">
-              </div>
+            </div>
+
+
+
             <div class="col-md-3">
               <label for="txt_surname">Surname</label>
               <input type="text" name="txt_surname" id="txt_surname" class="form-control" data-validetta="required">
@@ -292,9 +301,9 @@ if(!isset($_SESSION['user_id'])){
               <label for="txt_surname">Name</label>
               <input type="text" name="txt_name" id="txt_name" class="form-control" data-validetta="required">
             </div>
-          </div>
 
-          <div class="row">
+            </div>
+            <div class="row">
             <div class="col-3">
               <label for="txt_pin">Pin</label>
               <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
@@ -311,29 +320,23 @@ if(!isset($_SESSION['user_id'])){
               <input type = "email" name="txt_email" id="txt_email" class="form-control" data-validetta="required,email">
             </div>
           </div>
-<p></p>
+          </div>
 
-            <div class="row">
+                    <div class="row">
 
-                <div class="col-md-6" style="padding-top:15px">
-                  <button id="btn_save_user" name="btn_save_user" type="submit" class="btn btn-success"> Save </button>
-                  <button id="btn_cancel" name="btn_cancel" type="button" class="btn btn-danger"> Cancel </button></br>
-                </div>
+                        <div class="col-md-6" style="padding-top:15px">
+                          <button id="btn_save_user" name="btn_save_user" type="submit" class="btn btn-success"> Save </button>
+                          <button id="btn_cancel" name="btn_cancel" type="button" class="btn btn-danger"> Cancel </button></br>
+                        </div>
 
-            </div>
-
-
-          <p></p>
-      </form>
+                    </div>
+                  </form>
         </div>
         <!-- /.card-body -->
       </div>
-
             <!-- TO DO List -->
-
           </section>
           <!-- /.Left col -->
-
         </div>
         <!-- /.row (main row) -->
       </div><!-- /.container-fluid -->
@@ -342,8 +345,6 @@ if(!isset($_SESSION['user_id'])){
   </div>
   <!-- /.content-wrapper -->
   <div class="footer_list"></div>
-
-
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
@@ -390,7 +391,7 @@ if(!isset($_SESSION['user_id'])){
 <script src="plugins/validetta/validetta.min.js"></script>
 <!-- P-Loading JS -->
 <script type="text/javascript" src="p-loading/dist/js/p-loading.min.js"></script>
-<script src="custom/custom.js"></script>
+<script type="text/javascript" src="custom/custom.js"></script>
 <script>
 
 $(function (){
@@ -525,6 +526,7 @@ $('.btn_modal_approve').click(function () {
 //find user details by Phone number if already exists
 $('#txt_phone').keyup(function () {
   var lst_phone=$(this).val();
+  //alert(lst_phone);
   if(lst_phone!='' && lst_phone.length>=8){
   $.ajax({
     type:"POST",
@@ -532,15 +534,18 @@ $('#txt_phone').keyup(function () {
     data:{$txt_phone_num:lst_phone},
     success:function (data) {
       //console.log(data);
-      if(data==false){
-        $('#phone_search_result').html('Phone number not found');
+      if(data!=false){
+        $('#phone_search_result').html(data);
       }
       else {
-        $('#phone_search_result').html(data);
+        $('#phone_search_result').html('Phone number not found');
       }
     }
   });//end ajax
-  }
+}
+else{
+  $('#phone_search_result').html('');
+}
 
   //$('#phone_search_result').html(lst_phone);
 });
@@ -587,7 +592,6 @@ $('#btn_save_user').click(function () {
 
 //
 });// end Document Ready()
-
 
 </script>
 </body>

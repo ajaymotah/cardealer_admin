@@ -1,6 +1,7 @@
 <?php
-include('pages/cd_menu.php');
 include('includes/db_operations.class.php');
+include('pages/cd_menu.php');
+
 if(!isset($_SESSION['user_id'])){
   header('location:pages/cd_login.php');
   exit();

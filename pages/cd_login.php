@@ -84,7 +84,7 @@
         <a href="cd_reset_password.php">I forgot my password</a>
       </p>
       <p class="mb-0">
-        <a href="examples/register.html" class="text-center">Register a new membership</a>
+        <a href="cd_register.php" class="text-center">Register a new membership</a>
       </p>
     </div>
     <!-- /.login-card-body -->
