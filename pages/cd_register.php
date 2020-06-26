@@ -51,12 +51,16 @@ foreach ($slt_role as $key => $value) {
               <span class="fas fa-envelope"></span>
           </div>
         </div>
-        <div class="input-group mb-3">
-          <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" class="form-control" placeholder="Mobile Number" maxlength="8" id="txt_phone" name="txt_phone" data-validetta="required,remote[check_phonenumber],number,minLength[8],maxLength[8]">
+         <div class="input-group mb-3">
+          <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" class="form-control" placeholder="Mobile Number" maxlength="8" id="txt_phone" name="txt_phone" data-validetta="required,remote[check_username],number,minLength[8],maxLength[8]">
           <div class="input-group-append input-group-text">
               <span class="fas fa-mobile"></span>
           </div>
         </div>
+        <!-- <div>
+            <label>Username :</label>
+            <input type="text" name="txt_phone" data-validetta="required,remote[check_username]">
+        </div> -->
         <div class="input-group mb-3">
           <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="4" type="number" class="form-control" placeholder="Type a 4 Digit PIN" data-validetta="required,number,minLength[4],maxLength[4]" id="txt_pin" name="txt_pin">
           <div class="input-group-append input-group-text">
@@ -145,33 +149,34 @@ foreach ($slt_role as $key => $value) {
                   table:'tbl_users'
                 };
               //  console.log("Called");
-                $.ajax({
-                  type:"POST",
-                  url:"../ajax/insert_record.php",
-                  data:frm_add_user_data,
-                  success:function (data) {
-                    console.log(data);
-                    $('#frmAddUser').trigger("reset");
-                  //   if(data==1){
-                  //   window.location="thank-you.php";
-                  // }
-
-                  }
-                });
+              alert('submitted');
+                // $.ajax({
+                //   type:"POST",
+                //   url:"../ajax/insert_record.php",
+                //   data:frm_add_user_data,
+                //   success:function (data) {
+                //     console.log(data);
+                //     $('#frmAddUser').trigger("reset");
+                //   //   if(data==1){
+                //   //   window.location="thank-you.php";
+                //   // }
+                //
+                //   }
+                // });
             },
             validators: {
-              remote: {
-                check_phonenumber: {
-                  type:'POST',
-                  url:'../ajax/find_user_phone_exists.php',
-                  dataType:'json'
+                remote : {
+                    check_username : {
+                        type : 'POST',
+                        url : '../ajax/find_user_phone_exists.php',
+                        dataType : 'json'
+                    }
                 }
-              }
             }
 
 
 
-      })//validetta
+      });//validetta
 
     });
 
