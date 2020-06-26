@@ -157,9 +157,9 @@ foreach ($slt_role as $key => $value) {
                   success:function (data) {
                     console.log(data);
                     $('#frmAddUser').trigger("reset");
-                  //   if(data==1){
-                  //   window.location="thank-you.php";
-                  // }
+                    if(data==1){
+                    window.location="thank-you.php";
+                  }
 
                   }
                 });

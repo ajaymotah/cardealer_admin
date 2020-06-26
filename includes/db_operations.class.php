@@ -163,10 +163,7 @@ public function IsMatching($field)
 		}
 
 #####Session######
-public function SetSession($session_id,$value)
-{
-			$_SESSION[$session_id]=$value;
-}
+
 
 
 
@@ -441,7 +438,7 @@ tbl_listing_images.default_image=1 LIMIT 5";
 	//Login function
 	public function login($phone,$pin)
 	{
-	    $sql="SELECT user_id,pin,phone,user_role_id FROM tbl_users WHERE phone = '".$phone."'";
+	    $sql="SELECT user_id,pin,phone,user_role_id,user_status_id FROM tbl_users WHERE phone = '".$phone."'";
 			$query=mysqli_query($this->con,$sql);
 			$count=mysqli_num_rows($query);
 			$row=mysqli_fetch_array($query);
@@ -464,7 +461,13 @@ tbl_listing_images.default_image=1 LIMIT 5";
 			  $msg="Sorry! Mobile No not Found";
 				$error=1;
 			}
+			if($row['user_status_id']!=1){
+				$msg="Sorry! Your account is not Active. Please Contact us on 5923 0223 - Thank you";
+				$error=1;
+
+			}
 			$arr_msg=array(
+				"user_id"=>$row['user_id'],
 				"user_role_id"=>$row['user_role_id'],
 				"msg"=>$msg,
 				"error"=>$error
@@ -732,17 +735,22 @@ public function delete_listing($table,$field,$id)
 }
 
 //set Session
-	public function set_session($session_id)
+	public function set_session($session_id,$value,$user_role_id)
 	{
-	    $_SESSION[".$session_id."] = $session_id;
+	    $_SESSION[$session_id] = $value;
+			$_SESSION["user_role_id"] = $user_role_id;
 	    return $_SESSION[".$session_id."];
 	}
 
 	//get Session
 	public function get_session($session_id)
 	{
-	    $my_session=$_SESSION[$session_id];
-	    return $my_session;
+			if(isset($_SESSION[$session_id])){
+				    return true;
+					}
+			else {
+						return false;
+			}
 	}
 	public function check_admin_session($session,$page)
 		{

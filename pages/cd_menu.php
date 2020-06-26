@@ -7,6 +7,9 @@ $('a[href="'+page_url+'"').addClass('active');
 <?php
 // require_once('includes/page_display.class.php');
 // $span_user=$display_page->get_menu_count('tbl_users','user_status_id',2);
+$user_id=$_SESSION['user_id'];
+$row=$db_operation->find_by_id('tbl_users','user_id',$user_id);
+$username=$row['name'];
 $menu_list='
 <div class="sidebar">
   <!-- Sidebar user panel (optional) -->
@@ -15,7 +18,7 @@ $menu_list='
       <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
     </div>
     <div class="info">
-      <a href="#" class="d-block">Administrator</a>
+      <a href="#" class="d-block">Welcome, '.$username.'</a>
     </div>
   </div>
 

@@ -103,18 +103,7 @@
 <!-- custom script-->
 <script src="../custom/custom.js"></script>
 <script type="text/javascript">
-
-function check_session() {
-  var user_id=window.sessionStorage.getItem("user_id");
-  if(user_id){
-  window.location.href="../../index.php";
-  //console.log(user_id);
-    }
-  }
-
-  $(document).ready(function(){
-  //check_session();
-$('#btn_login').click(function () {
+$(document).ready(function(){
     $('#frm_login').validetta({
     bubblePosition: 'bottom',
     realTime:true,
@@ -151,18 +140,19 @@ $('#btn_login').click(function () {
                $.ajax({
                  type:"POST",
                  url:"../ajax/set_session.php",
-                 data:{user_id:'user_id',value:get_data.msg},
+                 data:{user_id:'user_id',value:get_data.user_id,user_role_id:get_data.user_role_id},
                success:function(data){
-                 //console.log(data);
-                 window.location.href="../index.php";
+                 if(get_data.user_role_id==1){
+                   window.location.href="../index.php";
+                 }
+                 else {
+                   window.location.href="../user_dashboard.php";
+                 }
+                 //console.log(get_data.user_role_id);
+                 //window.location.href="../index.php";
                }
 
              })
-
-
-
-
-
          }
                 $('.loading').attr('hidden','true');
                 $('.sign_in').removeAttr('hidden');
@@ -173,7 +163,7 @@ $('#btn_login').click(function () {
             //alert(event+"Loggin Failed - Please see with App Admin");
          }
      });
-})
+
 
 
 
