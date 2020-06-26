@@ -7,9 +7,12 @@ $('a[href="'+page_url+'"').addClass('active');
 <?php
 // require_once('includes/page_display.class.php');
 // $span_user=$display_page->get_menu_count('tbl_users','user_status_id',2);
+if(isset($_SESSION['user_id'])){
 $user_id=$_SESSION['user_id'];
+
 $row=$db_operation->find_by_id('tbl_users','user_id',$user_id);
 $username=$row['name'];
+}
 $menu_list='
 <div class="sidebar">
   <!-- Sidebar user panel (optional) -->
