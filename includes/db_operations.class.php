@@ -787,6 +787,7 @@ while($row=mysqli_fetch_assoc($query))
 		return false;
 	}
 }
+
 public function find_user_phone_exists($id)
 {
 	$sql="SELECT phone FROM tbl_users WHERE phone like '%$id%'";
@@ -801,14 +802,6 @@ public function find_user_phone_exists($id)
 			return false;
 		}
 }
-
-
-
-
-
-
-
-
 
 
 }//end of class
