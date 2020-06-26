@@ -52,7 +52,7 @@ foreach ($slt_role as $key => $value) {
           </div>
         </div>
         <div class="input-group mb-3">
-          <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" class="form-control" placeholder="Mobile Number" maxlength="8" id="txt_phone" name="txt_phone" data-validetta="required,number,minLength[8],maxLength[8],remote[check_phonenumber]">
+          <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" class="form-control" placeholder="Mobile Number" maxlength="8" id="txt_phone" name="txt_phone" data-validetta="required,remote[check_phonenumber],number,minLength[8],maxLength[8]">
           <div class="input-group-append input-group-text">
               <span class="fas fa-mobile"></span>
           </div>
@@ -123,9 +123,10 @@ foreach ($slt_role as $key => $value) {
       //stopImmediatePropagation();
         $('#frmAddUser').validetta({
         realTime:true,
+        //display:'inline',
         bubblePosition: 'bottom',
-        bubbleGapTop: 1,
-        bubbleGapLeft: -10,
+        bubbleGapTop: 10,
+        bubbleGapLeft: -5,
 
         //display : 'inline',
         //errorTemplateClass : 'validetta-inline',
@@ -163,11 +164,7 @@ foreach ($slt_role as $key => $value) {
                 check_phonenumber: {
                   type:'POST',
                   url:'../ajax/find_user_phone_exists.php',
-                  dataType:'json',
-                  success:function (data) {
-                    console.log(data);
-
-                  }
+                  dataType:'json'
                 }
               }
             }
