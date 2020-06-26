@@ -123,7 +123,7 @@ foreach ($slt_role as $key => $value) {
 
   $(document).ready(function () {
     //save new user as pending
-    $('#btn_register').click(function () {
+    //$('#btn_register').click(function () {
       //stopImmediatePropagation();
         $('#frmAddUser').validetta({
         realTime:true,
@@ -149,20 +149,20 @@ foreach ($slt_role as $key => $value) {
                   table:'tbl_users'
                 };
               //  console.log("Called");
-              alert('submitted');
-                // $.ajax({
-                //   type:"POST",
-                //   url:"../ajax/insert_record.php",
-                //   data:frm_add_user_data,
-                //   success:function (data) {
-                //     console.log(data);
-                //     $('#frmAddUser').trigger("reset");
-                //   //   if(data==1){
-                //   //   window.location="thank-you.php";
-                //   // }
-                //
-                //   }
-                // });
+              //alert('submitted');
+                $.ajax({
+                  type:"POST",
+                  url:"../ajax/insert_record.php",
+                  data:frm_add_user_data,
+                  success:function (data) {
+                    console.log(data);
+                    $('#frmAddUser').trigger("reset");
+                  //   if(data==1){
+                  //   window.location="thank-you.php";
+                  // }
+
+                  }
+                });
             },
             validators: {
                 remote : {
@@ -178,7 +178,7 @@ foreach ($slt_role as $key => $value) {
 
       });//validetta
 
-    });
+  //  });
 
 
   });//end document ready

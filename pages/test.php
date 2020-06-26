@@ -26,8 +26,8 @@
     <script src="../plugins/validetta/validetta.min.js"></script>
     <script>
 $(document).ready(function () {
-  $('#btn').click(function()
-  {
+  // $('#btn').click(function()
+  // {
 $('#exm').validetta({
     realTime : true,
     onValid : function( event ){
@@ -44,7 +44,7 @@ $('#exm').validetta({
         }
     }
 });
-});
+//});
 })
 
 
