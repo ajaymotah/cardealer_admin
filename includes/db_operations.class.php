@@ -650,7 +650,7 @@ tbl_listings.listing_id,tbl_listing_types.listing_type_id,tbl_listings.user_id,t
 FROM
 tbl_listings,tbl_listing_types,tbl_car_makes,tbl_car_models,tbl_listing_images,tbl_listing_status
 WHERE
-tbl_listings.user_id=$user_id,
+tbl_listings.user_id=$user_id AND
 tbl_listings.make_id=tbl_car_makes.make_id AND
 tbl_listings.model_id=tbl_car_models.model_id AND
 tbl_listings.listing_id=tbl_listing_images.listing_id AND

@@ -191,7 +191,7 @@ $user_role_id=$_SESSION['user_role_id'];
               </div>
               <!-- /.card-header -->
               <?php
-              echo $user_id;
+              //echo $user_id;
               $get_pending_listings=$db_operation->get_user_pending_listings(1,$user_id);
                ?>
               <div class="card-body" id="tbl_listings">
@@ -205,7 +205,6 @@ $user_role_id=$_SESSION['user_role_id'];
                     <th>Images</th>
                     <th>Date Posted</th>
                     <th>Sale Price</th>
-                    <th>Approve</th>
                     <th>Delete</th>
                   </tr>
                   </thead>
@@ -367,6 +366,7 @@ $user_role_id=$_SESSION['user_role_id'];
 <!-- form-->
 <form id="frmAddListing" name="frmAddListing" method="post">
 
+        <input class="form-control" placeholder="Phone Number" name="user_id" id="user_id" value="<?php echo $user_id;?>" hidden>
         <div class="card-body">
           <div class="row">
             <div class="col-md-3">
@@ -515,25 +515,7 @@ $user_role_id=$_SESSION['user_role_id'];
                             <input class="form-control" placeholder="Price (Rs)" type="number" name="txt_price" id="txt_price" data-validetta="required">
                           </div>
                       </div>
-                      <div class="col-md-3">
-                        <label for="txt_name">Username</label>
-                        <div class="input-group mb-3">
-                          <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                          </div>
-                                <input type="text" class="form-control" placeholder="User name" name="txt_name" id="txt_name">
-                              </div>
-                      </div>
-                      <div class="col-md-3">
-                        <label for="txt_phone">Mobile Number</label>
-                        <div class="input-group mb-3">
-                          <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-mobile"></i></span>
-                          </div>
-                              <input type="number" class="form-control" placeholder="Phone Number" name="txt_phone" id="txt_phone">
-                              </div>
-                      </div>
-                    </div>
+                  </div>
                       </form>
 
                     <!-- upload image row-->
@@ -810,8 +792,10 @@ $("#slt_transmission").change(function () {
 });
 $("#txt_price").keyup(function () {
   var txt_price=$(this).val();
-  var show_price = addCommas(txt_price);
-  $(".show_price").text(show_price);
+  var hidden_price=txt_price;
+  var show_price = addCommas(hidden_price);
+  $("#txt_price").val(show_price);
+  $(".show_price").text(hidden_price);
 });
 
 
@@ -907,14 +891,14 @@ $('#btn_save_listing').click(function (e) {
 var frm_save_listing= new FormData($('#frmAddListing')[0]);
 $.ajax({
   type:"post",
-  url:"ajax/save_listing.php",
+  url:"ajax/user_save_listing.php",
   data:frm_save_listing,
   cache: false,
   contentType: false,
   processData: false,
 
   success:function(listing_id){
-    //console.log(listing_id);
+    console.log(listing_id);
     //var listing_id=1;
     var formData = new FormData($('.frmUploadImg')[0]);
       $.ajax({
