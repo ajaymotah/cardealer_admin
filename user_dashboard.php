@@ -5,6 +5,11 @@ if(!isset($_SESSION['user_id'])){
   header('location:pages/cd_login.php');
   exit();
 }
+else{
+$user_id=$_SESSION['user_id'];
+$user_role_id=$_SESSION['user_role_id'];
+
+}
 ?>
 <!DOCTYPE html>
 <html>

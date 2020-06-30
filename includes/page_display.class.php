@@ -17,6 +17,4 @@ class PageDisplay extends DataOperation
 
 $display_page=new PageDisplay();
 
-
-
  ?>
