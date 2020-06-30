@@ -10,11 +10,11 @@ $default_user_id=1;
 $site_title="Car Dealer App Administrator";
 $site_version="1.0.0";
 
-//user listings 
+//user listings
 $individual_limit = 1;
 $advertiser_limit=20;
 $advertiser_fees = 200; // Rs
-$featured_listing_fees = 500 // Rs
+$featured_listing_fees = 500; // Rs
 
 //image upload size = 5MB
 $max_img_file_size=5000000;

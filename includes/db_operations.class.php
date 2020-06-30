@@ -609,7 +609,10 @@ while($row=mysqli_fetch_assoc($query))
 	{
 	$array[]=$row;
 	}
-	return $array;
+	if(!empty($array))
+		return $array;
+	else
+		return false;
 }
 
 //Get all pending listings
@@ -638,6 +641,36 @@ while($row=mysqli_fetch_assoc($query))
 		return false;
 
 }
+
+//get all pendings listing by $user_id
+public function get_user_pending_listings($listing_type,$user_id)
+{
+	$sql="SELECT
+tbl_listings.listing_id,tbl_listing_types.listing_type_id,tbl_listings.user_id,tbl_listings.make_id,tbl_listings.model_id,tbl_listings.date_posted,tbl_listings.sale_price,tbl_listing_status.listing_status,tbl_car_makes.make,tbl_car_models.model,tbl_listing_images.listing_id,tbl_listing_images.listing_image_url
+FROM
+tbl_listings,tbl_listing_types,tbl_car_makes,tbl_car_models,tbl_listing_images,tbl_listing_status
+WHERE
+tbl_listings.user_id=$user_id,
+tbl_listings.make_id=tbl_car_makes.make_id AND
+tbl_listings.model_id=tbl_car_models.model_id AND
+tbl_listings.listing_id=tbl_listing_images.listing_id AND
+tbl_listings.listing_status_id=tbl_listing_status.listing_status_id AND
+tbl_listing_images.default_image=1 AND
+tbl_listing_types.listing_type_id=$listing_type AND
+tbl_listings.listing_status_id=3 ORDER BY tbl_listings.listing_id DESC";
+$query=mysqli_query($this->con,$sql);
+while($row=mysqli_fetch_assoc($query))
+	{
+	$array[]=$row;
+	}
+	if(!empty($array))
+		return $array;
+	else
+		return false;
+
+}
+
+
 
 //get all active rental listings
 public function get_all_rental_listings($status_id)

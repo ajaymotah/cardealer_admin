@@ -191,7 +191,8 @@ $user_role_id=$_SESSION['user_role_id'];
               </div>
               <!-- /.card-header -->
               <?php
-              $get_pending_listings=$db_operation->get_all_pending_listings(1);
+              echo $user_id;
+              $get_pending_listings=$db_operation->get_user_pending_listings(1,$user_id);
                ?>
               <div class="card-body" id="tbl_listings">
                 <table id="lst_pendings" class="table table-bordered table-hover">
@@ -231,7 +232,7 @@ $user_role_id=$_SESSION['user_role_id'];
                           <td><?php echo $lst_penging_cars['date_posted']; ?></td>
                           <td><?php echo $lst_penging_cars['sale_price']; ?></td>
                           <!-- <td><a class="btn btn-success" href="payments.php?id=<?php ?>">Payment</a></td> -->
-                          <td><button id="<?php echo $lst_penging_cars['listing_id'];?>" type="button" class="btn btn-success btn_approve_pending" data-toggle="modal" data-target="#modal-approve">Approve</button></td>
+                          <!-- <td><button id="<?php echo $lst_penging_cars['listing_id'];?>" type="button" class="btn btn-success btn_approve_pending" data-toggle="modal" data-target="#modal-approve">Approve</button></td> -->
 
                           <td><button id="<?php echo $lst_penging_cars['listing_id'];?>" type="button" class="btn btn-danger btn_delete" data-toggle="modal" data-target="#modal-delete">Delete</button></td>
                         </tr>
@@ -300,6 +301,7 @@ $user_role_id=$_SESSION['user_role_id'];
                   </thead>
                   <tbody>
                     <?php
+                    if($get_cars){
                     foreach ($get_cars as $lst_cars) {?>
                        <tr id="<?php echo "tr_".$lst_cars['listing_id']; ?>">
                           <td><?php echo $lst_cars['listing_id']; ?></td>
@@ -313,7 +315,8 @@ $user_role_id=$_SESSION['user_role_id'];
 
                           <td><button id="<?php echo $lst_cars['listing_id'];?>" type="button" class="btn btn-danger btn_delete" data-toggle="modal" data-target="#modal-delete">Delete</button></td>
                         </tr>
-                  <?php  }  ?>
+                  <?php  }
+                }?>
                 </tbody>
               <!--<tfoot>
                 <tr>
