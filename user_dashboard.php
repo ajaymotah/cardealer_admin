@@ -510,9 +510,9 @@ $user_role_id=$_SESSION['user_role_id'];
                         <label for="txt_price">Price (MUR)<div class="show_price"></div></label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+                              <span class="input-group-text"><i class="fas fa-money"></i></span>
                             </div>
-                            <input class="form-control" placeholder="Price (Rs)" type="number" name="txt_price" id="txt_price" data-validetta="required">
+                            <input class="form-control" placeholder="Price (Rs)" type="numeric" name="txt_price" id="txt_price" data-validetta="required">
                           </div>
                       </div>
                   </div>
@@ -669,6 +669,19 @@ function addCommas(nStr)
 	return x1 + x2;
 }
 
+//add thouand seperator
+function addThousandsSeparator(input) {
+  var output = input
+ if (parseFloat(input)) {
+     input = new String(input); // so you can perform string operations
+     var parts = input.split("."); // remove the decimal part
+     parts[0] = parts[0].split("").reverse().join("").replace(/(\d{3})(?!$)/g, "$1,").split("").reverse().join("");
+     output = parts.join(".");
+ }
+
+ return output;
+}
+
 $(document).ready(function(){
 activate_link();
 $('.footer_list').load('pages/cd_footer.html');
@@ -792,10 +805,12 @@ $("#slt_transmission").change(function () {
 });
 $("#txt_price").keyup(function () {
   var txt_price=$(this).val();
-  var hidden_price=txt_price;
-  var show_price = addCommas(hidden_price);
-  $("#txt_price").val(show_price);
-  $(".show_price").text(hidden_price);
+  //remove commas
+  var retVal = txt_price ? parseFloat(txt_price.replace(/,/g, '')) : 0;
+
+  var output=addThousandsSeparator(retVal);
+  $("#txt_price").val(output);
+
 });
 
 
