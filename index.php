@@ -300,7 +300,7 @@ if(!isset($_SESSION['user_id'])){
                           <td><?php echo $lst_cars['listing_id']; ?></td>
                           <td><a href=""><?php echo $lst_cars['user_id']; ?></a></td>
                           <td><?php echo $lst_cars['make']; ?></td>
-                          <td><img src="<?php echo $remote_img_link.$lst_cars['listing_image_url'];?>" width="100" height="100"/></td>
+                          <td><img src="<?php echo $img_link.$lst_cars['listing_image_url'];?>" width="100" height="100"/></td>
                           <td><?php echo $lst_cars['date_posted']; ?></td>
                           <td><?php echo $lst_cars['listing_status']; ?></td>
                           <td><a class="btn btn-success" href="payments.php?id=<?php ?>">Payment</a></td>
