@@ -28,6 +28,6 @@ $max_file_upload = 5;
 //image links
 $img_link="uploaded_images/";
 global $remote_img_link;
-$remote_img_link="http://cardealer.webdevsolutions.biz/admin/uploaded_images/";
+$remote_img_link="http://".$_SERVER['HTTP_HOST']."/admin/".$img_link;
 
  ?>

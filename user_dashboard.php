@@ -84,7 +84,7 @@ $user_role_id=$_SESSION['user_role_id'];
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Dashboard <?php print_r($_SESSION);  print_r($_SERVER['HTTP_HOST']);?></h1>
+            <h1 class="m-0 text-dark">Dashboard <?php print_r($_SESSION);  echo $remote_img_link;?></h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -512,7 +512,8 @@ $user_role_id=$_SESSION['user_role_id'];
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fas fa-money"></i></span>
                             </div>
-                            <input class="form-control" placeholder="Price (Rs)" type="numeric" name="txt_price" id="txt_price" data-validetta="required">
+                            <input class="form-control" placeholder="Price (Rs)" type="numeric" name="show_txt_price" id="show_txt_price" data-validetta="required">
+                            <input class="form-control" placeholder="Price (Rs)" type="numeric" name="txt_price" id="txt_price" >
                           </div>
                       </div>
                   </div>
@@ -803,13 +804,16 @@ $("#slt_year").change(function () {
 $("#slt_transmission").change(function () {
   $("#row_3").removeAttr("hidden");
 });
-$("#txt_price").keyup(function () {
+
+$("#show_txt_price").keyup(function () {
   var txt_price=$(this).val();
   //remove commas
   var retVal = txt_price ? parseFloat(txt_price.replace(/,/g, '')) : 0;
+  $("#txt_price").val(retVal);
+  alert(retVal);
 
   var output=addThousandsSeparator(retVal);
-  $("#txt_price").val(output);
+  $("#show_txt_price").val(output);
 
 });
 
