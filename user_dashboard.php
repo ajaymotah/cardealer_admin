@@ -281,7 +281,7 @@ $user_role_id=$_SESSION['user_role_id'];
               </div>
               <!-- /.card-header -->
               <?php
-              $get_cars=$db_operation->get_all_sales_listings();
+              $get_cars=$db_operation->get_user_sales_listings($user_id);
                ?>
               <div class="card-body" id="tbl_listings">
                 <table id="example2" class="table table-bordered table-hover">
@@ -513,7 +513,7 @@ $user_role_id=$_SESSION['user_role_id'];
                               <span class="input-group-text"><i class="fas fa-money"></i></span>
                             </div>
                             <input class="form-control" placeholder="Price (Rs)" type="numeric" name="show_txt_price" id="show_txt_price" data-validetta="required">
-                            <input class="form-control" placeholder="Price (Rs)" type="numeric" name="txt_price" id="txt_price" >
+                            <input class="form-control" placeholder="Price (Rs)" type="numeric" name="txt_price" id="txt_price"  hidden>
                           </div>
                       </div>
                   </div>
