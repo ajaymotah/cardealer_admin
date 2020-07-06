@@ -3,9 +3,9 @@ include('fb_init.php');
 include('../includes/db_operations.class.php');
 
 /*Token expired by March 2020*/
-$pageAccessToken ='EAAExKKM6XLoBANEK16ZAEf0Bdz60y0eV10yBZByZBXaLyDAIuIGX9wSDKzZC679F2ngSB5ueqLfC4CkI9WhgioVZAvvAhAsnqpzaKklSzJ87qCLSLRZCMjoaVs0pK61HbxPCQZBCbim5JpPdiGl8gZCpJawwi2VwUTSsiPjCHodA9W3Bf10rX1wtyicuLVZAgkWqWyjzDuKiZC7QZDZD';
+$pageAccessToken ='EAAExKKM6XLoBAB0rEugHq2JM9kZBkWT8jjfdO1kGRBZBADkzfJJjgJJ8ileO6ataFyhyZBnW3zwOaZCUp4MDNlUPlmrIAzI3FoAud916TMl9UmRa28XR5hqcqbeoGpBiozO4UueLLwvLQ0TbDpv3OJphZBZABXmRCD62sejw1AWgwVURZBwoRoMJrjNqZCVebnfTpTvZAqcLlMAZDZD';
 $imageData=[
-  'source'=>$fb->fileToUpload('http://cardealer.webdevsolutions.biz/admin/uploaded_images/15468360683.jpg'),
+  'source'=>$fb->fileToUpload('http://cardealer.webdevsolutions.biz/admin/uploaded_images/265.jpg'),
   'message'=>'Testing!!!'
 
 ];
