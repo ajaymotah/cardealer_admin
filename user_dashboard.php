@@ -84,7 +84,7 @@ $user_role_id=$_SESSION['user_role_id'];
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Dashboard <?php print_r($_SESSION); ?></h1>
+            <h1 class="m-0 text-dark">Dashboard <?php print_r($_SESSION);  print_r($_SERVER['HTTP_HOST']);?></h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">

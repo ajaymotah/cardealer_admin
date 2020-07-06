@@ -586,6 +586,34 @@ if(!isset($_SESSION['user_id'])){
 </div>
 <!-- ./wrapper -->
 
+<button id="btn_test" type="button" class="btn btn-danger btn_delete" data-toggle="modal" data-target="#modal-test" hidden>Delete</button>
+
+
+<!--- Modal form-->
+<div class="modal fade" id="modal-test">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Please Wait...</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete the listing?</p>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" id="btn_modal_delete">Delete</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+
+
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -931,9 +959,23 @@ $.ajax({
       }
   })
 })
+$('#btn_cancel').click(function () {
+  $('.wrapper').fadeOut('slow','swing',function(){
+    alert('sdfsdf');
+    $('#btn_test').trigger("click");
+
+  });
+
+
+});
+
+
 //
 });// end Document Ready()
 
 </script>
+
 </body>
+
+
 </html>
