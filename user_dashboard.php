@@ -810,8 +810,6 @@ $("#show_txt_price").keyup(function () {
   //remove commas
   var retVal = txt_price ? parseFloat(txt_price.replace(/,/g, '')) : 0;
   $("#txt_price").val(retVal);
-  alert(retVal);
-
   var output=addThousandsSeparator(retVal);
   $("#show_txt_price").val(output);
 
