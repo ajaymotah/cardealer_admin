@@ -316,7 +316,7 @@ if(!isset($_SESSION['user_id'])){
             <div class="row">
 
                 <div class="col-md-6" style="padding-top:15px">
-                  <button id="btn_save_user" name="btn_save_user" type="submit" class="btn btn-success"> Save </button>
+                  <button id="btn_save_user" name="btn_save_user" type="button" class="btn btn-success"> Save </button>
                   <button id="btn_cancel" name="btn_cancel" type="button" class="btn btn-danger"> Cancel </button></br>
                 </div>
 
