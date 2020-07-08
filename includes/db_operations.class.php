@@ -362,7 +362,7 @@ tbl_listing_images.default_image=1";
 	{
 	    $sql="SELECT phone FROM tbl_users WHERE phone ='".$phone."'";
 	    $result=mysqli_query($this->con,$sql);
-		$rowcount=mysqli_num_rows($result);
+			$rowcount=mysqli_num_rows($result);
 		 return $rowcount;
 	}
 

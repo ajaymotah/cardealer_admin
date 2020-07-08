@@ -35,24 +35,7 @@ $menu_list='
                <p>Dashboard</p>
              </a>
            </li>
-      <li class="nav-item">
-        <a href="cd_list_users.php" class="nav-link">
-          <i class="nav-icon fas fa-users"></i>
-          <p>
-            Users
 
-          </p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="cd_car_rentals.php" class="nav-link">
-          <i class="nav-icon fas fa-ad"></i>
-          <p>
-            Car Rentals
-            <!--<span class="right badge badge-danger">New</span>-->
-          </p>
-        </a>
-      </li>
       <li class="nav-item">
         <a href="ajax/do_logout.php" class="nav-link">
           <i class="nav-icon fas fa-th"></i>

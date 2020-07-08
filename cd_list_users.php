@@ -529,9 +529,9 @@ $('#txt_phone').keyup(function () {
   $.ajax({
     type:"POST",
     url:"ajax/find_user_phone_exists.php",
-    data:{$txt_phone_num:lst_phone},
+    data:{txt_phone:lst_phone},
     success:function (data) {
-      //console.log(data);
+      console.log(data);
       if(data==false){
         $('#phone_search_result').html('Phone number not found');
       }
