@@ -769,9 +769,23 @@ $('.btn_modal_approve').click(function () {
       url:"ajax/approve_listing.php",
       data:{listing_id:listing_id},
       success:function (data) {
-        //console.log(data);
+        console.log(data);
+        // post to Facebook Page
+        $.ajax({
+          type:"POST",
+          url:"facebook_config/postpage.php",
+          data:{listing_id:listing_id},
+          success:function (posted) {
+            console.log(posted);
+
+          }
+        });
+
+
         if(data==1){
           $('.btn_close').trigger("click");
+
+
           //$('#example2').DataTable();
           Swal.fire({
        type: 'success',
@@ -782,16 +796,7 @@ $('.btn_modal_approve').click(function () {
 
 
 
-     // post to Facebook Page
-     $.ajax({
-       type:"POST",
-       url:"facebook_config/postpage.php",
-       data:{listing_id:listing_id},
-       success:function (posted) {
-         console.log(posted);
 
-       }
-     });
 
 
 

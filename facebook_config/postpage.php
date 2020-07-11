@@ -39,4 +39,5 @@ try {
  exit;
 }
 $graphNode = $response->getGraphNode();
+print_r($graphNode);
  ?>
