@@ -48,7 +48,7 @@ try {
   //for feeds only
  // $response = $fb->post('/814270918760767/feed', $linkData, $pageAccessToken);
 //-for photos--//
- $response = $fb->post('/me/photos', $attachment, $pageAccessToken);
+ $response = $fb->post('/me/feed', $attachment, $pageAccessToken);
  echo 'The post was published successfully to the Facebook timeline.';
 } catch(Facebook\Exceptions\FacebookResponseException $e) {
  echo 'Graph returned an error: '.$e->getMessage();
