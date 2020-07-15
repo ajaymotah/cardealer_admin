@@ -3,17 +3,33 @@ include('fb_init.php');
 include('../includes/db_operations.class.php');
 
 /*Token expired by March 2020*/
-$pageAccessToken ='EAAExKKM6XLoBAF1AyEdZB2wtSDU36aTZAQyNL1Fv6oTJGEgLvNID3WTHu7wBCJcCknCvZBeSDgp88BEv1ys5RYFJGFptCSNFH7OCBKSwZAN5CBHWa4XgKOuCLxQ6k6VgiaEOtk1pbmfjz8zLFsZAjfsfj6qaTyQKiGLoV6Lj7KRyu1h60YHHF';
+$pageAccessToken ='EAAExKKM6XLoBAChx1C48iXUIG7rWLwZBrw1lG2FRvILQ3ZBNtDZA0UFXQd1lRI6qqp7dkLIAZBjWxh7izR1c9FgPvw2ShScllYMD6KfEKjKTIcnngoeqjsF98c50B8xQRg8UhezvcdP3CgyGimWZCjxIJAjNgsZASdSzMl80sAlVUUU11peDmQ';
 $imageData=[
   'source'=>$fb->fileToUpload('http://cardealer.webdevsolutions.biz/admin/uploaded_images/265.jpg'),
   'message'=>'Testing!!!'
 
 ];
+//FB post content
+ $message = 'Test message from CodexWorld.com website';
+ $title = 'Post From Website';
+ $link = 'http://cardealer.webdevsolutions.biz';
+ $description = 'CodexWorld is a programming blog.';
+ $picture = 'http://cardealer.webdevsolutions.biz/admin/uploaded_images/265.jpg';
+
+$attachment = array(
+    'message' => $message,
+    'name' => $title,
+    'link' => $link,
+    'description' => $description,
+    'picture'=>$picture,
+);
+
 try {
   //for feeds only
  // $response = $fb->post('/814270918760767/feed', $linkData, $pageAccessToken);
 //-for photos--//
- $response = $fb->post('/me/photos', $imageData, $pageAccessToken);
+ $response = $fb->post('/me/feed', $attachment, $pageAccessToken);
+ echo 'The post was published successfully to the Facebook timeline.';
 } catch(Facebook\Exceptions\FacebookResponseException $e) {
  echo 'Graph returned an error: '.$e->getMessage();
  exit;
