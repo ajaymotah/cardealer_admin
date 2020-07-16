@@ -84,7 +84,7 @@ $user_role_id=$_SESSION['user_role_id'];
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Dashboard <?php print_r($_SESSION);  echo $remote_img_link;?></h1>
+            <h1 class="m-0 text-dark">Dashboard</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -242,36 +242,6 @@ $user_role_id=$_SESSION['user_role_id'];
           </div>
               <!-- /.card-body -->
         </div>
-        <!-- modal for view all details -->
-        <div class="modal fade" id="modal-approve">
-          <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title">Approve Listing</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="modal_lst">
-
-                </div>
-                <p>Are you sure you want to approve the listing?</p>
-              </div>
-              <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success btn_modal_approve">Approve</button>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div>
-        <!-- End modal for view all details -->
-
-
-
-
 
         <!--//End Pending Listings-->
 
@@ -703,9 +673,7 @@ $('.td_pending').click(function () {
       }
     }
   });
-
 });
-
 //delete listing function
 $(document).on('click','.btn_delete',function () {
   var listing_id= $(this).attr('id');
@@ -736,52 +704,6 @@ $(document).on('click','.btn_approve_pending',function () {
   $('#tr_'+listing_id).hide();
   $('.btn_modal_approve').attr('id',listing_id);
 })
-//Approve modal btn click
-$('.btn_modal_approve').click(function () {
-    var listing_id= $(this).attr("id");
-    //alert(listing_id);
-    $.ajax({
-      type:"POST",
-      url:"ajax/approve_listing.php",
-      data:{listing_id:listing_id},
-      success:function (data) {
-        //console.log(data);
-        if(data==1){
-          $('.btn_close').trigger("click");
-          //$('#example2').DataTable();
-          Swal.fire({
-       type: 'success',
-       title: 'Listing has been successfully put on live'
-     });
-     $("#lst_pendings").load(location.href + " #lst_pendings");
-     $("#example2").load(location.href + " #example2");
-
-
-
-     // post to Facebook Page
-     $.ajax({
-       type:"POST",
-       url:"facebook_config/postpage.php",
-       data:{listing_id:listing_id},
-       success:function (posted) {
-         console.log(posted);
-
-       }
-     });
-
-
-
-
-
-        }
-      }
-    });
-    //$("tr_"+listing_id).hide();
-});
-
-
-
-
 
 //Add listing functions
 $('#slt_make').change(function () {
@@ -933,7 +855,8 @@ $.ajax({
             Swal.fire({
          type: 'success',
          title: 'Listing has been saved'
-       })
+       }),
+          location.reload();
             //console.log(img_arr);
           }
         })

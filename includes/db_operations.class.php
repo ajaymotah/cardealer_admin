@@ -868,6 +868,15 @@ public function find_user_phone_exists($id)
 		}
 }
 
+public function check_user_limit($user_id){
+	$sql="SELECT user_id,role_listing_limit
+	FROM tbl_users,tbl_user_roles
+	WHERE
+	tbl_users.user_id=tbl_user_roles.user_id AND
+	tbl_user_roles=$user_id";
+
+}
+
 
 }//end of class
 
