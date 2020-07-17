@@ -662,7 +662,7 @@ function check_limit() {
     data:{user_id:user_id},
     success:function (data) {
 
-      if(!data){
+      if(data==0){
         $("#add_listing_section").hide();
 
       }
