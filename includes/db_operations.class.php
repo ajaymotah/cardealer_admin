@@ -891,10 +891,10 @@ public function check_user_limit($user_id){
 				}
 				return $result_row_count;
 		}else {
-			$sql_find_limit="SELECT tbl_user_roles.role_listing_limit,tbl_users.user_id,tbl_users.user_role_id FROM
-			tbl_users,tbl_user_roles WHERE
+			$sql_find_limit="SELECT tbl_user_roles.role_listing_limit,tbl_users.user_id,tbl_users.user_role_id,tbl_user_listing_count.user_id FROM
+			tbl_users,tbl_user_roles,tbl_user_listing_count WHERE
 			tbl_users.user_id=$user_id AND
-			tbl_user_roles.user_role_id=tbl_users.user_role_id";
+			tbl_user_roles.user_role_id=tbl_user_listing_count.user_role_id";
 			$result_find_limit=mysqli_query($this->con,$sql_find_limit);
 			while($row=mysqli_fetch_assoc($result_find_limit))
 				{
