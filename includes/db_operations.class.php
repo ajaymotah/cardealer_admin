@@ -902,10 +902,10 @@ public function check_user_limit($user_id){
 
 					if($rowcount>=$user_listing_limit){
 						//listing limit reached
-						return false;
+						return 0;
 					}else{
 						//valid
-						return true;
+						return 1;
 					}
 				//return $row['role_listing_limit'];
 				}
