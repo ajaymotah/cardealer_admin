@@ -660,9 +660,9 @@ function check_limit() {
     type:"POST",
     url:"ajax/check_limit.php",
     data:{user_id:user_id},
-    success:function (data) {
-      console.log(data);
-      if(data==0){
+    success:function (result) {
+      console.log(result);
+      if(result==0){
         $("#add_listing_section").hide();
 
       }
