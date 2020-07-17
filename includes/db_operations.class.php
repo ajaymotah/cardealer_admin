@@ -894,15 +894,17 @@ public function check_user_limit($user_id){
 			$sql_find_limit="SELECT tbl_user_roles.role_listing_limit,tbl_users.user_id,tbl_users.user_role_id FROM
 			tbl_users,tbl_user_roles WHERE
 			tbl_users.user_id=$user_id AND
-			tbl_user_roles.$user_role_id=tbl_users.$user_role_id";
+			tbl_user_roles.user_role_id=tbl_users.user_role_id";
 			$result_find_limit=mysqli_query($this->con,$sql_find_limit);
 			while($row=mysqli_fetch_assoc($result_find_limit))
 				{
 					$user_listing_limit=$row['role_listing_limit'];
 
 					if($rowcount>=$user_listing_limit){
+						//listing limit reached
 						return false;
 					}else{
+						//valid
 						return true;
 					}
 				//return $row['role_listing_limit'];

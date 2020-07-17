@@ -107,9 +107,10 @@ $user_role_id=$_SESSION['user_role_id'];
             <div class="small-box bg-info">
               <div class="inner">
                 <?php
-                $sales_listing_count=$db_operation->get_count_tbl("tbl_listings","listing_type_id",1);
+                $sales_listing_count=$db_operation->get_count_tbl("tbl_listings","user_id",$user_id);
+                $user_role_limit=$db_operation->find_by_id('tbl_user_roles','user_role_id',$user_role_id);
                  ?>
-                <h3><?php echo $sales_listing_count; ?></h3>
+                <h3><?php echo $sales_listing_count. ' / '.$user_role_limit['role_listing_limit']; ?></h3>
 
                 <p>Total Sales Listings</p>
               </div>
@@ -147,7 +148,7 @@ $user_role_id=$_SESSION['user_role_id'];
                  ?>
                 <h3><?php echo $active_users_count; ?></h3>
 
-                <p>User Registrations</p>
+                <p>Active Users Registered</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
@@ -329,7 +330,7 @@ $user_role_id=$_SESSION['user_role_id'];
         <!-- /.modal-dialog -->
       </div>
 
-      <div class="card card-primary">
+      <div class="card card-primary" id="add_listing_section">
         <div class="card-header">
           <h3 class="card-title">Add Car Listings</h3>
         </div>
@@ -652,9 +653,32 @@ function addThousandsSeparator(input) {
 
  return output;
 }
+//check user has reached listing limit
+function check_limit() {
+  var user_id="<?php echo $user_id;?>";
+  $.ajax({
+    type:"POST",
+    url:"ajax/check_limit.php",
+    data:{user_id:user_id},
+    success:function (data) {
+
+      if(!data){
+        $("#add_listing_section").hide();
+
+      }
+    }
+  });
+}
 
 $(document).ready(function(){
 activate_link();
+check_limit();
+
+
+
+
+
+
 $('.footer_list').load('pages/cd_footer.html');
 //show pending listing details on modal
 $('.td_pending').click(function () {
