@@ -869,11 +869,48 @@ public function find_user_phone_exists($id)
 }
 
 public function check_user_limit($user_id){
-	$sql="SELECT user_id,role_listing_limit
-	FROM tbl_users,tbl_user_roles
-	WHERE
-	tbl_users.user_id=tbl_user_roles.user_id AND
-	tbl_user_roles=$user_id";
+	$sql="SELECT user_id FROM tbl_user_listing_count WHERE user_id=$user_id";
+	$result=mysqli_query($this->con,$sql);
+	$rowcount=mysqli_num_rows($result);
+		if($rowcount==0){
+			$sql_find_count="SELECT user_id FROM tbl_listings WHERE user_id=$user_id";
+			$result_count=mysqli_query($this->con,$sql_find_count);
+			$result_row_count=mysqli_num_rows($result_count);
+				if($result_row_count==0){
+					$fields=array(
+						"user_id"=>$user_id,
+						"user_listing_count"=>0
+					);
+					$insert_record=$this->insert_record('tbl_user_listing_count',$fields);
+				}else{
+					$fields=array(
+						"user_id"=>$user_id,
+						"user_listing_count"=>$result_row_count
+					);
+					$insert_record=$this->insert_record('tbl_user_listing_count',$fields);
+				}
+				return $result_row_count;
+		}else {
+			$sql_find_limit="SELECT tbl_user_roles.role_listing_limit,tbl_users.user_id,tbl_users.user_role_id FROM
+			tbl_users,tbl_user_roles WHERE
+			tbl_users.user_id=$user_id AND
+			tbl_user_roles.$user_role_id=tbl_users.$user_role_id";
+			$result_find_limit=mysqli_query($this->con,$sql_find_limit);
+			while($row=mysqli_fetch_assoc($result_find_limit))
+				{
+					$user_listing_limit=$row['role_listing_limit'];
+
+					if($rowcount>=$user_listing_limit){
+						return false;
+					}else{
+						return true;
+					}
+				//return $row['role_listing_limit'];
+				}
+
+
+
+		}
 
 }
 
